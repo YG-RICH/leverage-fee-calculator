@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>레버리지 트레이딩 리스크 관리 7가지 원칙 | 레버리지 보증금 계산기</title>
+<meta name="description" content="레버리지 배율보다 중요한 리스크 관리. 손절 기준, 포지션 크기 계산법, 손익비까지 실전 원칙 7가지를 정리했습니다.">
+<meta name="robots" content="index, follow">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<div class="shell">
+  <nav class="site-nav">
+    <a class="brand" href="/">레버리지 계산기<span class="dot">.</span></a>
+    <div class="links">
+      <a href="/">계산기</a>
+      <a href="/guides/" aria-current="page">가이드</a>
+      <a href="/about.html">소개</a>
+    </div>
+  </nav>
+
+  <div class="card prose">
+    <span class="eyebrow" style="text-transform:uppercase;letter-spacing:.1em;font-size:11px;font-weight:700;color:var(--accent-ink);">리스크 관리</span>
+    <h1>레버리지 트레이딩 리스크 관리 7가지 원칙</h1>
+    <p class="lede">레버리지 배율보다 훨씬 중요한 건 리스크 관리입니다. 실전에서 바로 적용할 수 있는 원칙 7가지를 정리했습니다.</p>
+
+    <h2>1. 레버리지 배율 ≠ 리스크</h2>
+    <p>50배 레버리지를 써도 포지션을 아주 작게 잡고 촘촘하게 손절하면 리스크는 작을 수 있습니다. 반대로 3배여도 손절 없이 큰 포지션을 들고 있으면 계좌가 통째로 날아갈 수 있습니다. "몇 배 쓸까"가 아니라 <strong>"이 거래에서 최대 얼마까지 잃을 수 있나"</strong>를 먼저 정하는 게 순서입니다.</p>
+
+    <div class="ad-slot">광고 영역</div>
+
+    <h2>2. 1~2% 룰</h2>
+    <p>한 번의 거래에서 잃어도 되는 금액을 전체 계좌의 1~2% 이내로 제한하세요. 손절가를 먼저 정하고, "진입가~손절가 거리"와 "허용 손실액"을 가지고 <strong>포지션 크기를 역산</strong>하는 순서가 맞습니다. 포지션 크기를 먼저 정하고 손절가를 나중에 정하면 안 됩니다.</p>
+
+    <h3>포지션 크기 역산 공식</h3>
+    <p><code>포지션 크기 = (계좌 × 허용 리스크%) ÷ (진입가와 손절가의 가격 변동률)</code></p>
+
+    <h2>3. 손절가는 청산가보다 훨씬 여유 있게</h2>
+    <p>레버리지가 높을수록 청산가가 진입가에 가까워집니다. 손절가가 청산가 바로 앞에 있으면 잠깐의 변동성(꼬리, wick)에도 강제청산될 수 있습니다. 변동성이 큰 자산일수록 레버리지를 낮춰서 손절과 청산가 사이 여유를 확보하세요.</p>
+
+    <h2>4. 수수료와 펀딩비까지 포함한 손익분기점 기준으로 목표가 설정</h2>
+    <p>"얼마나 올라야 본전인지"를 모르고 목표가를 잡으면, 예측이 맞았는데도 수수료 때문에 손해가 나는 경우가 생깁니다. 목표가를 잡기 전에 항상 손익분기가를 먼저 확인하세요. (관련 글: <a href="/guides/leverage-fee-basics.html">레버리지 거래 수수료 완벽 가이드</a>)</p>
+
+    <h2>5. 손익비(R:R)는 최소 1:1.5~2 이상</h2>
+    <p>손절로 잃을 금액 대비 목표가로 벌 금액이 최소 1.5~2배는 되는 자리에서만 진입하세요. 이렇게 하면 승률이 50%가 안 되더라도 장기적으로 계좌가 우상향할 수 있습니다.</p>
+
+    <h2>6. 한 번에 몰빵 금지, 분할 진입·청산</h2>
+    <p>예상이 틀렸을 때를 대비해 자본을 나눠서 진입하고, 목표가 도달 시에도 나눠서 청산하면 감정적인 판단 실수를 줄일 수 있습니다.</p>
+
+    <h2>7. 전체 자산 중 레버리지 비중 자체를 제한</h2>
+    <p>전체 투자금의 일부(예: 10~20%)만 레버리지 거래에 쓰고 나머지는 현물이나 안전자산에 두세요. 레버리지 거래가 잘못되더라도 계좌 전체가 무너지지 않도록 방어선을 만드는 것입니다.</p>
+
+    <blockquote>요약: 레버리지 배율을 낮추는 것보다, "이번 거래에서 최대 얼마 잃을지"를 먼저 정하고 그에 맞게 포지션 크기·손절가·목표가를 역산하는 습관이 가장 중요합니다.</blockquote>
+
+    <div class="callout">
+      손절가와 목표가를 정했다면, <a href="/">레버리지 보증금 계산기</a>로 수수료를 포함한 실제 순손익과 ROE를 미리 확인해보세요.
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-links">
+      <a href="/about.html">소개</a>
+      <a href="/privacy.html">개인정보처리방침</a>
+      <a href="/terms.html">이용약관</a>
+      <a href="https://github.com/YG-RICH/leverage-fee-calculator/issues" target="_blank" rel="noopener">문의</a>
+    </div>
+    <div class="copyright">© 2026 레버리지 보증금 계산기. 모든 계산 결과는 참고용이며 투자 조언이 아닙니다.</div>
+  </footer>
+</div>
+</body>
+</html>

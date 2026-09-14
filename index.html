@@ -11,6 +11,7 @@
 <meta name="robots" content="index, follow">
 <meta name="google-site-verification" content="sZMXdHBrm5QPgx7P8StA2u9sftCW36DvU3SZlxO-6q0" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="styles.css">
 <style>
   :root {
     --paper: #f2f2f0;
@@ -399,6 +400,15 @@
 <body>
 
 <div class="page">
+  <nav class="site-nav">
+    <a class="brand" href="/">레버리지 계산기<span class="dot">.</span></a>
+    <div class="links">
+      <a href="/" aria-current="page">계산기</a>
+      <a href="/guides/">가이드</a>
+      <a href="/about.html">소개</a>
+    </div>
+  </nav>
+
   <header>
     <div class="eyebrow">My Leverage Tool</div>
     <h1>레버리지 보증금 계산기</h1>
@@ -527,7 +537,17 @@
     </div>
   </div>
 
-  <footer class="note">계산 결과는 참고용입니다. 실제 수수료율과 정산 방식은 이용 중인 서비스의 약관을 확인하세요.</footer>
+  <div class="ad-slot">광고 영역</div>
+
+  <footer class="site-footer">
+    <div class="footer-links">
+      <a href="/about.html">소개</a>
+      <a href="/privacy.html">개인정보처리방침</a>
+      <a href="/terms.html">이용약관</a>
+      <a href="https://github.com/YG-RICH/leverage-fee-calculator/issues" target="_blank" rel="noopener">문의</a>
+    </div>
+    <div class="copyright">계산 결과는 참고용이며 투자 조언이 아닙니다. © 2026 레버리지 보증금 계산기.</div>
+  </footer>
 </div>
 
 <script>

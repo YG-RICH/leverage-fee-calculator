@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>소개 | 레버리지 보증금 계산기</title>
+<meta name="description" content="레버리지 보증금 계산기를 만든 이유와 계산 방식에 대한 소개 페이지입니다.">
+<meta name="robots" content="index, follow">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="shell">
+  <nav class="site-nav">
+    <a class="brand" href="/">레버리지 계산기<span class="dot">.</span></a>
+    <div class="links">
+      <a href="/">계산기</a>
+      <a href="/guides/">가이드</a>
+      <a href="/about.html" aria-current="page">소개</a>
+    </div>
+  </nav>
+
+  <div class="card prose">
+    <h1>이 계산기를 만든 이유</h1>
+    <p class="lede">레버리지 거래는 수수료 구조가 복잡해서, 막상 계산해보면 생각보다 손익분기점이 멀거나 수수료 비중이 큰 경우가 많습니다.</p>
+
+    <p>레버리지 보증금 계산기는 보증금·레버리지 배율·거래 수수료율·진입가·목표가만 입력하면 <strong>포지션 크기, 진입·청산 수수료, 순손익(PnL), ROE, 손익분기점</strong>까지 한 번에 계산해주는 무료 도구입니다. 복잡한 스프레드시트를 만들지 않아도, 이 페이지 하나로 "얼마를 벌어야 수수료를 제하고도 이득인지"를 바로 확인할 수 있도록 만들었습니다.</p>
+
+    <h2>계산 방식</h2>
+    <p>이 도구는 다음과 같은 기본 공식을 사용합니다.</p>
+    <ul>
+      <li><strong>포지션 크기</strong> = 보증금 × 레버리지</li>
+      <li><strong>진입/청산 수수료</strong> = 해당 시점 포지션 가치 × 수수료율</li>
+      <li><strong>손익분기가 (롱)</strong> = 진입가 × (1 + 수수료율) / (1 − 수수료율)</li>
+      <li><strong>손익분기가 (숏)</strong> = 진입가 × (1 − 수수료율) / (1 + 수수료율)</li>
+      <li><strong>ROE</strong> = 순손익 ÷ 보증금 × 100</li>
+    </ul>
+    <p>자세한 개념 설명은 <a href="/guides/">가이드 페이지</a>에 정리해두었습니다.</p>
+
+    <h2>주의사항</h2>
+    <p>이 계산기는 교육·참고 목적의 도구이며, 투자 조언이 아닙니다. 실제 거래소의 수수료율, 슬리피지, 강제청산 조건은 서비스마다 다르므로 실제 거래 전에는 반드시 이용 중인 거래소의 약관과 수수료 정책을 확인하세요. 레버리지 거래는 원금 손실 위험이 있습니다.</p>
+
+    <div class="callout">
+      문의나 오류 제보는 <a href="https://github.com/YG-RICH/leverage-fee-calculator/issues" target="_blank" rel="noopener">GitHub 저장소 Issues</a>로 남겨주세요.
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-links">
+      <a href="/about.html">소개</a>
+      <a href="/privacy.html">개인정보처리방침</a>
+      <a href="/terms.html">이용약관</a>
+      <a href="https://github.com/YG-RICH/leverage-fee-calculator/issues" target="_blank" rel="noopener">문의</a>
+    </div>
+    <div class="copyright">© 2026 레버리지 보증금 계산기. 모든 계산 결과는 참고용이며 투자 조언이 아닙니다.</div>
+  </footer>
+</div>
+</body>
+</html>

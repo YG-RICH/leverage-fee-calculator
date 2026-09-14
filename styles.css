@@ -178,7 +178,7 @@ body {
 .prose strong { color: var(--ink); }
 
 .prose code {
-  font-family: "IBM Plex Mono", monospace;
+  font-family: "JetBrains Mono", monospace;
   background: var(--surface-2);
   border: 1px solid var(--border);
   border-radius: 5px;

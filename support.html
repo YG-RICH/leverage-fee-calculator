@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>후원하기 | 레버리지 보증금 계산기</title>
+<meta name="description" content="레버리지 보증금 계산기가 도움이 되셨다면 후원으로 응원해주세요. 카카오페이, 토스로 간편하게 후원할 수 있습니다.">
+<meta name="robots" content="index, follow">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .support-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+  }
+
+  .support-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    text-align: center;
+  }
+
+  .support-card .icon {
+    font-size: 26px;
+  }
+
+  .support-card h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 800;
+  }
+
+  .support-card p {
+    margin: 0;
+    font-size: 12.5px;
+    color: var(--ink-muted);
+    line-height: 1.5;
+  }
+
+  .support-card img.qr {
+    width: 168px;
+    max-width: 100%;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+  }
+
+  .support-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+    padding: 10px 16px;
+    border-radius: 10px;
+    background: var(--accent);
+    color: #fff;
+    font-weight: 700;
+    font-size: 13.5px;
+    text-decoration: none;
+  }
+
+  .support-btn:hover { background: var(--accent-ink); }
+
+  .coming-soon {
+    opacity: 0.55;
+  }
+
+  .coming-soon .support-btn {
+    background: var(--surface-2);
+    color: var(--ink-muted);
+    border: 1px dashed var(--border);
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+<div class="shell narrow">
+  <nav class="site-nav">
+    <a class="brand" href="/">레버리지 계산기<span class="dot">.</span></a>
+    <div class="links">
+      <a href="/">계산기</a>
+      <a href="/guides/">가이드</a>
+      <a href="/about.html">소개</a>
+    </div>
+  </nav>
+
+  <div class="prose" style="padding: 4px 2px;">
+    <h1>후원하기</h1>
+    <p class="lede">이 계산기가 도움이 되셨다면, 커피 한 잔 값으로 응원해주세요. 후원금은 사이트 운영과 새 기능 개발에 쓰입니다.</p>
+  </div>
+
+  <div class="support-grid">
+    <div class="support-card">
+      <span class="icon">💛</span>
+      <h3>카카오페이</h3>
+      <p>QR코드를 스캔하거나 아래 버튼을 눌러 후원해주세요.</p>
+      <img class="qr" src="assets/kakaopay-qr.png" alt="카카오페이 후원 QR코드">
+      <a class="support-btn" href="https://qr.kakaopay.com/FS3S4nNWx" target="_blank" rel="noopener">카카오페이로 후원하기</a>
+    </div>
+
+    <div class="support-card coming-soon">
+      <span class="icon">🔵</span>
+      <h3>토스</h3>
+      <p>준비 중입니다.</p>
+      <span class="support-btn">준비 중</span>
+    </div>
+
+    <div class="support-card coming-soon">
+      <span class="icon">☕</span>
+      <h3>Buy Me a Coffee</h3>
+      <p>해외/카드 결제용 후원 채널을 준비 중입니다.</p>
+      <span class="support-btn">준비 중</span>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-links">
+      <a href="/about.html">소개</a>
+      <a href="/privacy.html">개인정보처리방침</a>
+      <a href="/terms.html">이용약관</a>
+      <a href="/support.html">후원하기</a>
+      <a href="https://github.com/YG-RICH/leverage-fee-calculator/issues" target="_blank" rel="noopener">문의</a>
+    </div>
+    <div class="copyright">© 2026 레버리지 보증금 계산기. 모든 계산 결과는 참고용이며 투자 조언이 아닙니다.</div>
+  </footer>
+</div>
+</body>
+</html>

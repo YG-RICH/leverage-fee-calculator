@@ -1,0 +1,661 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>레버리지 보증금 계산기 | 수수료·손익분기점 자동 계산</title>
+<meta name="description" content="보증금, 레버리지, 거래 수수료율, 진입가·목표가를 입력하면 포지션 크기, 수수료, 순손익(PnL), ROE, 손익분기점을 자동으로 계산해주는 무료 계산기입니다.">
+<meta property="og:title" content="레버리지 보증금 계산기">
+<meta property="og:description" content="수수료 포함 손익과 손익분기점(이득구간)까지 한눈에 계산하는 레버리지 트레이딩 도구">
+<meta property="og:type" content="website">
+<meta name="robots" content="index, follow">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --paper: #f2f2f0;
+    --surface: #ffffff;
+    --surface-2: #f6f6f4;
+    --border: #dedcd6;
+    --ink: #1c1c1a;
+    --ink-muted: #6b6a63;
+    --accent: #b8742a;
+    --accent-ink: #8f5a1f;
+    --accent-soft: #f6ead7;
+    --good: #2f8f5b;
+    --good-soft: #e4f4ea;
+    --bad: #c0483f;
+    --bad-soft: #fbe8e6;
+    --shadow: 0 1px 2px rgba(28, 28, 26, 0.04), 0 10px 28px -14px rgba(28, 28, 26, 0.18);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #171613;
+      --surface: #201f1b;
+      --surface-2: #262420;
+      --border: #38352e;
+      --ink: #f1efe9;
+      --ink-muted: #a6a294;
+      --accent: #d9954a;
+      --accent-ink: #eab06c;
+      --accent-soft: #372a17;
+      --good: #4fbf85;
+      --good-soft: #1a3325;
+      --bad: #e0776e;
+      --bad-soft: #3a201d;
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 10px 28px -14px rgba(0, 0, 0, 0.6);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --paper: #171613;
+    --surface: #201f1b;
+    --surface-2: #262420;
+    --border: #38352e;
+    --ink: #f1efe9;
+    --ink-muted: #a6a29d;
+    --accent: #d9954a;
+    --accent-ink: #eab06c;
+    --accent-soft: #372a17;
+    --good: #4fbf85;
+    --good-soft: #1a3325;
+    --bad: #e0776e;
+    --bad-soft: #3a201d;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 10px 28px -14px rgba(0, 0, 0, 0.6);
+  }
+
+  * { box-sizing: border-box; }
+
+  html { background: #f2f2f0; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Manrope", "Malgun Gothic", system-ui, sans-serif;
+    padding-inline: 20px;
+    padding-block: 44px;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+  }
+
+  .page {
+    width: 100%;
+    max-width: 560px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  header {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: center;
+  }
+
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--accent-ink);
+  }
+
+  h1 {
+    margin: 0;
+    font-size: clamp(22px, 5vw, 27px);
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  .subtitle {
+    margin: 0;
+    color: var(--ink-muted);
+    font-size: 13.5px;
+    line-height: 1.5;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    padding: 24px;
+  }
+
+  .field { display: flex; flex-direction: column; gap: 7px; margin-bottom: 18px; }
+  .field:last-child { margin-bottom: 0; }
+
+  label {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--ink-muted);
+  }
+
+  label[data-tip], .label[data-tip] {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .info-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    border: none;
+    border-radius: 50%;
+    background: var(--accent-soft);
+    color: var(--accent-ink);
+    font-size: 10px;
+    font-weight: 800;
+    line-height: 1;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  .info-btn:hover, .info-btn.active {
+    background: var(--accent);
+    color: var(--surface);
+  }
+
+  .info-btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .tip-box {
+    font-size: 12px;
+    line-height: 1.55;
+    color: var(--ink);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-weight: 400;
+  }
+
+  .input-wrap { position: relative; display: flex; align-items: center; }
+
+  input[type="number"] {
+    width: 100%;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 46px 12px 14px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+
+  input[type="number"]:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+  }
+
+  .input-wrap .suffix {
+    position: absolute;
+    right: 14px;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--ink-muted);
+    pointer-events: none;
+  }
+
+  .lev-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  input[type="range"] {
+    flex: 1;
+    accent-color: var(--accent);
+  }
+
+  .lev-badge {
+    min-width: 56px;
+    text-align: center;
+    background: var(--accent-soft);
+    color: var(--accent-ink);
+    border-radius: 8px;
+    padding: 8px 0;
+    font-family: "IBM Plex Mono", monospace;
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .divider { height: 1px; background: var(--border); margin: 20px 0; }
+
+  .dir-toggle {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .dir-btn {
+    border: 1px solid var(--border);
+    background: var(--surface-2);
+    border-radius: 10px;
+    padding: 10px 0;
+    font-family: inherit;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--ink-muted);
+    cursor: pointer;
+  }
+
+  .dir-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+  .dir-btn[data-active="true"][data-dir="long"] {
+    background: var(--good-soft);
+    border-color: var(--good);
+    color: var(--good);
+  }
+
+  .dir-btn[data-active="true"][data-dir="short"] {
+    background: var(--bad-soft);
+    border-color: var(--bad);
+    color: var(--bad);
+  }
+
+  .section-label {
+    font-size: 11.5px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-muted);
+    margin: 4px 0 2px;
+  }
+
+  .zone-track {
+    position: relative;
+    height: 14px;
+    border-radius: 999px;
+    overflow: hidden;
+    background: var(--border);
+    margin-top: 12px;
+    display: flex;
+  }
+
+  .zone-loss { background: var(--bad-soft); flex: none; height: 100%; }
+  .zone-profit { background: var(--good-soft); flex: none; height: 100%; }
+
+  .zone-marker {
+    position: absolute;
+    top: 50%;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    border: 2px solid var(--surface);
+    box-shadow: 0 0 0 1px var(--ink);
+  }
+
+  .zone-caption {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--ink-muted);
+    margin-top: 8px;
+    font-family: "IBM Plex Mono", monospace;
+  }
+
+  .zone-caption b { color: var(--ink); font-weight: 600; }
+
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .status-badge.good { background: var(--good-soft); color: var(--good); }
+  .status-badge.bad { background: var(--bad-soft); color: var(--bad); }
+
+  .result-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  @media (max-width: 420px) {
+    .result-grid { grid-template-columns: 1fr; }
+  }
+
+  .stat {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .stat .label { font-size: 11.5px; font-weight: 700; color: var(--ink-muted); }
+  .stat .value {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 18px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
+  }
+
+  .stat.wide { grid-column: 1 / -1; }
+  .stat.hero {
+    background: var(--accent-soft);
+    border-color: var(--accent);
+  }
+  .stat.hero .label { color: var(--accent-ink); }
+  .stat.hero .value { color: var(--accent-ink); font-size: 24px; }
+
+  .stat.good .value { color: var(--good); }
+  .stat.bad .value { color: var(--bad); }
+
+  .bar-track {
+    margin-top: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: var(--border);
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 999px;
+    background: var(--accent);
+    width: 0%;
+    transition: width 0.2s ease;
+  }
+
+  .bar-caption {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--ink-muted);
+    margin-top: 6px;
+  }
+
+  footer.note {
+    font-size: 11.5px;
+    color: var(--ink-muted);
+    text-align: center;
+    line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <header>
+    <div class="eyebrow">My Leverage Tool</div>
+    <h1>레버리지 보증금 계산기</h1>
+    <p class="subtitle">보증금과 레버리지, 수수료율에 진입가·목표가까지 넣으면 수수료 포함 손익과 이득구간이 바로 나와요.</p>
+  </header>
+
+  <div class="card">
+    <div class="field">
+      <label for="deposit" data-tip="레버리지를 곱하기 전, 내가 실제로 계좌에 넣는 원금(증거금)이에요.">보증금</label>
+      <div class="input-wrap">
+        <input type="number" id="deposit" value="1000" min="0" step="10">
+        <span class="suffix">USDT</span>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="leverage" data-tip="보증금을 몇 배로 키워서 거래할지 정하는 배수예요. 예) 5배면 포지션 크기가 보증금의 5배가 돼요.">레버리지 배율</label>
+      <div class="lev-row">
+        <input type="range" id="leverageRange" min="1" max="50" step="1" value="5">
+        <div class="lev-badge"><span id="leverageValue">5</span>배</div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="feeRate" data-tip="포지션을 열 때(진입)와 닫을 때(청산) 각각 부과되는 수수료 비율이에요. 한 번의 거래에 두 번 나가는 비용이라고 생각하면 돼요. (참고: 바이낸스 선물 테이커 약 0.05%)">거래 수수료율 (진입·청산 각각)</label>
+      <div class="input-wrap">
+        <input type="number" id="feeRate" value="0.05" min="0" step="0.01">
+        <span class="suffix">%</span>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="field">
+      <label>포지션 방향</label>
+      <div class="dir-toggle" role="group" aria-label="포지션 방향">
+        <button type="button" class="dir-btn" data-dir="long" data-active="true" id="btnLong">롱 (Long)</button>
+        <button type="button" class="dir-btn" data-dir="short" data-active="false" id="btnShort">숏 (Short)</button>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="entryPrice" data-tip="포지션에 처음 들어갈 때(매수/매도 시작 시점)의 가격이에요.">진입가</label>
+      <div class="input-wrap">
+        <input type="number" id="entryPrice" value="65000" min="0" step="0.01">
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="targetPrice" data-tip="지금 가격이나 팔 것으로 예상하는 목표 가격이에요. 이 가격을 기준으로 손익을 계산해요.">목표가 (현재가)</label>
+      <div class="input-wrap">
+        <input type="number" id="targetPrice" value="66500" min="0" step="0.01">
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-label">포지션 &amp; 수수료</div>
+    <div class="result-grid">
+      <div class="stat">
+        <span class="label" data-tip="실제로 시장에서 움직이는 총 금액이에요. 포지션 크기 = 보증금 × 레버리지.">포지션 크기</span>
+        <span class="value" id="rPosition">–</span>
+      </div>
+      <div class="stat">
+        <span class="label" data-tip="보증금에서 진입 수수료만 뺀 금액이에요. 포지션이 열린 직후, 아직 청산 수수료는 내기 전 기준이에요.">순 보증금 (진입 수수료 차감 후)</span>
+        <span class="value" id="rNetDeposit">–</span>
+      </div>
+      <div class="stat hero wide">
+        <span class="label" data-tip="포지션을 열 때 한 번 내는 수수료예요. 포지션 크기 × 수수료율로 계산돼요.">진입 수수료</span>
+        <span class="value" id="rFee">–</span>
+        <div class="bar-track"><div class="bar-fill" id="feeBar"></div></div>
+        <div class="bar-caption">
+          <span>보증금 대비</span>
+          <span id="rFeeRatio">–</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section-label">손익분기점 &amp; 이득구간</div>
+    <div class="result-grid">
+      <div class="stat">
+        <span class="label" data-tip="이 가격에 도달하면 수수료를 다 내고도 손익이 정확히 0이 되는 지점이에요. 이보다 더 유리한 방향으로 가야 진짜 이득 구간이 시작돼요.">손익분기가</span>
+        <span class="value" id="rBreakeven">–</span>
+      </div>
+      <div class="stat">
+        <span class="label" data-tip="진입가에서 손익분기가까지 가격이 몇 % 움직여야 본전(손익 0)이 되는지 보여줘요.">손익분기까지 필요한 변동률</span>
+        <span class="value" id="rBreakevenMove">–</span>
+      </div>
+
+      <div class="stat wide">
+        <span class="label">목표가 기준 상태 <span id="zoneStatus" class="status-badge good">이득구간</span></span>
+        <div class="zone-track">
+          <div class="zone-loss" id="zoneLoss"></div>
+          <div class="zone-profit" id="zoneProfit"></div>
+          <div class="zone-marker" id="zoneMarker"></div>
+        </div>
+        <div class="zone-caption">
+          <span>진입 <b id="capEntry">–</b></span>
+          <span>손익분기 <b id="capBreakeven">–</b></span>
+          <span>목표가 <b id="capTarget">–</b></span>
+        </div>
+      </div>
+
+      <div class="stat" id="priceMoveCard">
+        <span class="label" data-tip="레버리지를 곱하기 전, 순수하게 가격 자체가 진입가 대비 몇 % 움직였는지예요.">진입가 대비 가격 변동률</span>
+        <span class="value" id="rPriceMove">–</span>
+      </div>
+      <div class="stat" id="grossPnlCard">
+        <span class="label" data-tip="가격이 움직인 만큼 생긴 손익이에요. 아직 수수료를 빼지 않은 금액이라서 'Gross PnL'이라고도 불러요.">가격 변동 손익 (수수료 전)</span>
+        <span class="value" id="rGrossPnl">–</span>
+      </div>
+      <div class="stat">
+        <span class="label" data-tip="포지션을 열 때 낸 수수료와 닫을 때 낼 수수료를 합친 금액이에요.">총 수수료 (진입+청산)</span>
+        <span class="value" id="rTotalFee">–</span>
+      </div>
+      <div class="stat" id="pnlCard">
+        <span class="label" data-tip="가격 변동 손익에서 총 수수료를 뺀, 실제로 내 손에 남는 손익이에요. 흔히 'Net PnL'이라고 불러요.">순손익 (수수료 반영 후)</span>
+        <span class="value" id="rNetPnl">–</span>
+      </div>
+      <div class="stat wide" id="roeCard">
+        <span class="label" data-tip="순손익 ÷ 보증금 × 100. 내가 실제로 넣은 돈 대비 몇 % 벌었는지예요. 레버리지 때문에 가격 변동률보다 훨씬 크게 움직여요.">ROE (보증금 대비 최종 수익률)</span>
+        <span class="value" id="rRoe">–</span>
+      </div>
+    </div>
+  </div>
+
+  <footer class="note">계산 결과는 참고용입니다. 실제 수수료율과 정산 방식은 이용 중인 서비스의 약관을 확인하세요.</footer>
+</div>
+
+<script>
+  const $ = (id) => document.getElementById(id);
+  const usdt = (n) => (isFinite(n) ? n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00') + ' USDT';
+  const pct = (n) => (isFinite(n) ? n.toLocaleString('ko-KR', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) : '0') + '%';
+  const signedUsdt = (n) => (n >= 0 ? '+' : '') + usdt(n);
+  const signedPct = (n) => (n >= 0 ? '+' : '') + pct(n);
+  const price = (n) => (isFinite(n) ? n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '–');
+
+  let direction = 'long';
+
+  function setDirection(dir) {
+    direction = dir;
+    $('btnLong').dataset.active = String(dir === 'long');
+    $('btnShort').dataset.active = String(dir === 'short');
+    calculate();
+  }
+
+  $('btnLong').addEventListener('click', () => setDirection('long'));
+  $('btnShort').addEventListener('click', () => setDirection('short'));
+
+  function calculate() {
+    const deposit = parseFloat($('deposit').value) || 0;
+    const leverage = parseFloat($('leverageRange').value) || 0;
+    const feeRate = (parseFloat($('feeRate').value) || 0) / 100;
+    const entryPrice = parseFloat($('entryPrice').value) || 0;
+    const targetPrice = parseFloat($('targetPrice').value) || 0;
+
+    $('leverageValue').textContent = leverage;
+
+    // 포지션 & 진입 수수료
+    const position = deposit * leverage;
+    const entryFee = position * feeRate;
+    const netDeposit = deposit - entryFee;
+    const feeRatio = deposit > 0 ? (entryFee / deposit) * 100 : 0;
+
+    $('rPosition').textContent = usdt(position);
+    $('rFee').textContent = usdt(entryFee);
+    $('rNetDeposit').textContent = usdt(netDeposit);
+    $('rFeeRatio').textContent = pct(feeRatio);
+    $('feeBar').style.width = Math.min(100, feeRatio) + '%';
+
+    // 손익분기가: entry * (1+f)/(1-f) [롱] 또는 entry * (1-f)/(1+f) [숏]
+    const breakeven = direction === 'long'
+      ? entryPrice * (1 + feeRate) / (1 - feeRate)
+      : entryPrice * (1 - feeRate) / (1 + feeRate);
+    const breakevenMovePct = feeRate < 1 ? (2 * feeRate / (1 - feeRate)) * 100 : Infinity;
+
+    $('rBreakeven').textContent = price(breakeven);
+    $('rBreakevenMove').textContent = signedPct(breakevenMovePct);
+
+    // 진입가 대비 가격 변동률 (레버리지 반영 전, 순수 가격 기준)
+    const targetMovePct = direction === 'long'
+      ? (entryPrice > 0 ? (targetPrice / entryPrice - 1) * 100 : 0)
+      : (targetPrice > 0 ? (entryPrice / targetPrice - 1) * 100 : 0);
+
+    // 목표가 기준 손익
+    const qty = entryPrice > 0 ? position / entryPrice : 0;
+    const exitNotional = qty * targetPrice;
+    const exitFee = exitNotional * feeRate;
+    const totalFee = entryFee + exitFee;
+    const grossPnl = direction === 'long' ? qty * (targetPrice - entryPrice) : qty * (entryPrice - targetPrice);
+    const netPnl = grossPnl - totalFee;
+    const roe = deposit > 0 ? (netPnl / deposit) * 100 : 0;
+    const inProfit = netPnl >= 0;
+    const gainingBeforeFees = grossPnl >= 0;
+
+    $('rPriceMove').textContent = signedPct(targetMovePct);
+    $('rGrossPnl').textContent = signedUsdt(grossPnl);
+    $('rTotalFee').textContent = usdt(totalFee);
+    $('rNetPnl').textContent = signedUsdt(netPnl);
+    $('rRoe').textContent = signedPct(roe);
+
+    const priceMoveCard = $('priceMoveCard');
+    priceMoveCard.classList.remove('good', 'bad');
+    priceMoveCard.classList.add(targetMovePct >= 0 ? 'good' : 'bad');
+    const grossPnlCard = $('grossPnlCard');
+    grossPnlCard.classList.remove('good', 'bad');
+    grossPnlCard.classList.add(gainingBeforeFees ? 'good' : 'bad');
+    const pnlCard = $('pnlCard');
+    pnlCard.classList.remove('good', 'bad');
+    pnlCard.classList.add(inProfit ? 'good' : 'bad');
+    const roeCard = $('roeCard');
+    roeCard.classList.remove('good', 'bad');
+    roeCard.classList.add(inProfit ? 'good' : 'bad');
+
+    // 이득구간 게이지: 0%(진입) ~ trackMax% 구간에서 손익분기 지점을 기준으로 손실/이득 구간을 나눔
+    const trackMax = Math.max(breakevenMovePct * 1.4, targetMovePct * 1.15, breakevenMovePct + 0.5, 1);
+    const breakevenPos = Math.min(100, Math.max(0, (breakevenMovePct / trackMax) * 100));
+    const targetPos = Math.min(100, Math.max(0, (targetMovePct / trackMax) * 100));
+
+    $('zoneLoss').style.width = breakevenPos + '%';
+    $('zoneProfit').style.width = (100 - breakevenPos) + '%';
+    $('zoneMarker').style.left = targetPos + '%';
+    $('zoneMarker').style.background = inProfit ? 'var(--good)' : 'var(--bad)';
+
+    const statusEl = $('zoneStatus');
+    statusEl.textContent = inProfit ? '이득구간' : '손실구간';
+    statusEl.classList.remove('good', 'bad');
+    statusEl.classList.add(inProfit ? 'good' : 'bad');
+
+    $('capEntry').textContent = price(entryPrice);
+    $('capBreakeven').textContent = price(breakeven);
+    $('capTarget').textContent = price(targetPrice);
+  }
+
+  ['deposit', 'leverageRange', 'feeRate', 'entryPrice', 'targetPrice'].forEach((id) => $(id).addEventListener('input', calculate));
+  calculate();
+
+  document.querySelectorAll('[data-tip]').forEach((el) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'info-btn';
+    btn.setAttribute('aria-label', '설명 보기');
+    btn.textContent = '!';
+    el.appendChild(btn);
+
+    const box = document.createElement('div');
+    box.className = 'tip-box';
+    box.textContent = el.getAttribute('data-tip');
+    box.hidden = true;
+    el.insertAdjacentElement('afterend', box);
+
+    btn.addEventListener('click', () => {
+      box.hidden = !box.hidden;
+      btn.classList.toggle('active', !box.hidden);
+    });
+  });
+</script>
+</body>
+</html>

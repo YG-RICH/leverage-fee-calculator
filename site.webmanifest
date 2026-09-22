@@ -1,0 +1,14 @@
+{
+  "name": "레계시 - 레버리지 보증금 계산기",
+  "short_name": "레계시",
+  "description": "보증금, 레버리지, 수수료율로 손익과 손익분기점을 계산하는 무료 계산기",
+  "start_url": "/leverage-fee-calculator/",
+  "scope": "/leverage-fee-calculator/",
+  "display": "standalone",
+  "background_color": "#f2f2f0",
+  "theme_color": "#b8742a",
+  "icons": [
+    { "src": "/leverage-fee-calculator/assets/favicon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/leverage-fee-calculator/assets/logo-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

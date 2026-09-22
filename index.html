@@ -397,6 +397,24 @@
   .stat.good .value { color: var(--good); }
   .stat.bad .value { color: var(--bad); }
 
+  .stat.draggable {
+    cursor: ew-resize;
+    user-select: none;
+    touch-action: none;
+    transition: background 0.12s ease, border-color 0.12s ease;
+  }
+
+  .stat.draggable.dragging {
+    background: var(--accent-soft);
+    border-color: var(--accent);
+  }
+
+  .drag-hint {
+    font-size: 10.5px;
+    color: var(--ink-muted);
+    opacity: 0.75;
+  }
+
   .bar-track {
     margin-top: 8px;
     height: 8px;
@@ -547,9 +565,10 @@
         </div>
       </div>
 
-      <div class="stat" id="priceMoveCard">
-        <span class="label" data-tip="레버리지를 곱하기 전, 순수하게 가격 자체가 진입가 대비 몇 % 움직였는지예요.">진입가 대비 가격 변동률</span>
+      <div class="stat draggable" id="priceMoveCard">
+        <span class="label" data-tip="레버리지를 곱하기 전, 순수하게 가격 자체가 진입가 대비 몇 % 움직였는지예요. 좌우로 드래그하면 목표가가 자동으로 바뀌어요.">진입가 대비 가격 변동률</span>
         <span class="value" id="rPriceMove">–</span>
+        <span class="drag-hint">↔ 드래그해서 목표가 조정</span>
       </div>
       <div class="stat" id="grossPnlCard">
         <span class="label" data-tip="가격이 움직인 만큼 생긴 손익이에요. 아직 수수료를 빼지 않은 금액이라서 'Gross PnL'이라고도 불러요.">가격 변동 손익 (수수료 전)</span>
@@ -691,6 +710,56 @@
 
   ['deposit', 'leverageRange', 'feeRate', 'entryPrice', 'targetPrice'].forEach((id) => $(id).addEventListener('input', calculate));
   calculate();
+
+  // 진입가 대비 가격 변동률 카드를 좌우로 드래그하면 목표가가 자동으로 바뀜
+  function computeMovePct(entryPrice, targetPrice) {
+    if (direction === 'long') return entryPrice > 0 ? (targetPrice / entryPrice - 1) * 100 : 0;
+    return targetPrice > 0 ? (entryPrice / targetPrice - 1) * 100 : 0;
+  }
+
+  function movePctToTargetPrice(entryPrice, movePct) {
+    if (direction === 'long') return entryPrice * (1 + movePct / 100);
+    const denom = 1 + movePct / 100;
+    return denom > 0 ? entryPrice / denom : NaN;
+  }
+
+  const dragCard = $('priceMoveCard');
+  const DRAG_SENSITIVITY = 0.05; // % 변동 / px
+  let dragState = null;
+
+  dragCard.addEventListener('pointerdown', (e) => {
+    if (e.target.closest('.info-btn') || e.target.closest('.tip-box')) return;
+    const entryPrice = parseFloat($('entryPrice').value) || 0;
+    if (entryPrice <= 0) return;
+    dragState = {
+      pointerId: e.pointerId,
+      startX: e.clientX,
+      startPct: computeMovePct(entryPrice, parseFloat($('targetPrice').value) || 0),
+      entryPrice,
+    };
+    dragCard.setPointerCapture(e.pointerId);
+    dragCard.classList.add('dragging');
+    e.preventDefault();
+  });
+
+  dragCard.addEventListener('pointermove', (e) => {
+    if (!dragState || e.pointerId !== dragState.pointerId) return;
+    const movePct = Math.max(-99, dragState.startPct + (e.clientX - dragState.startX) * DRAG_SENSITIVITY);
+    const newTarget = movePctToTargetPrice(dragState.entryPrice, movePct);
+    if (isFinite(newTarget) && newTarget > 0) {
+      $('targetPrice').value = newTarget.toFixed(2);
+      calculate();
+    }
+  });
+
+  function endDrag(e) {
+    if (!dragState || e.pointerId !== dragState.pointerId) return;
+    dragCard.classList.remove('dragging');
+    dragCard.releasePointerCapture(dragState.pointerId);
+    dragState = null;
+  }
+  dragCard.addEventListener('pointerup', endDrag);
+  dragCard.addEventListener('pointercancel', endDrag);
 
   document.querySelectorAll('[data-tip]').forEach((el) => {
     const btn = document.createElement('button');

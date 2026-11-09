@@ -3,783 +3,1794 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>레계시 - 레버리지 보증금 계산기 | 수수료·손익분기점 자동 계산</title>
-<meta name="description" content="레계시는 보증금, 레버리지, 거래 수수료율, 진입가·목표가를 입력하면 포지션 크기, 수수료, 순손익(PnL), ROE, 손익분기점을 자동으로 계산해주는 무료 레버리지 보증금 계산기입니다.">
-<meta name="keywords" content="레계시, 레버리지 보증금 계산기, 레버리지 계산기, 손익분기점 계산기, 코인 레버리지 계산기">
-<meta property="og:title" content="레계시 | 레버리지 보증금 계산기">
-<meta property="og:description" content="수수료 포함 손익과 손익분기점(이득구간)까지 한눈에 계산하는 레버리지 트레이딩 도구, 레계시.">
+<title>주식 물타기 계산기 · 코인 청산 맵 | TradeMath</title>
+<meta name="description" content="주식 물타기 계산기, 평단가 계산기, 코인 청산가·펀딩비 계산기와 실시간 청산 맵. 목표 평단까지 몇 주를 더 사야 하는지, 분할 매수 계획까지 무료로 계산하세요.">
+<meta property="og:title" content="TradeMath · 주식 물타기 계산기 · 코인 청산 맵">
+<meta property="og:description" content="목표 평단까지 필요한 수량, 분할 매수 플래너, 코인 청산가·펀딩비 계산기와 실시간 청산 맵.">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="레계시">
-<meta property="og:image" content="https://yg-rich.github.io/leverage-fee-calculator/assets/og-image.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:url" content="https://yg-rich.github.io/leverage-fee-calculator/">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="레계시 | 레버리지 보증금 계산기">
-<meta name="twitter:description" content="수수료 포함 손익과 손익분기점까지 한눈에 계산하는 무료 레버리지 계산기">
-<meta name="twitter:image" content="https://yg-rich.github.io/leverage-fee-calculator/assets/og-image.png">
-<meta name="application-name" content="레계시">
-<meta name="apple-mobile-web-app-title" content="레계시">
-<meta name="theme-color" content="#b8742a">
-<meta name="robots" content="index, follow">
-<meta name="google-site-verification" content="sZMXdHBrm5QPgx7P8StA2u9sftCW36DvU3SZlxO-6q0" />
-<link rel="canonical" href="https://yg-rich.github.io/leverage-fee-calculator/">
-<link rel="icon" href="/leverage-fee-calculator/assets/favicon.ico" sizes="any">
-<link rel="icon" href="/leverage-fee-calculator/assets/favicon-32.png" sizes="32x32" type="image/png">
-<link rel="icon" href="/leverage-fee-calculator/assets/favicon-192.png" sizes="192x192" type="image/png">
-<link rel="apple-touch-icon" href="/leverage-fee-calculator/assets/apple-touch-icon.png">
-<link rel="manifest" href="/leverage-fee-calculator/site.webmanifest">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap">
-<link rel="stylesheet" href="styles.css">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "레계시",
-  "alternateName": ["레버리지 보증금 계산기", "leverage-fee-calculator"],
-  "url": "https://yg-rich.github.io/leverage-fee-calculator/",
-  "description": "보증금, 레버리지, 거래 수수료율, 진입가·목표가를 입력하면 포지션 크기, 수수료, 순손익(PnL), ROE, 손익분기점을 자동으로 계산해주는 무료 계산기.",
-  "applicationCategory": "FinanceApplication",
-  "operatingSystem": "Any",
-  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
-}
-</script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23C6F432'/%3E%3Ctext x='32' y='42' font-family='Arial' font-weight='900' font-size='26' text-anchor='middle' fill='%230A0D04'%3ETM%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800&family=Black+Han+Sans&family=Onest:wght@400;500;600;700&family=Gothic+A1:wght@400;500;600;700;800;900&display=swap">
 <style>
-  :root {
-    --paper: #f2f2f0;
-    --surface: #ffffff;
-    --surface-2: #f6f6f4;
-    --border: #dedcd6;
-    --ink: #1c1c1a;
-    --ink-muted: #6b6a63;
-    --accent: #b8742a;
-    --accent-ink: #8f5a1f;
-    --accent-soft: #f6ead7;
-    --good: #2f8f5b;
-    --good-soft: #e4f4ea;
-    --bad: #c0483f;
-    --bad-soft: #fbe8e6;
-    --shadow: 0 1px 2px rgba(28, 28, 26, 0.04), 0 10px 28px -14px rgba(28, 28, 26, 0.18);
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --paper: #171613;
-      --surface: #201f1b;
-      --surface-2: #262420;
-      --border: #38352e;
-      --ink: #f1efe9;
-      --ink-muted: #a6a294;
-      --accent: #d9954a;
-      --accent-ink: #eab06c;
-      --accent-soft: #372a17;
-      --good: #4fbf85;
-      --good-soft: #1a3325;
-      --bad: #e0776e;
-      --bad-soft: #3a201d;
-      --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 10px 28px -14px rgba(0, 0, 0, 0.6);
-    }
-  }
-
-  :root[data-theme="dark"] {
-    --paper: #171613;
-    --surface: #201f1b;
-    --surface-2: #262420;
-    --border: #38352e;
-    --ink: #f1efe9;
-    --ink-muted: #a6a29d;
-    --accent: #d9954a;
-    --accent-ink: #eab06c;
-    --accent-soft: #372a17;
-    --good: #4fbf85;
-    --good-soft: #1a3325;
-    --bad: #e0776e;
-    --bad-soft: #3a201d;
-    --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 10px 28px -14px rgba(0, 0, 0, 0.6);
-  }
-
-  * { box-sizing: border-box; }
-
-  html { background: #f2f2f0; }
-
-  body {
-    background: var(--paper);
-    color: var(--ink);
-    font-family: "Manrope", "Malgun Gothic", system-ui, sans-serif;
-    padding-inline: 20px;
-    padding-block: 44px;
-    display: flex;
-    justify-content: center;
-    margin: 0;
-  }
-
-  .page {
-    width: 100%;
-    max-width: 560px;
-    display: flex;
-    flex-direction: column;
-    gap: 22px;
-  }
-
-  header {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    text-align: center;
-  }
-
-  .eyebrow {
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    font-size: 11.5px;
-    font-weight: 700;
-    color: var(--accent-ink);
-  }
-
-  h1 {
-    margin: 0;
-    font-size: clamp(22px, 5vw, 27px);
-    font-weight: 800;
-    letter-spacing: -0.01em;
-    text-wrap: balance;
-  }
-
-  .subtitle {
-    margin: 0;
-    color: var(--ink-muted);
-    font-size: 13.5px;
-    line-height: 1.5;
-  }
-
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    box-shadow: var(--shadow);
-    padding: 24px;
-  }
-
-  .field { display: flex; flex-direction: column; gap: 7px; margin-bottom: 18px; }
-  .field:last-child { margin-bottom: 0; }
-
-  label {
-    font-size: 12.5px;
-    font-weight: 700;
-    color: var(--ink-muted);
-  }
-
-  label[data-tip], .label[data-tip] {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .info-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 16px;
-    height: 16px;
-    flex-shrink: 0;
-    border: none;
-    border-radius: 50%;
-    background: var(--accent-soft);
-    color: var(--accent-ink);
-    font-size: 10px;
-    font-weight: 800;
-    line-height: 1;
-    padding: 0;
-    cursor: pointer;
-  }
-
-  .info-btn:hover, .info-btn.active {
-    background: var(--accent);
-    color: var(--surface);
-  }
-
-  .info-btn:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
-
-  .tip-box {
-    font-size: 12px;
-    line-height: 1.55;
-    color: var(--ink);
-    background: var(--surface-2);
-    border: 1px solid var(--border);
-    border-left: 3px solid var(--accent);
-    border-radius: 8px;
-    padding: 10px 12px;
-    font-weight: 400;
-  }
-
-  .input-wrap { position: relative; display: flex; align-items: center; }
-
-  input[type="number"] {
-    width: 100%;
-    background: var(--surface-2);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 12px 46px 12px 14px;
-    font-family: "Space Grotesk", sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--ink);
-    font-variant-numeric: tabular-nums;
-  }
-
-  input[type="number"]:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 1px;
-  }
-
-  .input-wrap .suffix {
-    position: absolute;
-    right: 14px;
-    font-size: 12.5px;
-    font-weight: 600;
-    color: var(--ink-muted);
-    pointer-events: none;
-  }
-
-  .lev-row {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
-
-  input[type="range"] {
-    flex: 1;
-    accent-color: var(--accent);
-  }
-
-  .lev-badge {
-    min-width: 56px;
-    text-align: center;
-    background: var(--accent-soft);
-    color: var(--accent-ink);
-    border-radius: 8px;
-    padding: 8px 0;
-    font-family: "Space Grotesk", sans-serif;
-    font-weight: 700;
-    font-size: 14px;
-  }
-
-  .divider { height: 1px; background: var(--border); margin: 20px 0; }
-
-  .dir-toggle {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-  }
-
-  .dir-btn {
-    border: 1px solid var(--border);
-    background: var(--surface-2);
-    border-radius: 10px;
-    padding: 10px 0;
-    font-family: inherit;
-    font-size: 13.5px;
-    font-weight: 700;
-    color: var(--ink-muted);
-    cursor: pointer;
-  }
-
-  .dir-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
-
-  .dir-btn[data-active="true"][data-dir="long"] {
-    background: var(--good-soft);
-    border-color: var(--good);
-    color: var(--good);
-  }
-
-  .dir-btn[data-active="true"][data-dir="short"] {
-    background: var(--bad-soft);
-    border-color: var(--bad);
-    color: var(--bad);
-  }
-
-  .section-label {
-    font-size: 11.5px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--ink-muted);
-    margin: 4px 0 2px;
-  }
-
-  .zone-track {
-    position: relative;
-    height: 14px;
-    border-radius: 999px;
-    overflow: hidden;
-    background: var(--border);
-    margin-top: 12px;
-    display: flex;
-  }
-
-  .zone-loss { background: var(--bad-soft); flex: none; height: 100%; }
-  .zone-profit { background: var(--good-soft); flex: none; height: 100%; }
-
-  .zone-marker {
-    position: absolute;
-    top: 50%;
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    border: 2px solid var(--surface);
-    box-shadow: 0 0 0 1px var(--ink);
-  }
-
-  .zone-caption {
-    display: flex;
-    justify-content: space-between;
-    font-size: 11px;
-    color: var(--ink-muted);
-    margin-top: 8px;
-    font-family: "Space Grotesk", sans-serif;
-  }
-
-  .zone-caption b { color: var(--ink); font-weight: 600; }
-
-  .status-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 3px 10px;
-    border-radius: 999px;
-    font-size: 12px;
-    font-weight: 700;
-  }
-
-  .status-badge.good { background: var(--good-soft); color: var(--good); }
-  .status-badge.bad { background: var(--bad-soft); color: var(--bad); }
-
-  .result-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-  }
-
-  @media (max-width: 420px) {
-    .result-grid { grid-template-columns: 1fr; }
-  }
-
-  .stat {
-    background: var(--surface-2);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 14px 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .stat .label { font-size: 11.5px; font-weight: 700; color: var(--ink-muted); }
-  .stat .value {
-    font-family: "Space Grotesk", sans-serif;
-    font-size: 19px;
-    font-weight: 700;
-    font-variant-numeric: tabular-nums;
-    letter-spacing: -0.01em;
-  }
-
-  .stat.wide { grid-column: 1 / -1; }
-  .stat.hero {
-    background: var(--accent-soft);
-    border-color: var(--accent);
-  }
-  .stat.hero .label { color: var(--accent-ink); }
-  .stat.hero .value { color: var(--accent-ink); font-size: 24px; }
-
-  .stat.good .value { color: var(--good); }
-  .stat.bad .value { color: var(--bad); }
-
-  .stat.draggable {
-    cursor: ew-resize;
-    user-select: none;
-    touch-action: none;
-    transition: background 0.12s ease, border-color 0.12s ease;
-  }
-
-  .stat.draggable.dragging {
-    background: var(--accent-soft);
-    border-color: var(--accent);
-  }
-
-  .drag-hint {
-    font-size: 10.5px;
-    color: var(--ink-muted);
-    opacity: 0.75;
-  }
-
-  .bar-track {
-    margin-top: 8px;
-    height: 8px;
-    border-radius: 999px;
-    background: var(--border);
-    overflow: hidden;
-  }
-
-  .bar-fill {
-    height: 100%;
-    border-radius: 999px;
-    background: var(--accent);
-    width: 0%;
-    transition: width 0.2s ease;
-  }
-
-  .bar-caption {
-    display: flex;
-    justify-content: space-between;
-    font-size: 11px;
-    color: var(--ink-muted);
-    margin-top: 6px;
-  }
-
-  footer.note {
-    font-size: 11.5px;
-    color: var(--ink-muted);
-    text-align: center;
-    line-height: 1.6;
-  }
+body{margin:0;background:#07090D}
+*{box-sizing:border-box}
+::selection{background:#C6F432;color:#0A0D04}
+a{color:#C6F432;text-decoration:none}a:hover{color:#E2FF7A}
+button{font:inherit}
+button:focus-visible,a:focus-visible{outline:2px solid #C6F432;outline-offset:3px}
+.fh{font-family:var(--fh,'Hahmlet',serif);font-weight:var(--hw,800);font-synthesis:none}
+.fb{font-family:var(--fb,'IBM Plex Sans KR',system-ui,sans-serif)}
+.fn{font-family:var(--fn,'JetBrains Mono',monospace);font-variant-numeric:tabular-nums lining-nums;font-synthesis:none}
+.field{transition:border-color .2s, box-shadow .2s}
+.field:focus-within{border-color:#C6F432 !important;box-shadow:0 0 0 3px rgba(198,244,50,.18)}
+.field input:focus{outline:none}
+summary{list-style:none}summary::-webkit-details-marker{display:none}
+details[open] summary .plus{transform:rotate(45deg)}
+.plus{transition:transform .25s}
+.grip{cursor:ew-resize;touch-action:none;user-select:none;transition:background .2s,color .2s}
+.grip:hover,.grip.dragging{background:#141A23;color:#C6F432 !important}
+.field.flash{border-color:#C6F432 !important}
+.card{transition:transform .35s cubic-bezier(.2,.8,.2,1), border-color .35s, background .35s}
+.card:hover{transform:translateY(-6px);border-color:#C6F432 !important;background:#11161E !important}
+.card:hover .arrow{background:#C6F432 !important;color:#0A0D04 !important;transform:rotate(-45deg)}
+.arrow{transition:transform .35s, background .35s, color .35s}
+.navlink:hover{background:#141A23 !important}
+.cta{transition:transform .2s, box-shadow .2s}
+.cta:hover{transform:translateY(-2px);box-shadow:0 10px 30px -10px rgba(198,244,50,.6)}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+.marq:hover{animation-play-state:paused}
+.rise{animation:rise .9s cubic-bezier(.2,.8,.2,1) both}
+@media (prefers-reduced-motion: reduce){.rise,.marq,.blink{animation:none !important}}
 </style>
 </head>
 <body>
+<div id="app"></div>
+<template id="tpl">
+<div class="fb" style="--fh: {{fh}}; --fb: {{fb}}; --fn: {{fn}}; --hw: {{hw}}; min-height: 100vh; background: #07090D; color: #EEF1F4; line-height: 1.55; overflow: hidden">
 
-<div class="page">
-  <nav class="site-nav">
-    <a class="brand" href="/leverage-fee-calculator/">레계시<span class="dot">.</span></a>
-    <div class="links">
-      <a href="/leverage-fee-calculator/" aria-current="page">계산기</a>
-      <a href="/leverage-fee-calculator/guides/">가이드</a>
-      <a href="/leverage-fee-calculator/support.html">후원</a>
-      <a href="/leverage-fee-calculator/about.html">소개</a>
-    </div>
-  </nav>
-
-  <header>
-    <div class="eyebrow">레계시</div>
-    <h1>레버리지 보증금 계산기</h1>
-    <p class="subtitle">보증금과 레버리지, 수수료율에 진입가·목표가까지 넣으면 수수료 포함 손익과 이득구간이 바로 나와요.</p>
-  </header>
-
-  <div class="card">
-    <div class="field">
-      <label for="deposit" data-tip="레버리지를 곱하기 전, 내가 실제로 계좌에 넣는 원금(증거금)이에요.">보증금</label>
-      <div class="input-wrap">
-        <input type="number" id="deposit" value="1000" min="0" step="10">
-        <span class="suffix">USDT</span>
-      </div>
-    </div>
-
-    <div class="field">
-      <label for="leverage" data-tip="보증금을 몇 배로 키워서 거래할지 정하는 배수예요. 예) 5배면 포지션 크기가 보증금의 5배가 돼요.">레버리지 배율</label>
-      <div class="lev-row">
-        <input type="range" id="leverageRange" min="1" max="50" step="1" value="5">
-        <div class="lev-badge"><span id="leverageValue">5</span>배</div>
-      </div>
-    </div>
-
-    <div class="field">
-      <label for="feeRate" data-tip="포지션을 열 때(진입)와 닫을 때(청산) 각각 부과되는 수수료 비율이에요. 한 번의 거래에 두 번 나가는 비용이라고 생각하면 돼요. (참고: 바이낸스 선물 테이커 약 0.05%)">거래 수수료율 (진입·청산 각각)</label>
-      <div class="input-wrap">
-        <input type="number" id="feeRate" value="0.05" min="0" step="0.01">
-        <span class="suffix">%</span>
-      </div>
-    </div>
-
-    <div class="divider"></div>
-
-    <div class="field">
-      <label>포지션 방향</label>
-      <div class="dir-toggle" role="group" aria-label="포지션 방향">
-        <button type="button" class="dir-btn" data-dir="long" data-active="true" id="btnLong">롱 (Long)</button>
-        <button type="button" class="dir-btn" data-dir="short" data-active="false" id="btnShort">숏 (Short)</button>
-      </div>
-    </div>
-
-    <div class="field">
-      <label for="entryPrice" data-tip="포지션에 처음 들어갈 때(매수/매도 시작 시점)의 가격이에요.">진입가</label>
-      <div class="input-wrap">
-        <input type="number" id="entryPrice" value="65000" min="0" step="0.01">
-      </div>
-    </div>
-
-    <div class="field">
-      <label for="targetPrice" data-tip="지금 가격이나 팔 것으로 예상하는 목표 가격이에요. 이 가격을 기준으로 손익을 계산해요.">목표가 (현재가)</label>
-      <div class="input-wrap">
-        <input type="number" id="targetPrice" value="66500" min="0" step="0.01">
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="section-label">포지션 &amp; 수수료</div>
-    <div class="result-grid">
-      <div class="stat">
-        <span class="label" data-tip="실제로 시장에서 움직이는 총 금액이에요. 포지션 크기 = 보증금 × 레버리지.">포지션 크기</span>
-        <span class="value" id="rPosition">–</span>
-      </div>
-      <div class="stat">
-        <span class="label" data-tip="보증금에서 진입 수수료만 뺀 금액이에요. 포지션이 열린 직후, 아직 청산 수수료는 내기 전 기준이에요.">순 보증금 (진입 수수료 차감 후)</span>
-        <span class="value" id="rNetDeposit">–</span>
-      </div>
-      <div class="stat hero wide">
-        <span class="label" data-tip="포지션을 열 때 한 번 내는 수수료예요. 포지션 크기 × 수수료율로 계산돼요.">진입 수수료</span>
-        <span class="value" id="rFee">–</span>
-        <div class="bar-track"><div class="bar-fill" id="feeBar"></div></div>
-        <div class="bar-caption">
-          <span>보증금 대비</span>
-          <span id="rFeeRatio">–</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="divider"></div>
-
-    <div class="section-label">손익분기점 &amp; 이득구간</div>
-    <div class="result-grid">
-      <div class="stat">
-        <span class="label" data-tip="이 가격에 도달하면 수수료를 다 내고도 손익이 정확히 0이 되는 지점이에요. 이보다 더 유리한 방향으로 가야 진짜 이득 구간이 시작돼요.">손익분기가</span>
-        <span class="value" id="rBreakeven">–</span>
-      </div>
-      <div class="stat">
-        <span class="label" data-tip="진입가에서 손익분기가까지 가격이 몇 % 움직여야 본전(손익 0)이 되는지 보여줘요.">손익분기까지 필요한 변동률</span>
-        <span class="value" id="rBreakevenMove">–</span>
-      </div>
-
-      <div class="stat wide">
-        <span class="label">목표가 기준 상태 <span id="zoneStatus" class="status-badge good">이득구간</span></span>
-        <div class="zone-track">
-          <div class="zone-loss" id="zoneLoss"></div>
-          <div class="zone-profit" id="zoneProfit"></div>
-          <div class="zone-marker" id="zoneMarker"></div>
-        </div>
-        <div class="zone-caption">
-          <span>진입 <b id="capEntry">–</b></span>
-          <span>손익분기 <b id="capBreakeven">–</b></span>
-          <span>목표가 <b id="capTarget">–</b></span>
-        </div>
-      </div>
-
-      <div class="stat draggable" id="priceMoveCard">
-        <span class="label" data-tip="레버리지를 곱하기 전, 순수하게 가격 자체가 진입가 대비 몇 % 움직였는지예요. 좌우로 드래그하면 목표가가 자동으로 바뀌어요.">진입가 대비 가격 변동률</span>
-        <span class="value" id="rPriceMove">–</span>
-        <span class="drag-hint">↔ 드래그해서 목표가 조정</span>
-      </div>
-      <div class="stat" id="grossPnlCard">
-        <span class="label" data-tip="가격이 움직인 만큼 생긴 손익이에요. 아직 수수료를 빼지 않은 금액이라서 'Gross PnL'이라고도 불러요.">가격 변동 손익 (수수료 전)</span>
-        <span class="value" id="rGrossPnl">–</span>
-      </div>
-      <div class="stat">
-        <span class="label" data-tip="포지션을 열 때 낸 수수료와 닫을 때 낼 수수료를 합친 금액이에요.">총 수수료 (진입+청산)</span>
-        <span class="value" id="rTotalFee">–</span>
-      </div>
-      <div class="stat" id="pnlCard">
-        <span class="label" data-tip="가격 변동 손익에서 총 수수료를 뺀, 실제로 내 손에 남는 손익이에요. 흔히 'Net PnL'이라고 불러요.">순손익 (수수료 반영 후)</span>
-        <span class="value" id="rNetPnl">–</span>
-      </div>
-      <div class="stat wide" id="roeCard">
-        <span class="label" data-tip="순손익 ÷ 보증금 × 100. 내가 실제로 넣은 돈 대비 몇 % 벌었는지예요. 레버리지 때문에 가격 변동률보다 훨씬 크게 움직여요.">ROE (보증금 대비 최종 수익률)</span>
-        <span class="value" id="rRoe">–</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="ad-slot">광고 영역</div>
-
-  <footer class="site-footer">
-    <div class="footer-links">
-      <a href="/leverage-fee-calculator/about.html">소개</a>
-      <a href="/leverage-fee-calculator/privacy.html">개인정보처리방침</a>
-      <a href="/leverage-fee-calculator/terms.html">이용약관</a>
-      <a href="/leverage-fee-calculator/support.html">후원하기</a>
-      <a href="https://github.com/YG-RICH/leverage-fee-calculator/issues" target="_blank" rel="noopener">문의</a>
-    </div>
-    <div class="copyright">계산 결과는 참고용이며 투자 조언이 아닙니다. © 2026 레계시 · 레버리지 보증금 계산기.</div>
-  </footer>
+<div role="region" aria-label="{{tk.aria}}" style="display: flex; align-items: stretch; border-bottom: 1px solid #1C222C; background: #0B0E13">
+<div class="fn" style="flex: none; display: flex; align-items: center; gap: 8px; padding: 0 16px; border-right: 1px solid #1C222C; background: #07090D; font-size: 12px; letter-spacing: 0.06em; color: #8E99A8; white-space: nowrap">
+<span class="blink" style="width: 7px; height: 7px; border-radius: 50%; background: #C6F432; animation: blink 1.6s ease-in-out infinite"></span>{{tk.label}}
+</div>
+<div style="flex: 1; min-width: 0; overflow: hidden; white-space: nowrap">
+<div class="marq fn" style="display: inline-flex; animation: marquee 50s linear infinite; font-size: 14px">
+<div style="display: inline-flex; align-items: center; gap: 30px; padding: 12px 15px">
+<sc-for list="{{tk.items}}" as="p" hint-placeholder-count="11">
+<span style="display: inline-flex; align-items: baseline; gap: 8px"><span aria-hidden="true" class="fn" style="align-self: center; flex: none; width: 22px; height: 22px; border-radius: 50%; background: {{p.bg}}; color: #0A0D04; display: inline-flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 800; letter-spacing: -0.02em; position: relative; overflow: hidden">{{p.ini}}<sc-if value="{{p.hasIcon}}" hint-placeholder-val="{{ false }}"><img src="{{p.icon}}" alt="" onerror="this.remove()" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; background: #0A0D12"></sc-if></span><b style="color: #EEF1F4; font-weight: 700">{{p.sym}}</b><span style="color: #C9D0D8">{{p.price}}</span><span style="color: {{p.color}}; font-weight: 700">{{p.chg}}</span><span style="color: #3A4352">/</span></span>
+</sc-for>
+</div>
+<div aria-hidden="true" style="display: inline-flex; align-items: center; gap: 30px; padding: 12px 15px">
+<sc-for list="{{tk.items}}" as="p" hint-placeholder-count="11">
+<span style="display: inline-flex; align-items: baseline; gap: 8px"><span aria-hidden="true" class="fn" style="align-self: center; flex: none; width: 22px; height: 22px; border-radius: 50%; background: {{p.bg}}; color: #0A0D04; display: inline-flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 800; letter-spacing: -0.02em; position: relative; overflow: hidden">{{p.ini}}<sc-if value="{{p.hasIcon}}" hint-placeholder-val="{{ false }}"><img src="{{p.icon}}" alt="" onerror="this.remove()" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; background: #0A0D12"></sc-if></span><b style="color: #EEF1F4; font-weight: 700">{{p.sym}}</b><span style="color: #C9D0D8">{{p.price}}</span><span style="color: {{p.color}}; font-weight: 700">{{p.chg}}</span><span style="color: #3A4352">/</span></span>
+</sc-for>
+</div>
+</div>
+</div>
 </div>
 
+<header style="position: relative; z-index: 2; border-bottom: 1px solid #1C222C; background: rgba(7,9,13,0.85)">
+<div style="max-width: 1240px; margin: 0 auto; padding: 14px 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px">
+<button type="button" onClick="{{goHome}}" style="display: flex; align-items: center; gap: 12px; padding: 0; border: 0; background: transparent; color: #EEF1F4; cursor: pointer">
+<span class="fn" style="width: 36px; height: 36px; border-radius: 9px; background: #C6F432; color: #0A0D04; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; letter-spacing: -0.04em">TM</span>
+<span class="fh" style="font-size: 21px; letter-spacing: -0.02em">{{t.brand}}</span>
+</button>
+<nav aria-label="Main" style="display: flex; flex-wrap: wrap; align-items: center; gap: 2px">
+<button type="button" class="navlink" onClick="{{goTools}}" style="min-height: 44px; padding: 0 14px; border: 0; border-radius: 999px; background: transparent; color: #C9D0D8; font-size: 15px; cursor: pointer">{{t.navTools}}</button>
+<button type="button" class="navlink" onClick="{{goReport}}" style="min-height: 44px; padding: 0 14px; border: 0; border-radius: 999px; background: transparent; color: #C9D0D8; font-size: 15px; cursor: pointer">{{t.navReport}}</button>
+<button type="button" class="navlink" onClick="{{goLiq}}" style="min-height: 44px; padding: 0 14px; border: 0; border-radius: 999px; background: transparent; color: #C9D0D8; font-size: 15px; cursor: pointer">{{t.navLiq}}</button>
+<button type="button" class="navlink" onClick="{{goInd}}" style="min-height: 44px; padding: 0 14px; border: 0; border-radius: 999px; background: transparent; color: #C9D0D8; font-size: 15px; cursor: pointer">{{t.navInd}}</button>
+<div role="group" aria-label="Language" style="margin-left: 6px; display: flex; padding: 3px; gap: 2px; border-radius: 999px; border: 1px solid #252D39">
+<button type="button" onClick="{{setKo}}" aria-pressed="{{koPressed}}" class="fn" style="min-height: 38px; min-width: 44px; padding: 0 12px; border: 0; border-radius: 999px; background: {{koBg}}; color: {{koFg}}; font-size: 13px; font-weight: 700; cursor: pointer">KO</button>
+<button type="button" onClick="{{setEn}}" aria-pressed="{{enPressed}}" class="fn" style="min-height: 38px; min-width: 44px; padding: 0 12px; border: 0; border-radius: 999px; background: {{enBg}}; color: {{enFg}}; font-size: 13px; font-weight: 700; cursor: pointer">EN</button>
+</div>
+<button type="button" class="cta" onClick="{{goHome}}" style="margin-left: 6px; min-height: 44px; padding: 0 20px; border: 0; border-radius: 999px; background: #C6F432; color: #0A0D04; font-weight: 700; font-size: 15px; cursor: pointer">{{t.cta}}</button>
+</nav>
+</div>
+</header>
+
+<main id="top">
+<section style="position: relative; background-color: #07090D; background-image: radial-gradient(circle at 1px 1px, rgba(238,241,244,0.07) 1px, transparent 0), radial-gradient(ellipse 60% 55% at 85% 20%, rgba(198,244,50,0.10), transparent 70%); background-size: 28px 28px, 100% 100%">
+<div style="max-width: 1240px; margin: 0 auto; padding: 80px 24px 96px; display: flex; flex-wrap: wrap; gap: 56px; align-items: flex-start">
+
+<div style="flex: 1 1 440px; min-width: 0; display: flex; flex-direction: column; gap: 26px; padding-top: 8px">
+<sc-if value="{{isHome}}" hint-placeholder-val="{{ true }}">
+<p class="rise fn" style="margin: 0; display: inline-flex; align-items: center; gap: 10px; font-size: 13px; letter-spacing: 0.1em; color: #C6F432">
+<span class="blink" style="width: 8px; height: 8px; border-radius: 50%; background: #C6F432; animation: blink 1.6s ease-in-out infinite"></span>{{t.eyebrow}}</p>
+<h1 class="rise fh" style="margin: 0; font-size: 66px; line-height: 1.12; letter-spacing: -0.035em; text-wrap: balance; animation-delay: .08s">{{t.h1a}}<br>{{t.h1b}}<br>{{t.h1c}}<br><span style="position: relative; color: #C6F432">{{t.h1acc}}<svg width="100%" height="14" viewBox="0 0 200 14" preserveAspectRatio="none" aria-hidden="true" style="position: absolute; left: 0; bottom: -8px"><path d="M2 10 C 50 2, 120 2, 198 8" fill="none" stroke="#C6F432" stroke-width="4" stroke-linecap="round"></path></svg></span>{{t.h1tail}}</h1>
+<p class="rise" style="margin: 0; font-size: 18px; color: #A9B3BF; max-width: 480px; text-wrap: pretty; animation-delay: .16s">{{t.sub}}</p>
+<div class="rise" style="display: flex; flex-wrap: wrap; gap: 10px; animation-delay: .24s">
+<sc-for list="{{t.chips}}" as="c" hint-placeholder-count="3">
+<span class="fn" style="padding: 8px 14px; border: 1px solid #252D39; border-radius: 999px; font-size: 13px; color: #C9D0D8">{{c}}</span>
+</sc-for>
+</div>
+<div class="rise" style="display: flex; flex-wrap: wrap; align-items: center; gap: 18px; animation-delay: .32s">
+<button type="button" class="cta" onClick="{{goTools}}" style="min-height: 52px; padding: 0 26px; display: inline-flex; align-items: center; gap: 10px; border: 0; border-radius: 999px; background: #C6F432; color: #0A0D04; font-weight: 700; font-size: 16px; cursor: pointer">{{t.heroCta}}<span aria-hidden="true">→</span></button>
+<button type="button" onClick="{{goReport}}" style="padding: 0 0 2px; border: 0; border-bottom: 1px solid #3A4352; background: transparent; font-size: 15px; font-weight: 600; color: #EEF1F4; cursor: pointer">{{t.heroLink}}</button>
+</div>
+</sc-if>
+<sc-if value="{{isDetail}}" hint-placeholder-val="{{ false }}">
+<button type="button" onClick="{{goHome}}" class="fn" style="align-self: flex-start; min-height: 40px; padding: 0 14px; border: 1px solid #252D39; border-radius: 999px; background: transparent; color: #C9D0D8; font-size: 13px; cursor: pointer">{{t.back}}</button>
+<p class="fn" style="margin: 0; font-size: 13px; letter-spacing: 0.12em; color: #C6F432">{{calc.num}} · {{calc.code}}</p>
+<h1 class="fh" style="margin: 0; font-size: 56px; line-height: 1.12; letter-spacing: -0.035em; text-wrap: balance">{{calc.title}}</h1>
+<p style="margin: 0; font-size: 18px; color: #A9B3BF; max-width: 500px; text-wrap: pretty">{{calc.desc}}</p>
+<div style="display: flex; flex-direction: column; gap: 10px; padding: 22px 24px; border-radius: 16px; background: #0B0E13; border: 1px solid #1C222C">
+<span class="fn" style="font-size: 12px; letter-spacing: 0.14em; color: #8E99A8">{{t.howTitle}}</span>
+<sc-for list="{{calc.formula}}" as="line" hint-placeholder-count="2">
+<p class="fn" style="margin: 0; font-size: 14px; color: #EEF1F4">{{line}}</p>
+</sc-for>
+</div>
+</sc-if>
+</div>
+
+<div class="rise" style="flex: 1 1 560px; min-width: 0; position: relative; animation-delay: .2s">
+<div aria-hidden="true" style="position: absolute; inset: 24px -18px -18px 24px; border: 1px solid #1C222C; border-radius: 26px"></div>
+<div style="position: relative; background: linear-gradient(180deg, #121821 0%, #0C1016 100%); border: 1px solid #252D39; border-radius: 24px; padding: 28px; display: flex; flex-direction: column; gap: 22px; box-shadow: 0 40px 80px -30px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.05)">
+
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<span class="fn" style="font-size: 12px; letter-spacing: 0.14em; color: #8E99A8">{{calc.code}}</span>
+<h2 class="fh" style="margin: 0; font-size: 24px; letter-spacing: -0.02em">{{calc.title}}</h2>
+</div>
+<sc-if value="{{calc.hasSide}}" hint-placeholder-val="{{ true }}">
+<div role="group" aria-label="{{t.sideLabel}}" style="display: flex; padding: 4px; gap: 4px; border-radius: 999px; background: #07090D; border: 1px solid #252D39">
+<button type="button" onClick="{{pickLong}}" aria-pressed="{{longPressed}}" style="min-height: 44px; min-width: 76px; padding: 0 18px; border-radius: 999px; border: 0; background: {{longBg}}; color: {{longFg}}; font-weight: 700; cursor: pointer">{{t.long}}</button>
+<button type="button" onClick="{{pickShort}}" aria-pressed="{{shortPressed}}" style="min-height: 44px; min-width: 76px; padding: 0 18px; border-radius: 999px; border: 0; background: {{shortBg}}; color: {{shortFg}}; font-weight: 700; cursor: pointer">{{t.short}}</button>
+</div>
+</sc-if>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; gap: 12px">
+<sc-for list="{{calc.fields}}" as="fd" hint-placeholder-count="6">
+<label style="flex: 1 1 210px; display: flex; flex-direction: column; gap: 6px; font-size: 13px; color: #8E99A8">{{fd.label}}
+<span class="field" data-scrub-key="{{fd.key}}" title="{{t.scrubTip}}" style="display: flex; align-items: center; gap: 8px; min-height: 50px; padding: 0 14px 0 6px; border-radius: 12px; border: 1px solid #252D39; background: #07090D">
+<span class="grip" data-drag-key="{{fd.key}}" aria-hidden="true" style="flex: none; width: 30px; height: 38px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #5A6575"><svg width="18" height="12" viewBox="0 0 18 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2L1 6l4 4"></path><path d="M13 2l4 4-4 4"></path><path d="M7 6h4"></path></svg></span>
+<input class="fn" type="text" inputmode="decimal" value="{{fd.value}}" onChange="{{fd.onChange}}" onKeyDown="{{fd.onKeyDown}}" aria-describedby="scrub-hint" style="flex: 1; min-width: 0; border: 0; background: transparent; color: #EEF1F4; font-size: 18px; font-weight: 700">
+<span class="fn" style="font-size: 12px; color: #8E99A8">{{fd.unit}}</span>
+</span>
+</label>
+</sc-for>
+</div>
+<p id="scrub-hint" style="margin: -8px 0 0; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; font-size: 12px; color: #8E99A8">
+<span style="display: inline-flex; align-items: center; gap: 6px"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#C6F432" stroke-width="1.6" aria-hidden="true"><rect x="3.5" y="1" width="7" height="12" rx="3.5"></rect><path d="M7 3.5v2"></path></svg>{{t.hintWheel}}</span>
+<span style="display: inline-flex; align-items: center; gap: 6px"><svg width="16" height="10" viewBox="0 0 18 12" fill="none" stroke="#C6F432" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 2L1 6l4 4"></path><path d="M13 2l4 4-4 4"></path></svg>{{t.hintDrag}}</span>
+<span>{{t.hintKeys}}</span>
+</p>
+
+<sc-if value="{{res.hasError}}" hint-placeholder-val="{{ false }}">
+<p role="alert" style="margin: 0; padding: 12px 16px; border-radius: 12px; background: rgba(255,138,76,0.08); border: 1px solid rgba(255,138,76,0.5); color: #FF9F6B; font-size: 14px">{{res.error}}</p>
+</sc-if>
+
+<sc-if value="{{res.ok}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-wrap: wrap; gap: 12px">
+<div style="flex: 2 1 260px; padding: 18px 20px; border-radius: 16px; background: #C6F432; color: #0A0D04; display: flex; flex-direction: column; gap: 2px">
+<span style="font-size: 13px; font-weight: 600">{{res.p.label}}</span>
+<span class="fn" style="font-size: 34px; line-height: 1.15; font-weight: 700; letter-spacing: -0.03em; overflow-wrap: anywhere">{{res.p.value}}</span>
+<span class="fn" style="font-size: 13px; font-weight: 500">{{res.p.sub}}</span>
+</div>
+<div style="flex: 1 1 160px; padding: 18px 20px; border-radius: 16px; border: 1px solid #252D39; background: #07090D; display: flex; flex-direction: column; gap: 2px">
+<span style="font-size: 13px; color: #8E99A8">{{res.s.label}}</span>
+<span class="fn" style="font-size: 34px; line-height: 1.15; font-weight: 700; letter-spacing: -0.03em; overflow-wrap: anywhere">{{res.s.value}}</span>
+<span class="fn" style="font-size: 13px; color: #8E99A8">{{res.s.sub}}</span>
+</div>
+</div>
+
+<sc-if value="{{viz.hasLadder}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-direction: column; gap: 12px; padding: 18px 20px 16px; border-radius: 16px; border: 1px solid #1C222C; background: #0A0D12">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 12px">
+<span class="fn" style="font-size: 12px; letter-spacing: 0.14em; color: #8E99A8">PRICE LADDER</span>
+<span style="font-size: 12px; color: #8E99A8">{{t.lowHigh}}</span>
+</div>
+<div role="img" aria-label="{{t.ladderAria}}" style="position: relative; height: 44px">
+<div style="position: absolute; left: 0; right: 0; top: 21px; height: 2px; background: #252D39"></div>
+<sc-for list="{{viz.zones}}" as="z" hint-placeholder-count="2">
+<div style="position: absolute; top: 14px; height: 16px; border-radius: 4px; left: {{z.l}}; width: {{z.w}}; background: {{z.color}}"></div>
+</sc-for>
+<sc-for list="{{viz.markers}}" as="mk" hint-placeholder-count="4">
+<div style="position: absolute; border-radius: 2px; left: {{mk.l}}; top: {{mk.top}}; height: {{mk.h}}; width: {{mk.wd}}; margin-left: {{mk.ml}}; background: {{mk.bg}}"></div>
+</sc-for>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px 18px">
+<sc-for list="{{viz.legend}}" as="lg" hint-placeholder-count="4">
+<span style="display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: #A9B3BF">
+<sc-if value="{{lg.dash}}" hint-placeholder-val="{{ false }}"><span style="width: 10px; border-top: 2px dashed #EEF1F4"></span></sc-if>
+<sc-if value="{{lg.solid}}" hint-placeholder-val="{{ true }}"><span style="width: 10px; height: 10px; border-radius: 3px; background: {{lg.color}}"></span></sc-if>
+{{lg.label}} <b class="fn" style="color: {{lg.color}}">{{lg.value}}</b></span>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{viz.hasBars}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 12px; padding: 18px 20px; border-radius: 16px; border: 1px solid #1C222C; background: #0A0D12">
+<span class="fn" style="font-size: 12px; letter-spacing: 0.1em; color: #8E99A8">{{viz.barsTitle}}</span>
+<sc-for list="{{viz.bars}}" as="b" hint-placeholder-count="3">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; justify-content: space-between; gap: 12px; font-size: 13px">
+<span style="color: #A9B3BF">{{b.label}}</span>
+<span class="fn" style="font-weight: 700; color: {{b.color}}">{{b.value}}</span>
+</div>
+<div style="height: 8px; border-radius: 999px; background: #161C25; overflow: hidden">
+<div style="height: 100%; border-radius: 999px; width: {{b.w}}; background: {{b.color}}; transition: width .35s cubic-bezier(.2,.8,.2,1)"></div>
+</div>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{viz.insGood}}" hint-placeholder-val="{{ true }}">
+<p style="margin: 0; display: flex; gap: 10px; align-items: flex-start; font-size: 14px; color: #C6F432"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#C6F432" stroke-width="2" aria-hidden="true" style="flex: none; margin-top: 2px"><path d="M3 9.5l4 4 8-9"></path></svg><span>{{viz.insText}}</span></p>
+</sc-if>
+<sc-if value="{{viz.insWarn}}" hint-placeholder-val="{{ false }}">
+<p role="alert" style="margin: 0; display: flex; gap: 10px; align-items: flex-start; font-size: 14px; color: #FF9F6B"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#FF9F6B" stroke-width="2" aria-hidden="true" style="flex: none; margin-top: 2px"><path d="M9 3l7 12H2z"></path><path d="M9 8v3"></path><path d="M9 13.5v.5"></path></svg><span>{{viz.insText}}</span></p>
+</sc-if>
+<sc-if value="{{viz.insInfo}}" hint-placeholder-val="{{ false }}">
+<p style="margin: 0; display: flex; gap: 10px; align-items: flex-start; font-size: 14px; color: #C9D0D8"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#8E99A8" stroke-width="2" aria-hidden="true" style="flex: none; margin-top: 2px"><circle cx="9" cy="9" r="7"></circle><path d="M9 8v4.5"></path><path d="M9 5.5v.5"></path></svg><span>{{viz.insText}}</span></p>
+</sc-if>
+
+<div style="display: flex; flex-direction: column">
+<sc-for list="{{res.list}}" as="row" hint-placeholder-count="3">
+<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 11px 2px; border-bottom: 1px solid #1C222C">
+<span style="font-size: 14px; color: #A9B3BF">{{row.label}}</span>
+<span class="fn" style="font-size: 16px; font-weight: 700; color: #EEF1F4; text-align: right">{{row.value}}</span>
+</div>
+</sc-for>
+</div>
+</sc-if>
+<p style="margin: 0; font-size: 12px; color: #8E99A8">{{calc.note}}</p>
+</div>
+</div>
+</div>
+</section>
+
+<sc-if value="{{isAvgDown}}" hint-placeholder-val="{{ false }}">
+<section style="max-width: 1240px; margin: 0 auto; padding: 8px 24px 72px; display: flex; flex-direction: column; gap: 28px">
+<div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px; border-bottom: 1px solid #1C222C; padding-bottom: 24px">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span class="fn" style="font-size: 13px; letter-spacing: 0.12em; color: #C6F432">STRATEGY PLANNER</span>
+<h2 class="fh" style="margin: 0; font-size: 44px; line-height: 1.1; letter-spacing: -0.03em">{{pl.title}}</h2>
+</div>
+<p style="margin: 0; max-width: 520px; font-size: 16px; color: #A9B3BF; text-wrap: pretty">{{pl.desc}}</p>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; gap: 28px; align-items: flex-start">
+<div style="flex: 3 1 620px; min-width: 0; display: flex; flex-direction: column; gap: 20px; padding: 28px; border-radius: 24px; border: 1px solid #252D39; background: linear-gradient(180deg, #121821 0%, #0C1016 100%)">
+<div role="group" aria-label="{{pl.modeLabel}}" style="align-self: flex-start; display: flex; flex-wrap: wrap; padding: 4px; gap: 4px; border-radius: 999px; background: #07090D; border: 1px solid #252D39">
+<button type="button" onClick="{{pl.pickEqual}}" aria-pressed="{{pl.eqPressed}}" style="min-height: 44px; padding: 0 18px; border-radius: 999px; border: 0; background: {{pl.eqBg}}; color: {{pl.eqFg}}; font-weight: 700; cursor: pointer">{{pl.eqLabel}}</button>
+<button type="button" onClick="{{pl.pickPyr}}" aria-pressed="{{pl.pyPressed}}" style="min-height: 44px; padding: 0 18px; border-radius: 999px; border: 0; background: {{pl.pyBg}}; color: {{pl.pyFg}}; font-weight: 700; cursor: pointer">{{pl.pyLabel}}</button>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; gap: 12px">
+<sc-for list="{{pl.fields}}" as="fd" hint-placeholder-count="3">
+<label style="flex: 1 1 180px; display: flex; flex-direction: column; gap: 6px; font-size: 13px; color: #8E99A8">{{fd.label}}
+<span class="field" data-scrub-key="{{fd.key}}" data-scrub-cid="plan" title="{{t.scrubTip}}" style="display: flex; align-items: center; gap: 8px; min-height: 50px; padding: 0 14px 0 6px; border-radius: 12px; border: 1px solid #252D39; background: #07090D">
+<span class="grip" data-drag-key="{{fd.key}}" data-drag-cid="plan" aria-hidden="true" style="flex: none; width: 30px; height: 38px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #5A6575"><svg width="18" height="12" viewBox="0 0 18 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2L1 6l4 4"></path><path d="M13 2l4 4-4 4"></path><path d="M7 6h4"></path></svg></span>
+<input class="fn" type="text" inputmode="decimal" value="{{fd.value}}" onChange="{{fd.onChange}}" onKeyDown="{{fd.onKeyDown}}" style="flex: 1; min-width: 0; border: 0; background: transparent; color: #EEF1F4; font-size: 18px; font-weight: 700">
+<span class="fn" style="font-size: 12px; color: #8E99A8">{{fd.unit}}</span>
+</span>
+</label>
+</sc-for>
+</div>
+
+<sc-if value="{{pl.hasError}}" hint-placeholder-val="{{ false }}">
+<p role="alert" style="margin: 0; padding: 12px 16px; border-radius: 12px; background: rgba(255,138,76,0.08); border: 1px solid rgba(255,138,76,0.5); color: #FF9F6B; font-size: 14px">{{pl.error}}</p>
+</sc-if>
+
+<sc-if value="{{pl.ok}}" hint-placeholder-val="{{ true }}">
+<div style="overflow-x: auto; border-radius: 16px; border: 1px solid #1C222C">
+<div style="min-width: 560px; display: flex; flex-direction: column">
+<div class="fn" style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; padding: 12px 18px; background: #0A0D12; font-size: 12px; letter-spacing: 0.06em; color: #8E99A8">
+<sc-for list="{{pl.head}}" as="h" hint-placeholder-count="5"><span>{{h}}</span></sc-for>
+</div>
+<sc-for list="{{pl.rows}}" as="row" hint-placeholder-count="4">
+<div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; align-items: baseline; padding: 13px 18px; border-top: 1px solid #1C222C; background: {{row.bg}}">
+<span style="display: flex; flex-direction: column"><b style="font-size: 14px">{{row.n}}</b><span class="fn" style="font-size: 12px; color: #8E99A8">{{row.drop}}</span></span>
+<span class="fn" style="font-size: 15px; font-weight: 700">{{row.price}}</span>
+<span class="fn" style="font-size: 15px">{{row.qty}}</span>
+<span class="fn" style="font-size: 15px; color: #C9D0D8">{{row.cost}}</span>
+<span class="fn" style="font-size: 15px; font-weight: 700; color: {{row.avgColor}}">{{row.avg}}</span>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; gap: 10px">
+<sc-for list="{{pl.stats}}" as="st" hint-placeholder-count="4">
+<div style="flex: 1 1 140px; padding: 14px 16px; border-radius: 14px; background: #07090D; border: 1px solid #1C222C; display: flex; flex-direction: column; gap: 2px">
+<span style="font-size: 12px; color: #8E99A8">{{st.label}}</span>
+<span class="fn" style="font-size: 20px; font-weight: 700; color: {{st.color}}">{{st.value}}</span>
+</div>
+</sc-for>
+</div>
+
+<sc-if value="{{pl.good}}" hint-placeholder-val="{{ true }}">
+<p style="margin: 0; display: flex; gap: 10px; align-items: flex-start; font-size: 15px; color: #C6F432"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#C6F432" stroke-width="2" aria-hidden="true" style="flex: none; margin-top: 3px"><path d="M3 9.5l4 4 8-9"></path></svg><span>{{pl.msg}}</span></p>
+</sc-if>
+<sc-if value="{{pl.warn}}" hint-placeholder-val="{{ false }}">
+<p style="margin: 0; display: flex; gap: 10px; align-items: flex-start; font-size: 15px; color: #FF9F6B"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#FF9F6B" stroke-width="2" aria-hidden="true" style="flex: none; margin-top: 3px"><path d="M9 3l7 12H2z"></path><path d="M9 8v3"></path><path d="M9 13.5v.5"></path></svg><span>{{pl.msg}}</span></p>
+</sc-if>
+</sc-if>
+</div>
+
+<aside style="flex: 2 1 340px; min-width: 0; display: flex; flex-direction: column; gap: 14px">
+<span class="fn" style="font-size: 12px; letter-spacing: 0.12em; color: #8E99A8">{{pl.methodsTitle}}</span>
+<sc-for list="{{pl.methods}}" as="m" hint-placeholder-count="3">
+<div style="display: flex; flex-direction: column; gap: 10px; padding: 20px 22px; border-radius: 18px; border: 1px solid {{m.border}}; background: #0B0E13">
+<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px">
+<span class="fh" style="font-size: 20px; letter-spacing: -0.01em">{{m.title}}</span>
+<span class="fn" style="font-size: 12px; color: #8E99A8">{{m.tag}}</span>
+</div>
+<p style="margin: 0; font-size: 14px; color: #C9D0D8; text-wrap: pretty">{{m.body}}</p>
+<div style="display: flex; flex-direction: column; gap: 4px; font-size: 13px">
+<span style="color: #C6F432">+ {{m.pro}}</span>
+<span style="color: #FF9F6B">− {{m.con}}</span>
+</div>
+</div>
+</sc-for>
+<div style="display: flex; flex-direction: column; gap: 12px; padding: 20px 22px; border-radius: 18px; border: 1px dashed #2A3240">
+<span class="fh" style="font-size: 18px">{{pl.checkTitle}}</span>
+<sc-for list="{{pl.checks}}" as="c" hint-placeholder-count="4">
+<span style="display: flex; gap: 10px; font-size: 14px; color: #C9D0D8"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#C6F432" stroke-width="1.8" aria-hidden="true" style="flex: none; margin-top: 3px"><rect x="1.5" y="1.5" width="13" height="13" rx="3"></rect><path d="M4.5 8.3l2.3 2.3 4.7-5"></path></svg>{{c}}</span>
+</sc-for>
+</div>
+<p style="margin: 0; font-size: 12px; color: #8E99A8">{{pl.disclaimer}}</p>
+</aside>
+</div>
+</section>
+</sc-if>
+
+<sc-if value="{{isDetail}}" hint-placeholder-val="{{ false }}">
+<section style="max-width: 1240px; margin: 0 auto; padding: 8px 24px 88px; display: flex; flex-wrap: wrap; gap: 48px">
+<div style="flex: 999 1 600px; min-width: 0; display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; align-items: baseline; gap: 16px">
+<span aria-hidden="true" class="fn" style="font-size: 14px; color: #C6F432">FAQ</span>
+<h2 class="fh" style="margin: 0; font-size: 34px; letter-spacing: -0.02em">{{t.faqTitle}}</h2>
+</div>
+<div style="display: flex; flex-direction: column; border-top: 1px solid #1C222C">
+<sc-for list="{{faq}}" as="qa" hint-placeholder-count="3">
+<details style="border-bottom: 1px solid #1C222C">
+<summary class="fh" style="cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px; min-height: 64px; padding: 16px 0; font-size: 19px; letter-spacing: -0.01em">{{qa.q}}<span class="plus fn" aria-hidden="true" style="flex: none; font-size: 22px; color: #C6F432">+</span></summary>
+<p style="margin: 0 0 20px; max-width: 720px; font-size: 16px; color: #C9D0D8; text-wrap: pretty">{{qa.a}}</p>
+</details>
+</sc-for>
+</div>
+</div>
+<aside style="flex: 1 1 300px; min-width: 0; display: flex; flex-direction: column; gap: 12px">
+<h2 class="fn" style="margin: 0 0 4px; font-size: 12px; letter-spacing: 0.14em; font-weight: 500; color: #8E99A8">{{t.relTitle}}</h2>
+<sc-for list="{{related}}" as="rl" hint-placeholder-count="3">
+<button type="button" class="card" onClick="{{rl.go}}" style="display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 18px 20px; border-radius: 16px; background: #0E1218; border: 1px solid #252D39; color: #EEF1F4; text-align: left; cursor: pointer">
+<span style="display: flex; flex-direction: column; gap: 2px">
+<span class="fh" style="font-size: 18px">{{rl.title}}</span>
+<span style="font-size: 13px; color: #8E99A8">{{rl.card}}</span>
+</span>
+<span aria-hidden="true" style="color: #C6F432">→</span>
+</button>
+</sc-for>
+</aside>
+</section>
+</sc-if>
+
+<div style="max-width: 1240px; margin: 0 auto; padding: 0 24px">
+<div class="fn" style="height: 110px; border: 1px dashed #2A3240; border-radius: 16px; display: flex; align-items: center; justify-content: center; gap: 10px; color: #8E99A8; font-size: 12px; letter-spacing: 0.1em"><span style="padding: 2px 6px; border: 1px solid #2A3240; border-radius: 4px">AD</span>{{t.ad}}</div>
+</div>
+
+<section id="tools" style="max-width: 1240px; margin: 0 auto; padding: 104px 24px 32px; display: flex; flex-direction: column; gap: 40px">
+<div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 20px; border-bottom: 1px solid #1C222C; padding-bottom: 28px">
+<div style="display: flex; align-items: flex-end; gap: 22px">
+<span aria-hidden="true" class="fn" style="font-size: 96px; line-height: 0.8; font-weight: 700; color: transparent; -webkit-text-stroke: 1.5px #3A4352">01</span>
+<h2 class="fh" style="margin: 0; font-size: 48px; line-height: 1.1; letter-spacing: -0.03em">{{t.stockA}}<br>{{t.stockB}}</h2>
+</div>
+<p style="margin: 0; font-size: 16px; color: #A9B3BF; max-width: 340px">{{t.stockDesc}}</p>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 16px">
+<sc-for list="{{stockTools}}" as="c" hint-placeholder-count="4">
+<button type="button" class="card" onClick="{{c.go}}" style="flex: {{c.flex}}; min-height: 230px; display: flex; flex-direction: column; justify-content: space-between; gap: 22px; padding: 26px; border-radius: 22px; background: {{c.bg}}; border: 1px solid {{c.border}}; color: #EEF1F4; text-align: left; cursor: pointer">
+<span style="display: flex; justify-content: space-between; align-items: center; gap: 12px; width: 100%">
+<span class="fn" style="font-size: 13px; color: #8E99A8">{{c.num}} · {{c.code}}</span>
+<span class="arrow" aria-hidden="true" style="width: 42px; height: 42px; flex: none; border-radius: 50%; border: 1px solid #3A4352; display: flex; align-items: center; justify-content: center; color: #EEF1F4; font-size: 17px">→</span>
+</span>
+<span style="display: flex; flex-direction: column; gap: 8px">
+<span class="fh" style="font-size: 24px; letter-spacing: -0.02em">{{c.title}}</span>
+<span style="font-size: 14px; color: #A9B3BF">{{c.card}}</span>
+</span>
+</button>
+</sc-for>
+</div>
+</section>
+
+<section id="coin" style="max-width: 1240px; margin: 0 auto; padding: 88px 24px 32px; display: flex; flex-direction: column; gap: 40px">
+<div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 20px; border-bottom: 1px solid #1C222C; padding-bottom: 28px">
+<div style="display: flex; align-items: flex-end; gap: 22px">
+<span aria-hidden="true" class="fn" style="font-size: 96px; line-height: 0.8; font-weight: 700; color: transparent; -webkit-text-stroke: 1.5px #3A4352">02</span>
+<h2 class="fh" style="margin: 0; font-size: 48px; line-height: 1.1; letter-spacing: -0.03em">{{t.coinA}}<br>{{t.coinB}}</h2>
+</div>
+<p style="margin: 0; font-size: 16px; color: #A9B3BF; max-width: 340px">{{t.coinDesc}}</p>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 16px">
+<sc-for list="{{coinTools}}" as="c" hint-placeholder-count="6">
+<button type="button" class="card" onClick="{{c.go}}" style="flex: {{c.flex}}; min-height: 230px; display: flex; flex-direction: column; justify-content: space-between; gap: 22px; padding: 26px; border-radius: 22px; background: {{c.bg}}; border: 1px solid {{c.border}}; color: #EEF1F4; text-align: left; cursor: pointer">
+<span style="display: flex; justify-content: space-between; align-items: center; gap: 12px; width: 100%">
+<span class="fn" style="font-size: 13px; color: #8E99A8">{{c.num}} · {{c.code}}</span>
+<span class="arrow" aria-hidden="true" style="width: 42px; height: 42px; flex: none; border-radius: 50%; border: 1px solid #3A4352; display: flex; align-items: center; justify-content: center; color: #EEF1F4; font-size: 17px">→</span>
+</span>
+<span style="display: flex; flex-direction: column; gap: 8px">
+<span class="fh" style="font-size: 24px; letter-spacing: -0.02em">{{c.title}}</span>
+<span style="font-size: 14px; color: #A9B3BF">{{c.card}}</span>
+</span>
+</button>
+</sc-for>
+</div>
+</section>
+
+<section id="report" style="max-width: 1240px; margin: 0 auto; padding: 88px 24px 32px; display: flex; flex-direction: column; gap: 40px">
+<div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 20px; border-bottom: 1px solid #1C222C; padding-bottom: 28px">
+<div style="display: flex; align-items: flex-end; gap: 22px">
+<span aria-hidden="true" class="fn" style="font-size: 96px; line-height: 0.8; font-weight: 700; color: transparent; -webkit-text-stroke: 1.5px #3A4352">03</span>
+<h2 class="fh" style="margin: 0; font-size: 48px; line-height: 1.1; letter-spacing: -0.03em">{{t.repA}}<br>{{t.repB}}</h2>
+</div>
+<p class="fn" style="margin: 0; display: inline-flex; align-items: center; gap: 10px; font-size: 13px; color: #A9B3BF"><span style="width: 8px; height: 8px; border-radius: 50%; background: #C6F432"></span>{{rep.stamp}}</p>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-start">
+<article style="flex: 3 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 22px; padding: 34px; border-radius: 22px; border: 1px solid #252D39; background: linear-gradient(160deg, #10151C, #0A0D12)">
+<span class="fn" style="font-size: 13px; color: #C6F432">{{rep.kicker}}</span>
+<h3 class="fh" style="margin: 0; font-size: 34px; line-height: 1.25; letter-spacing: -0.02em; text-wrap: balance">{{rep.title}}</h3>
+
+<div style="display: flex; flex-wrap: wrap; gap: 10px">
+<sc-for list="{{rep.stats}}" as="st" hint-placeholder-count="4">
+<div style="flex: 1 1 130px; padding: 14px 16px; border-radius: 14px; background: #07090D; border: 1px solid #1C222C; display: flex; flex-direction: column; gap: 2px">
+<span style="font-size: 12px; color: #8E99A8">{{st.label}}</span>
+<span class="fn" style="font-size: 22px; font-weight: 700; color: {{st.color}}">{{st.value}}</span>
+</div>
+</sc-for>
+</div>
+
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px">
+<sc-for list="{{rep.points}}" as="pt" hint-placeholder-count="3">
+<li style="display: flex; gap: 12px; font-size: 16px; color: #C9D0D8; text-wrap: pretty"><span aria-hidden="true" style="flex: none; width: 6px; height: 6px; margin-top: 10px; border-radius: 50%; background: #C6F432"></span><span>{{pt}}</span></li>
+</sc-for>
+</ul>
+
+<div style="display: flex; flex-wrap: wrap; gap: 20px">
+<div style="flex: 1 1 260px; min-width: 0; display: flex; flex-direction: column">
+<span class="fn" style="padding-bottom: 10px; font-size: 12px; letter-spacing: 0.08em; color: #C6F432; border-bottom: 1px solid #252D39">{{rep.topTitle}}</span>
+<sc-for list="{{rep.top}}" as="row" hint-placeholder-count="6">
+<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 10px 0; border-bottom: 1px solid #1C222C">
+<span style="display: flex; align-items: center; gap: 10px"><span aria-hidden="true" class="fn" style="align-self: center; flex: none; width: 22px; height: 22px; border-radius: 50%; background: {{row.bg}}; color: #0A0D04; display: inline-flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 800; letter-spacing: -0.02em; position: relative; overflow: hidden">{{row.ini}}<sc-if value="{{row.hasIcon}}" hint-placeholder-val="{{ false }}"><img src="{{row.icon}}" alt="" onerror="this.remove()" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; background: #0A0D12"></sc-if></span><span style="display: flex; flex-direction: column"><b class="fn" style="font-size: 14px; color: #EEF1F4">{{row.sym}}</b><span style="font-size: 12px; color: #8E99A8">{{row.name}}</span></span></span>
+<span style="display: flex; flex-direction: column; align-items: flex-end"><b class="fn" style="font-size: 15px; color: {{row.color}}">{{row.rate}}</b><span class="fn" style="font-size: 12px; color: #8E99A8">{{row.vol}}</span></span>
+</div>
+</sc-for>
+</div>
+<div style="flex: 1 1 260px; min-width: 0; display: flex; flex-direction: column">
+<span class="fn" style="padding-bottom: 10px; font-size: 12px; letter-spacing: 0.08em; color: #FF8A4C; border-bottom: 1px solid #252D39">{{rep.botTitle}}</span>
+<sc-for list="{{rep.bottom}}" as="row" hint-placeholder-count="6">
+<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 10px 0; border-bottom: 1px solid #1C222C">
+<span style="display: flex; align-items: center; gap: 10px"><span aria-hidden="true" class="fn" style="align-self: center; flex: none; width: 22px; height: 22px; border-radius: 50%; background: {{row.bg}}; color: #0A0D04; display: inline-flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 800; letter-spacing: -0.02em; position: relative; overflow: hidden">{{row.ini}}<sc-if value="{{row.hasIcon}}" hint-placeholder-val="{{ false }}"><img src="{{row.icon}}" alt="" onerror="this.remove()" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; background: #0A0D12"></sc-if></span><span style="display: flex; flex-direction: column"><b class="fn" style="font-size: 14px; color: #EEF1F4">{{row.sym}}</b><span style="font-size: 12px; color: #8E99A8">{{row.name}}</span></span></span>
+<span style="display: flex; flex-direction: column; align-items: flex-end"><b class="fn" style="font-size: 15px; color: {{row.color}}">{{row.rate}}</b><span class="fn" style="font-size: 12px; color: #8E99A8">{{row.vol}}</span></span>
+</div>
+</sc-for>
+</div>
+</div>
+<p style="margin: 0; font-size: 12px; color: #8E99A8">{{rep.note}}</p>
+</article>
+
+<aside style="flex: 2 1 300px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
+<div style="padding: 24px; border-radius: 22px; border: 1px solid #252D39; background: #0B0E13; display: flex; flex-direction: column">
+<span class="fn" style="padding-bottom: 12px; font-size: 12px; letter-spacing: 0.1em; color: #8E99A8; border-bottom: 1px solid #252D39">{{rep.majTitle}}</span>
+<sc-for list="{{rep.majors}}" as="mj" hint-placeholder-count="6">
+<div style="display: grid; grid-template-columns: 100px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 11px 0; border-bottom: 1px solid #1C222C">
+<span style="display: flex; align-items: center; gap: 10px"><span aria-hidden="true" class="fn" style="align-self: center; flex: none; width: 22px; height: 22px; border-radius: 50%; background: {{mj.bg}}; color: #0A0D04; display: inline-flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 800; letter-spacing: -0.02em; position: relative; overflow: hidden">{{mj.ini}}<sc-if value="{{mj.hasIcon}}" hint-placeholder-val="{{ false }}"><img src="{{mj.icon}}" alt="" onerror="this.remove()" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; background: #0A0D12"></sc-if></span><b class="fn" style="font-size: 14px">{{mj.sym}}</b></span>
+<span class="fn" style="font-size: 13px; color: {{mj.chgColor}}">{{mj.chg}}</span>
+<b class="fn" style="font-size: 14px; color: {{mj.color}}; text-align: right">{{mj.rate}}</b>
+</div>
+</sc-for>
+<span style="padding-top: 12px; font-size: 12px; color: #8E99A8">{{rep.majNote}}</span>
+</div>
+<div style="padding: 24px; border-radius: 22px; border: 1px dashed #2A3240; display: flex; flex-direction: column; gap: 8px">
+<span class="fn" style="font-size: 12px; letter-spacing: 0.1em; color: #8E99A8">{{rep.nextLabel}}</span>
+<span class="fn" style="font-size: 26px; font-weight: 700">{{rep.next}}</span>
+<span style="font-size: 13px; color: #A9B3BF">{{rep.archive}}</span>
+</div>
+</aside>
+</div>
+</section>
+
+<section id="liqmap" style="max-width: 1240px; margin: 0 auto; padding: 88px 24px 32px; display: flex; flex-direction: column; gap: 32px">
+<div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 20px; border-bottom: 1px solid #1C222C; padding-bottom: 28px">
+<div style="display: flex; align-items: flex-end; gap: 22px">
+<span aria-hidden="true" class="fn" style="font-size: 96px; line-height: 0.8; font-weight: 700; color: transparent; -webkit-text-stroke: 1.5px #3A4352">04</span>
+<h2 class="fh" style="margin: 0; font-size: 48px; line-height: 1.1; letter-spacing: -0.03em">{{lm.titleA}}<br>{{lm.titleB}}</h2>
+</div>
+<div style="display: flex; flex-direction: column; align-items: flex-end; gap: 12px">
+<div role="group" aria-label="{{lm.coinLabel}}" style="display: flex; padding: 4px; gap: 4px; border-radius: 999px; background: #07090D; border: 1px solid #252D39">
+<sc-for list="{{lm.coins}}" as="cn" hint-placeholder-count="3">
+<button type="button" onClick="{{cn.pick}}" aria-pressed="{{cn.pressed}}" style="min-height: 44px; padding: 0 16px 0 8px; display: inline-flex; align-items: center; gap: 8px; border-radius: 999px; border: 0; background: {{cn.bg}}; color: {{cn.fg}}; font-weight: 700; cursor: pointer">
+<span aria-hidden="true" class="fn" style="width: 26px; height: 26px; border-radius: 50%; background: {{cn.badge}}; color: #0A0D04; display: inline-flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 800; position: relative; overflow: hidden">{{cn.sym}}<sc-if value="{{cn.hasIcon}}" hint-placeholder-val="{{ false }}"><img src="{{cn.icon}}" alt="" onerror="this.remove()" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; background: #0A0D12"></sc-if></span>{{cn.sym}}</button>
+</sc-for>
+</div>
+<p class="fn" style="margin: 0; display: inline-flex; align-items: center; gap: 10px; font-size: 13px; color: #A9B3BF"><span style="width: 8px; height: 8px; border-radius: 50%; background: #C6F432"></span>{{lm.stamp}}</p>
+</div>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: stretch">
+<div style="flex: 1 1 480px; min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr) 64px; gap: 20px; padding: 28px; border-radius: 28px; border: 1px solid #252D39; background: linear-gradient(180deg, #121821 0%, #0C1016 100%)">
+<div style="display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; flex-direction: column; gap: 4px; padding: 20px 22px; border-radius: 20px; border: 1px solid rgba(255,138,76,0.45); background: #0A0D12">
+<span class="fn" style="font-size: 12px; font-weight: 700; letter-spacing: 0.06em; color: #FF9F6B">{{lm.upLabel}}</span>
+<span class="fn" style="font-size: 44px; line-height: 1.1; font-weight: 700; color: #FF9F6B">{{lm.upD}}</span>
+<span class="fn" style="font-size: 14px; color: #A9B3BF">{{lm.upRange}}</span>
+</div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 6px 0; text-align: center">
+<span style="font-size: 12px; color: #8E99A8">{{lm.nowLabel}}</span>
+<span class="fn" style="font-size: 34px; font-weight: 700">{{lm.price}}</span>
+<span style="font-size: 14px; color: #C9D0D8">{{lm.closer}}</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 4px; padding: 20px 22px; border-radius: 20px; border: 1px solid rgba(198,244,50,0.45); background: #0A0D12">
+<span class="fn" style="font-size: 12px; font-weight: 700; letter-spacing: 0.06em; color: #C6F432">{{lm.dnLabel}}</span>
+<span class="fn" style="font-size: 44px; line-height: 1.1; font-weight: 700; color: #C6F432">{{lm.dnD}}</span>
+<span class="fn" style="font-size: 14px; color: #A9B3BF">{{lm.dnRange}}</span>
+</div>
+</div>
+<div aria-hidden="true" style="position: relative; border-radius: 999px; background: linear-gradient(180deg, #FF8A4C, #1B222D 45%, #1B222D 55%, #C6F432)">
+<div style="position: absolute; left: 50%; top: {{lm.ballTop}}; width: 30px; height: 30px; margin: -15px 0 0 -15px; border-radius: 50%; background: #EEF1F4; box-shadow: 0 0 0 6px rgba(238,241,244,0.15), 0 0 24px rgba(238,241,244,0.6)"></div>
+</div>
+</div>
+
+<div style="flex: 0 1 400px; min-width: 0; margin: 0 auto; width: 100%; max-width: 400px; display: flex; flex-direction: column; gap: 14px; padding: 24px; border-radius: 28px; border: 1px solid #252D39; background: #0A0D12">
+<div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px">
+<span style="display: flex; align-items: center; gap: 10px; font-weight: 700"><span aria-hidden="true" class="fn" style="width: 32px; height: 32px; border-radius: 50%; background: {{lm.badge}}; color: #0A0D04; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; position: relative; overflow: hidden">{{lm.sym}}<sc-if value="{{lm.hasIcon}}" hint-placeholder-val="{{ false }}"><img src="{{lm.icon}}" alt="" onerror="this.remove()" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; background: #0A0D12"></sc-if></span>{{lm.sym}} / USDT</span>
+<span style="display: flex; flex-direction: column; align-items: flex-end">
+<span class="fn" style="font-size: 24px; font-weight: 700">{{lm.price}}</span>
+<span class="fn" style="font-size: 13px; font-weight: 700; color: {{lm.chgColor}}">{{lm.chg}}</span>
+</span>
+</div>
+<svg viewBox="0 0 336 96" width="100%" height="96" role="img" aria-label="{{lm.sparkAria}}">
+<rect x="0" width="336" y="{{lm.upY}}" height="{{lm.upH}}" fill="#FF8A4C" fill-opacity="0.22"></rect>
+<rect x="0" width="336" y="{{lm.dnY}}" height="{{lm.dnH}}" fill="#C6F432" fill-opacity="0.22"></rect>
+<path d="{{lm.spark}}" fill="none" stroke="#EEF1F4" stroke-width="2" stroke-linejoin="round"></path>
+<circle cx="336" cy="{{lm.lastY}}" r="3.5" fill="#EEF1F4"></circle>
+</svg>
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 11px 14px; border-radius: 14px; background: #0F141B">
+<span style="font-size: 13px; font-weight: 700; color: #FF9F6B">{{lm.upShort}}</span>
+<span class="fn" style="font-size: 14px">{{lm.upMid}} <b style="color: #FF9F6B">{{lm.upD}}</b></span>
+</div>
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 11px 14px; border-radius: 14px; background: #0F141B">
+<span style="font-size: 13px; font-weight: 700; color: #C6F432">{{lm.dnShort}}</span>
+<span class="fn" style="font-size: 14px">{{lm.dnMid}} <b style="color: #C6F432">{{lm.dnD}}</b></span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; justify-content: space-between; font-size: 12px; color: #8E99A8"><span>{{lm.ratioLabel}}</span><span class="fn">OI {{lm.oi}}</span></div>
+<div style="display: flex; height: 10px; border-radius: 999px; overflow: hidden"><div style="width: {{lm.longW}}; background: #C6F432"></div><div style="flex: 1; background: #FF8A4C"></div></div>
+<div class="fn" style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 700"><span style="color: #C6F432">{{lm.longTxt}}</span><span style="color: #FF9F6B">{{lm.shortTxt}}</span></div>
+</div>
+<div style="display: flex; justify-content: space-between; font-size: 11px; color: #6F7A8A"><span>{{t.brand}}</span><span class="fn">{{lm.at}}</span></div>
+</div>
+</div>
+<p style="margin: 0; font-size: 12px; color: #8E99A8">{{lm.method}}</p>
+</section>
+
+<section id="indicator" style="max-width: 1240px; margin: 0 auto; padding: 88px 24px 112px">
+<div style="position: relative; overflow: hidden; display: flex; flex-wrap: wrap; gap: 36px; align-items: flex-end; justify-content: space-between; padding: 56px 48px; border-radius: 28px; background: #C6F432; color: #0A0D04">
+<div aria-hidden="true" class="fn" style="position: absolute; right: -60px; bottom: -120px; font-size: 280px; line-height: 1; font-weight: 700; color: rgba(10,13,4,0.07); letter-spacing: -0.06em">TM</div>
+<div style="position: relative; flex: 1 1 460px; min-width: 0; display: flex; flex-direction: column; gap: 14px">
+<span class="fn" style="font-size: 13px; font-weight: 700; letter-spacing: 0.12em">TRADINGVIEW INDICATOR</span>
+<h2 class="fh" style="margin: 0; font-size: 46px; line-height: 1.15; letter-spacing: -0.03em; text-wrap: balance">{{t.indA}}<br>{{t.indB}}</h2>
+<p style="margin: 0; font-size: 17px; max-width: 500px; color: #2A3310">{{t.indBody}}</p>
+<p style="margin: 0; font-size: 12px; color: #3A4419">{{t.indNote}}</p>
+</div>
+<div style="position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 14px">
+<span class="fn" style="font-size: 28px; font-weight: 700">{{t.indPrice}}</span>
+<a class="cta" href="#indicator" style="min-height: 54px; padding: 0 28px; display: inline-flex; align-items: center; gap: 10px; border-radius: 999px; background: #0A0D04; color: #C6F432; font-weight: 700; font-size: 16px">{{t.indCta}}<span aria-hidden="true">→</span></a>
+</div>
+</div>
+</section>
+</main>
+
+<footer style="border-top: 1px solid #1C222C; background: #05070A">
+<div style="max-width: 1240px; margin: 0 auto; padding: 56px 24px 40px; display: flex; flex-direction: column; gap: 28px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 24px">
+<p style="margin: 0; font-size: 13px; color: #8E99A8; max-width: 560px">{{t.disclaimer}}</p>
+<nav aria-label="Footer" style="display: flex; flex-wrap: wrap; gap: 22px; font-size: 14px">
+<a href="terms.html" style="color: #C9D0D8">{{t.terms}}</a>
+<a href="privacy.html" style="color: #C9D0D8">{{t.privacy}}</a>
+<a href="privacy.html#contact" style="color: #C9D0D8">{{t.contact}}</a>
+</nav>
+</div>
+<p aria-hidden="true" class="fh" style="margin: 0; font-size: 132px; line-height: 0.95; letter-spacing: -0.05em; color: transparent; -webkit-text-stroke: 1.5px #2A3240; white-space: nowrap; overflow: hidden">{{t.brand}}</p>
+<p class="fn" style="margin: 0; font-size: 12px; color: #8E99A8">{{t.copy}}</p>
+</div>
+</footer>
+</div>
+</template>
+<noscript>이 사이트는 자바스크립트가 필요해요. / This site needs JavaScript.</noscript>
 <script>
-  const $ = (id) => document.getElementById(id);
-  const usdt = (n) => (isFinite(n) ? n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00') + ' USDT';
-  const pct = (n) => (isFinite(n) ? n.toLocaleString('ko-KR', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) : '0') + '%';
-  const signedUsdt = (n) => (n >= 0 ? '+' : '') + usdt(n);
-  const signedPct = (n) => (n >= 0 ? '+' : '') + pct(n);
-  const price = (n) => (isFinite(n) ? n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '–');
-
-  let direction = 'long';
-
-  function setDirection(dir) {
-    direction = dir;
-    $('btnLong').dataset.active = String(dir === 'long');
-    $('btnShort').dataset.active = String(dir === 'short');
-    calculate();
+/* ---------- mini runtime: renders the design file's template in a normal page ---------- */
+var SVGNS = 'http://www.w3.org/2000/svg';
+var HOLE = /\{\{\s*([^}]+?)\s*\}\}/g;
+var ONLY = /^\s*\{\{\s*([^}]+?)\s*\}\}\s*$/;
+var EVMAP = { onclick: 'click', onchange: 'input', onkeydown: 'keydown' };
+function lookup(path, sc) {
+  path = path.trim();
+  if (path === 'true') return true; if (path === 'false') return false;
+  if (/^-?\d+(\.\d+)?$/.test(path)) return +path;
+  var parts = path.split('.'), s = sc, v;
+  while (s) { if (Object.prototype.hasOwnProperty.call(s.vars, parts[0])) { v = s.vars[parts[0]]; break; } s = s.parent; }
+  if (!s) return undefined;
+  for (var i = 1; i < parts.length; i++) { if (v == null) return undefined; v = v[parts[i]]; }
+  return v;
+}
+function interp(str, sc) {
+  var m = str.match(ONLY); if (m) return lookup(m[1], sc);
+  return str.replace(HOLE, function (_, p) { var v = lookup(p, sc); return v == null ? '' : String(v); });
+}
+function renderNode(node, sc, out) {
+  if (node.nodeType === 3) { var tv = interp(node.nodeValue, sc); out.push(document.createTextNode(tv == null ? '' : String(tv))); return; }
+  if (node.nodeType !== 1) return;
+  var tag = node.localName, i;
+  if (tag === 'sc-if') { if (interp(node.getAttribute('value') || '', sc)) for (i = 0; i < node.childNodes.length; i++) renderNode(node.childNodes[i], sc, out); return; }
+  if (tag === 'sc-for') {
+    var list = interp(node.getAttribute('list') || '', sc) || [], as = node.getAttribute('as') || 'item';
+    for (var k = 0; k < list.length; k++) { var vars = { $index: k }; vars[as] = list[k]; var s2 = { vars: vars, parent: sc }; for (i = 0; i < node.childNodes.length; i++) renderNode(node.childNodes[i], s2, out); }
+    return;
   }
-
-  $('btnLong').addEventListener('click', () => setDirection('long'));
-  $('btnShort').addEventListener('click', () => setDirection('short'));
-
-  function calculate() {
-    const deposit = parseFloat($('deposit').value) || 0;
-    const leverage = parseFloat($('leverageRange').value) || 0;
-    const feeRate = (parseFloat($('feeRate').value) || 0) / 100;
-    const entryPrice = parseFloat($('entryPrice').value) || 0;
-    const targetPrice = parseFloat($('targetPrice').value) || 0;
-
-    $('leverageValue').textContent = leverage;
-
-    // 포지션 & 진입 수수료
-    const position = deposit * leverage;
-    const entryFee = position * feeRate;
-    const netDeposit = deposit - entryFee;
-    const feeRatio = deposit > 0 ? (entryFee / deposit) * 100 : 0;
-
-    $('rPosition').textContent = usdt(position);
-    $('rFee').textContent = usdt(entryFee);
-    $('rNetDeposit').textContent = usdt(netDeposit);
-    $('rFeeRatio').textContent = pct(feeRatio);
-    $('feeBar').style.width = Math.min(100, feeRatio) + '%';
-
-    // 손익분기가: entry * (1+f)/(1-f) [롱] 또는 entry * (1-f)/(1+f) [숏]
-    const breakeven = direction === 'long'
-      ? entryPrice * (1 + feeRate) / (1 - feeRate)
-      : entryPrice * (1 - feeRate) / (1 + feeRate);
-    const breakevenMovePct = feeRate < 1 ? (2 * feeRate / (1 - feeRate)) * 100 : Infinity;
-
-    $('rBreakeven').textContent = price(breakeven);
-    $('rBreakevenMove').textContent = signedPct(breakevenMovePct);
-
-    // 진입가 대비 가격 변동률 (레버리지 반영 전, 순수 가격 기준)
-    const targetMovePct = direction === 'long'
-      ? (entryPrice > 0 ? (targetPrice / entryPrice - 1) * 100 : 0)
-      : (targetPrice > 0 ? (entryPrice / targetPrice - 1) * 100 : 0);
-
-    // 목표가 기준 손익
-    const qty = entryPrice > 0 ? position / entryPrice : 0;
-    const exitNotional = qty * targetPrice;
-    const exitFee = exitNotional * feeRate;
-    const totalFee = entryFee + exitFee;
-    const grossPnl = direction === 'long' ? qty * (targetPrice - entryPrice) : qty * (entryPrice - targetPrice);
-    const netPnl = grossPnl - totalFee;
-    const roe = deposit > 0 ? (netPnl / deposit) * 100 : 0;
-    const inProfit = netPnl >= 0;
-    const gainingBeforeFees = grossPnl >= 0;
-
-    $('rPriceMove').textContent = signedPct(targetMovePct);
-    $('rGrossPnl').textContent = signedUsdt(grossPnl);
-    $('rTotalFee').textContent = usdt(totalFee);
-    $('rNetPnl').textContent = signedUsdt(netPnl);
-    $('rRoe').textContent = signedPct(roe);
-
-    const priceMoveCard = $('priceMoveCard');
-    priceMoveCard.classList.remove('good', 'bad');
-    priceMoveCard.classList.add(targetMovePct >= 0 ? 'good' : 'bad');
-    const grossPnlCard = $('grossPnlCard');
-    grossPnlCard.classList.remove('good', 'bad');
-    grossPnlCard.classList.add(gainingBeforeFees ? 'good' : 'bad');
-    const pnlCard = $('pnlCard');
-    pnlCard.classList.remove('good', 'bad');
-    pnlCard.classList.add(inProfit ? 'good' : 'bad');
-    const roeCard = $('roeCard');
-    roeCard.classList.remove('good', 'bad');
-    roeCard.classList.add(inProfit ? 'good' : 'bad');
-
-    // 이득구간 게이지: 0%(진입) ~ trackMax% 구간에서 손익분기 지점을 기준으로 손실/이득 구간을 나눔
-    const trackMax = Math.max(breakevenMovePct * 1.4, targetMovePct * 1.15, breakevenMovePct + 0.5, 1);
-    const breakevenPos = Math.min(100, Math.max(0, (breakevenMovePct / trackMax) * 100));
-    const targetPos = Math.min(100, Math.max(0, (targetMovePct / trackMax) * 100));
-
-    $('zoneLoss').style.width = breakevenPos + '%';
-    $('zoneProfit').style.width = (100 - breakevenPos) + '%';
-    $('zoneMarker').style.left = targetPos + '%';
-    $('zoneMarker').style.background = inProfit ? 'var(--good)' : 'var(--bad)';
-
-    const statusEl = $('zoneStatus');
-    statusEl.textContent = inProfit ? '이득구간' : '손실구간';
-    statusEl.classList.remove('good', 'bad');
-    statusEl.classList.add(inProfit ? 'good' : 'bad');
-
-    $('capEntry').textContent = price(entryPrice);
-    $('capBreakeven').textContent = price(breakeven);
-    $('capTarget').textContent = price(targetPrice);
+  var el = node.namespaceURI === SVGNS ? document.createElementNS(SVGNS, node.localName) : document.createElement(tag);
+  for (i = 0; i < node.attributes.length; i++) {
+    var a = node.attributes[i], name = a.name;
+    if (name.indexOf('hint-') === 0) continue;
+    var val = interp(a.value, sc);
+    if (EVMAP[name] && typeof val === 'function') { (el.__ev || (el.__ev = {}))[EVMAP[name]] = val; continue; }
+    if (val == null || val === false) continue;
+    el.setAttribute(name, String(val));
   }
-
-  ['deposit', 'leverageRange', 'feeRate', 'entryPrice', 'targetPrice'].forEach((id) => $(id).addEventListener('input', calculate));
-  calculate();
-
-  // 진입가 대비 가격 변동률 카드를 좌우로 드래그하면 목표가가 자동으로 바뀜
-  function computeMovePct(entryPrice, targetPrice) {
-    if (direction === 'long') return entryPrice > 0 ? (targetPrice / entryPrice - 1) * 100 : 0;
-    return targetPrice > 0 ? (entryPrice / targetPrice - 1) * 100 : 0;
+  var kids = [];
+  for (i = 0; i < node.childNodes.length; i++) renderNode(node.childNodes[i], sc, kids);
+  for (i = 0; i < kids.length; i++) el.appendChild(kids[i]);
+  out.push(el);
+}
+function sameKind(a, b) { return a.nodeType === b.nodeType && (a.nodeType === 3 || (a.localName === b.localName && a.namespaceURI === b.namespaceURI)); }
+function patch(o, n) {
+  if (o.nodeType === 3) { if (o.nodeValue !== n.nodeValue) o.nodeValue = n.nodeValue; return; }
+  var i, at;
+  for (i = o.attributes.length - 1; i >= 0; i--) { at = o.attributes[i].name; if (!n.hasAttribute(at) && !(at === 'open' && o.localName === 'details')) o.removeAttribute(at); }
+  for (i = 0; i < n.attributes.length; i++) { at = n.attributes[i]; if (o.getAttribute(at.name) !== at.value) o.setAttribute(at.name, at.value); }
+  o.__ev = n.__ev;
+  if (o.localName === 'input') { var v = n.getAttribute('value'); if (v != null && o.value !== v) o.value = v; }
+  patchChildren(o, Array.prototype.slice.call(n.childNodes));
+}
+function patchChildren(parent, kids) {
+  for (var i = 0; i < kids.length; i++) {
+    var o = parent.childNodes[i];
+    if (!o) parent.appendChild(kids[i]);
+    else if (sameKind(o, kids[i])) patch(o, kids[i]);
+    else parent.replaceChild(kids[i], o);
   }
+  while (parent.childNodes.length > kids.length) parent.removeChild(parent.lastChild);
+}
+var App = { dirty: false, raf: false };
+class DCLogic {
+  constructor() { this.props = {}; this.state = {}; }
+  setState(o) { Object.assign(this.state, typeof o === 'function' ? o(this.state) : o); App.schedule(); }
+  forceUpdate() { App.schedule(); }
+}
 
-  function movePctToTargetPrice(entryPrice, movePct) {
-    if (direction === 'long') return entryPrice * (1 + movePct / 100);
-    const denom = 1 + movePct / 100;
-    return denom > 0 ? entryPrice / denom : NaN;
-  }
 
-  const dragCard = $('priceMoveCard');
-  const DRAG_SENSITIVITY = 0.05; // % 변동 / px
-  let dragState = null;
-
-  dragCard.addEventListener('pointerdown', (e) => {
-    if (e.target.closest('.info-btn') || e.target.closest('.tip-box')) return;
-    const entryPrice = parseFloat($('entryPrice').value) || 0;
-    if (entryPrice <= 0) return;
-    dragState = {
-      pointerId: e.pointerId,
-      startX: e.clientX,
-      startPct: computeMovePct(entryPrice, parseFloat($('targetPrice').value) || 0),
-      entryPrice,
+class Component extends DCLogic {
+  constructor(...args) {
+    super(...args);
+    this.state = {
+      lang: 'ko', font: null, view: 'home',
+      sides: { pos: 'long', fee: 'long', liq: 'long', fund: 'long', dca: 'long', rr: 'long', sliq: 'long' },
+      vals: {
+        pos: { seed: '1000', risk: '1', entry: '100000', stop: '98000', margin: '100', fee: '0.05' },
+        fee: { margin: '100', lev: '20', entry: '100000', exit: '101000', fo: '0.05', fc: '0.05' },
+        liq: { entry: '100000', lev: '10', mmr: '0.5' },
+        fund: { notional: '5000', rate: '0.01', interval: '8', hold: '72' },
+        dca: { p1: '100000', q1: '0.01', p2: '97000', q2: '0.01', p3: '', q3: '', p4: '', q4: '', lev: '10' },
+        rr: { entry: '100000', stop: '98000', target: '106000' },
+        avgdown: { shares: '100', avg: '80000', price: '60000', target: '70000' },
+        avgp: { p1: '70000', q1: '10', p2: '65000', q2: '10', p3: '60000', q3: '20', p4: '', q4: '', cp: '66000' },
+        etf: { lev: '3', vol: '3', days: '20' },
+        sliq: { entry: '150', lev: '5', mmr: '1' },
+        plan: { budget: '5000000', n: '4', gap: '5' }
+      },
+      planMode: 'equal', lmCoin: 'BTC'
     };
-    dragCard.setPointerCapture(e.pointerId);
-    dragCard.classList.add('dragging');
-    e.preventDefault();
-  });
-
-  dragCard.addEventListener('pointermove', (e) => {
-    if (!dragState || e.pointerId !== dragState.pointerId) return;
-    const movePct = Math.max(-99, dragState.startPct + (e.clientX - dragState.startX) * DRAG_SENSITIVITY);
-    const newTarget = movePctToTargetPrice(dragState.entryPrice, movePct);
-    if (isFinite(newTarget) && newTarget > 0) {
-      $('targetPrice').value = newTarget.toFixed(2);
-      calculate();
-    }
-  });
-
-  function endDrag(e) {
-    if (!dragState || e.pointerId !== dragState.pointerId) return;
-    dragCard.classList.remove('dragging');
-    dragCard.releasePointerCapture(dragState.pointerId);
-    dragState = null;
   }
-  dragCard.addEventListener('pointerup', endDrag);
-  dragCard.addEventListener('pointercancel', endDrag);
 
-  document.querySelectorAll('[data-tip]').forEach((el) => {
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'info-btn';
-    btn.setAttribute('aria-label', '설명 보기');
-    btn.textContent = '!';
-    el.appendChild(btn);
+  stepFor(cid, key, v) {
+    var fixed = { risk: 0.1, fee: 0.01, fo: 0.01, fc: 0.01, mmr: 0.1, rate: 0.001, vol: 0.1, lev: 1, interval: 1, hold: 1, days: 1, shares: 1, n: 1, gap: 0.5 };
+    if (fixed[key]) return fixed[key];
+    if (cid === 'avgp' && key.charAt(0) === 'q') return 1;
+    var a = Math.abs(v);
+    if (!isFinite(a) || a === 0) return 1;
+    var off = (key === 'seed' || key === 'margin' || key === 'notional' || key === 'budget' || key.charAt(0) === 'q') ? 2 : 3;
+    return Math.pow(10, Math.floor(Math.log10(a)) - off);
+  }
 
-    const box = document.createElement('div');
-    box.className = 'tip-box';
-    box.textContent = el.getAttribute('data-tip');
-    box.hidden = true;
-    el.insertAdjacentElement('afterend', box);
+  applyStep(cid, key, base, dir, mult) {
+    var b = parseFloat(String(base == null ? '' : base).replace(/,/g, ''));
+    if (!isFinite(b)) b = 0;
+    var step = this.stepFor(cid, key, b) * (mult || 1);
+    var x = b + dir * step;
+    if (key !== 'rate') x = Math.max(0, x);
+    if (key === 'lev') x = Math.min(Math.max(1, x), cid === 'etf' ? 10 : 125);
+    if (key === 'n') x = Math.min(Math.max(1, x), 10);
+    var dec = Math.max(0, Math.min(10, -Math.floor(Math.log10(step) + 1e-9)));
+    return String(parseFloat(x.toFixed(dec)));
+  }
 
-    btn.addEventListener('click', () => {
-      box.hidden = !box.hidden;
-      btn.classList.toggle('active', !box.hidden);
+  setVal(cid, key, value) {
+    var all = Object.assign({}, this.state.vals);
+    var one = Object.assign({}, all[cid]);
+    one[key] = value; all[cid] = one;
+    this.setState({ vals: all });
+  }
+
+  nudge(key, dir, mult, cidIn) {
+    var cid = cidIn || this._cid;
+    if (!cid) return;
+    var cur = ((this.state.vals || {})[cid] || {})[key];
+    this.setVal(cid, key, this.applyStep(cid, key, cur, dir, mult));
+  }
+
+  componentDidMount() {
+    var self = this;
+    this._wacc = 0;
+    this._onWheel = function (e) {
+      var el = e.target && e.target.closest ? e.target.closest('[data-scrub-key]') : null;
+      if (!el) return;
+      e.preventDefault();
+      var d = e.deltaY * (e.deltaMode === 1 ? 33 : e.deltaMode === 2 ? 400 : 1);
+      self._wacc += d;
+      var mult = e.shiftKey ? 10 : e.altKey ? 0.1 : 1;
+      var key = el.getAttribute('data-scrub-key');
+      var wcid = el.getAttribute('data-scrub-cid') || self._cid;
+      while (Math.abs(self._wacc) >= 100) {
+        var dir = self._wacc < 0 ? 1 : -1;
+        self._wacc += dir * 100;
+        self.nudge(key, dir, mult, wcid);
+      }
+    };
+    this._onDown = function (e) {
+      var g = e.target && e.target.closest ? e.target.closest('[data-drag-key]') : null;
+      if (!g || !self._cid) return;
+      e.preventDefault();
+      var key = g.getAttribute('data-drag-key');
+      var dcid = g.getAttribute('data-drag-cid') || self._cid;
+      self._drag = { key: key, cid: dcid, x: e.clientX, base: ((self.state.vals || {})[dcid] || {})[key], el: g };
+      g.classList.add('dragging');
+      try { document.body.style.cursor = 'ew-resize'; } catch (err) {}
+    };
+    this._onMove = function (e) {
+      var d = self._drag;
+      if (!d) return;
+      var steps = Math.round((e.clientX - d.x) / 6);
+      var mult = e.shiftKey ? 10 : e.altKey ? 0.1 : 1;
+      var next = steps === 0 ? String(d.base == null ? '' : d.base) : self.applyStep(d.cid, d.key, d.base, steps > 0 ? 1 : -1, mult * Math.abs(steps));
+      if (d.last !== next) { d.last = next; self.setVal(d.cid, d.key, next); }
+    };
+    this._onUp = function () {
+      if (!self._drag) return;
+      try { self._drag.el.classList.remove('dragging'); document.body.style.cursor = ''; } catch (err) {}
+      self._drag = null;
+    };
+    document.addEventListener('wheel', this._onWheel, { passive: false });
+    document.addEventListener('pointerdown', this._onDown);
+    window.addEventListener('pointermove', this._onMove);
+    window.addEventListener('pointerup', this._onUp);
+    window.addEventListener('pointercancel', this._onUp);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('wheel', this._onWheel, { passive: false });
+    document.removeEventListener('pointerdown', this._onDown);
+    window.removeEventListener('pointermove', this._onMove);
+    window.removeEventListener('pointerup', this._onUp);
+    window.removeEventListener('pointercancel', this._onUp);
+  }
+
+  fontPresets() {
+    return {
+      '0': { fh: "'Hahmlet', serif", hw: '800', fb: "'IBM Plex Sans KR', system-ui, sans-serif", fn: "'JetBrains Mono', monospace" },
+      'A': { fh: "'Instrument Serif', 'Hahmlet', serif", hw: '400', fb: "'Instrument Sans', 'IBM Plex Sans KR', sans-serif", fn: "'Fraunces', 'Hahmlet', serif" },
+      'B': { fh: "'Unbounded', 'Black Han Sans', sans-serif", hw: '700', fb: "'Onest', 'Gothic A1', sans-serif", fn: "'Unbounded', 'Gothic A1', sans-serif" },
+      'C': { fh: "'Syne', 'Gothic A1', sans-serif", hw: '800', fb: "'Figtree', 'Gothic A1', sans-serif", fn: "'Martian Mono', 'Gothic A1', monospace" },
+      'D': { fh: "'Antonio', 'Do Hyeon', sans-serif", hw: '700', fb: "'Archivo', 'Nanum Gothic', sans-serif", fn: "'Antonio', 'Do Hyeon', sans-serif" }
+    };
+  }
+
+  ui(lang) {
+    if (lang === 'en') return {
+      brand: 'TradeMath', navLiq: 'Liquidation map', navTools: 'Calculators', navReport: 'Funding report', navInd: 'TradingView indicator', cta: 'Start calculating',
+      fontBar: 'FONT PREVIEW · design review only', eyebrow: 'AVERAGING DOWN · plan it before you buy more',
+      h1a: 'Average down', h1b: 'with a plan,', h1c: 'not a hunch.', h1acc: 'Calculate', h1tail: ' first.',
+      sub: 'Enter your shares, average cost, current price and target average. See exactly how many shares to buy, and how to split the buys across price levels. Crypto futures calculators and a live liquidation map are here too.',
+      chips: ['Shares needed for your target', 'Split-buy planner', 'Free, no sign-up'],
+      heroCta: 'All calculators', heroLink: "Today's funding report", back: '← All calculators', howTitle: 'HOW IT WORKS',
+      long: 'Long', short: 'Short', sideLabel: 'Position side', lowHigh: 'lower ← price → higher', ladderAria: 'Liquidation, stop, entry and target on a price axis',
+      lLiq: 'Liq.', lStop: 'Stop', lEntry: 'Entry', lTarget: 'Target 1:2',
+      safe: 'Your stop is hit before liquidation', danger: 'Liquidation comes first: add margin or cut size',
+      ad: 'Responsive banner slot',
+      coinA: 'Crypto futures', coinB: 'calculators', coinDesc: 'From entry to liquidation: every number one position needs, in order.',
+      stockA: 'Stock', stockB: 'calculators', stockDesc: 'Everyday math for stock investors, from averaging down to leveraged ETFs.',
+      repA: 'Every morning,', repB: 'the funding report', repTag: 'Binance · AI auto-publishing (coming soon)', repToday: 'TODAY · [date]',
+      repTitle: "[Today's report title]", repBody: 'A summary of the highest and lowest funding rates and their change since yesterday will be published here automatically.',
+      repRead: 'Read report →', repDate: '[date]', repPast: '[Past report title]',
+      indA: 'Right on your chart,', indB: 'stop-based sizing.', indBody: '[Indicator name]: mark your entry and stop, and size and leverage appear on the chart.',
+      indNote: 'A helper tool. It does not give buy/sell signals or guarantee returns.', indPrice: '[monthly price]', indCta: 'View indicator',
+      disclaimer: 'Results are estimates for reference only and are not investment advice. Actual liquidation prices and fees vary by exchange, account tier and position size.',
+      terms: 'Terms', privacy: 'Privacy', contact: 'Contact', copy: '© 2026 TradeMath',
+      errNum: 'Please fill every field with a number.', errPos: 'Values must be greater than 0.',
+      errLongStop: 'For a long, the stop must be below the entry.', errShortStop: 'For a short, the stop must be above the entry.',
+      errLev: 'Leverage must be between 1x and 125x.', errMmr: 'Maintenance margin must be smaller than 1/leverage.',
+      errRRLong: 'For a long: stop < entry < target.', errRRShort: 'For a short: target < entry < stop.',
+      errAvgDown: 'Needs current price < target average < current average.', errEtf: 'Daily move × leverage must be below 100%.', errRows: 'Fill both price and size on each row you use.',
+      pay: 'you pay', receive: 'you receive', times: '×', sh: ' sh', days: 'days', ofMargin: 'of margin', pos: 'position', stopDist: 'stop distance', roe: 'ROE',
+      hintWheel: 'Scroll over a field to adjust', hintDrag: 'Drag the ⇆ handle left/right', hintKeys: '↑↓ keys · Shift ×10 · Alt ×0.1',
+      scrubTip: 'Scroll, drag the handle, or use ↑↓ to adjust',
+      faqTitle: 'Frequently asked', relTitle: 'WORKS WELL WITH',
+      lAvg: 'Average', lCur: 'Price now', lCurAvg: 'Current avg', lNewAvg: 'New avg', nthPre: '#', nthPost: '',
+      tFee: 'P&L BREAKDOWN', tLiq: 'DISTANCE TO LIQUIDATION BY LEVERAGE', tFund: 'FUNDING BY HOLDING PERIOD', tAvgp: 'COST VS. MARKET VALUE', tEtf: 'RETURN OVER THE SAME PERIOD',
+      bGross: 'P&L before fees', bFees: 'Total fees', bNet: 'Net P&L', bCost: 'Total cost', bValue: 'Market value', bIndex: 'Index', bNaive: 'Index × leverage', bEtf: 'Leveraged ETF',
+      d1: '1 day', d7: '1 week', d30: '30 days',
+      feeEat: 'You called the price right, but fees turned it into a loss. Lower the leverage or use limit (maker) orders to cut fees.',
+      feeBe: 'Price must move {m}% just to cover fees. Fees on this trade are {r}% of your margin.',
+      liqHigh: 'At this leverage a small wick can liquidate you. Keep your stop well inside the liquidation price.',
+      liqInfo: 'At {l}x, a {m}% move against you liquidates the position. Put your stop inside that range.',
+      fundPay: 'On this side you pay funding. The longer you hold, the more it adds up.',
+      fundGet: 'On this side you receive funding. It flips if the rate changes sign.',
+      fundZero: 'With a 0% rate nothing changes hands.',
+      dcaOne: 'Only one entry so far. Add a second price and size.',
+      dcaBetter: 'Your average entry is {p}% better than the first entry, but the larger position also means a larger loss at your stop.',
+      dcaWorse: 'Your average entry is {p}% worse than the first entry (scaling into strength).',
+      rrGood: 'Win more than {w}% of the time and you are profitable before fees.',
+      rrMid: 'Break-even win rate is {w}%. Aim for 1:2 or better to give yourself room.',
+      rrBad: 'Your stop is wider than your target. You need to win over {w}% just to break even.',
+      adBig: 'Reaching the target average takes {x}× your current investment. Check that one stock is not taking over your portfolio.',
+      adInfo: 'Buying about {x}% more than you have invested gets you to the target average.',
+      apUp: 'The price is {p}% above your average cost.',
+      apDown: 'The price needs to rise {p}% to get back to break-even.',
+      etfDecay: 'The ETF made {p}%p less than index × leverage over the same period. The longer it chops sideways, the worse it gets.',
+      etfInfo: 'Under these inputs, volatility decay is small.'
+    };
+    return {
+      brand: 'TradeMath', navLiq: '청산 맵', navTools: '계산기', navReport: '펀딩비 리포트', navInd: '트레이딩뷰 지표', cta: '계산 시작',
+      fontBar: '폰트 시안 · 디자인 검토용 (확정 후 삭제)', eyebrow: 'AVERAGING DOWN · 더 사기 전에, 계산부터',
+      h1a: '물타기,', h1b: '감 말고', h1c: '숫자로', h1acc: '계산', h1tail: '하세요.',
+      sub: '보유 수량·평단가·현재가·목표 평단만 넣으면 몇 주를 더 사야 하는지, 회차별로 어떻게 나눠 살지까지 바로 계산해 드려요. 코인 선물 계산기와 실시간 청산 맵도 함께 있어요.',
+      chips: ['목표 평단까지 필요 수량', '분할 매수 플래너', '가입 없이 무료'],
+      heroCta: '계산기 전체 보기', heroLink: '오늘의 펀딩비 리포트', back: '← 모든 계산기', howTitle: '계산 방식',
+      long: '롱', short: '숏', sideLabel: '포지션 방향', lowHigh: '낮은 가격 ← → 높은 가격', ladderAria: '청산가, 손절가, 진입가, 목표가의 가격 위치',
+      lLiq: '청산', lStop: '손절', lEntry: '진입', lTarget: '목표 1:2',
+      safe: '손절가에 청산가보다 먼저 닿아요', danger: '청산가가 먼저 와요 — 증거금을 늘리거나 수량을 줄이세요',
+      ad: '반응형 배너 자리',
+      coinA: '코인 선물', coinB: '계산기', coinDesc: '진입부터 청산까지, 포지션 하나에 필요한 계산을 순서대로 모았어요.',
+      stockA: '주식', stockB: '계산기', stockDesc: '코인을 안 해도 매일 쓰는 계산기. 물타기부터 레버리지 ETF까지.',
+      repA: '매일 아침,', repB: '펀딩비 리포트', repTag: '바이낸스 · AI 자동 발행 예정', repToday: 'TODAY · [발행일]',
+      repTitle: '[오늘의 리포트 제목]', repBody: '펀딩비 상위·하위 코인과 전날 대비 변화를 정리한 요약이 이 자리에 자동으로 들어가요.',
+      repRead: '리포트 읽기 →', repDate: '[발행일]', repPast: '[지난 리포트 제목]',
+      indA: '차트 위에서 바로,', indB: '손절가 기준 포지션.', indBody: '[지표 이름] — 진입가와 손절가를 찍으면 수량과 레버리지가 차트에 그대로 표시돼요.',
+      indNote: '보조 지표 도구이며 매수·매도 신호나 수익을 보장하지 않아요.', indPrice: '[월 구독료]', indCta: '지표 보러 가기',
+      disclaimer: '이 사이트의 계산 결과는 참고용이며 투자 권유가 아니에요. 실제 청산가와 수수료는 거래소, 계정 등급, 포지션 구간에 따라 달라질 수 있어요.',
+      terms: '이용약관', privacy: '개인정보처리방침', contact: '문의하기', copy: '© 2026 TradeMath',
+      errNum: '모든 칸에 숫자를 입력해 주세요.', errPos: '값은 0보다 커야 해요.',
+      errLongStop: '롱 포지션은 손절가가 진입가보다 낮아야 해요.', errShortStop: '숏 포지션은 손절가가 진입가보다 높아야 해요.',
+      errLev: '레버리지는 1배에서 125배 사이로 입력해 주세요.', errMmr: '유지증거금률은 1/레버리지보다 작아야 해요.',
+      errRRLong: '롱은 손절가 < 진입가 < 목표가여야 해요.', errRRShort: '숏은 목표가 < 진입가 < 손절가여야 해요.',
+      errAvgDown: '현재가 < 목표 평단 < 현재 평단일 때만 계산돼요.', errEtf: '일간 변동폭 × 배수가 100%보다 작아야 해요.', errRows: '쓰는 줄은 가격과 수량을 둘 다 채워 주세요.',
+      pay: '지불', receive: '수령', times: '회', sh: '주', days: '일', ofMargin: '증거금의', pos: '포지션', stopDist: '손절폭', roe: '증거금 대비',
+      hintWheel: '칸 위에서 휠을 굴려 조절', hintDrag: '⇆ 손잡이를 좌우로 드래그', hintKeys: '키보드 위·아래 화살표로도 조절 · Shift 누르고 하면 10배 크게, Alt 누르고 하면 10배 잘게',
+      scrubTip: '휠, 손잡이 드래그, 위·아래 화살표 키로 숫자를 바꿀 수 있어요',
+      faqTitle: '자주 묻는 질문', relTitle: '함께 쓰면 좋은 계산기',
+      lAvg: '평균가', lCur: '현재가', lCurAvg: '현재 평단', lNewAvg: '새 평단', nthPre: '', nthPost: '차',
+      tFee: '손익 구성', tLiq: '레버리지별 청산까지 거리', tFund: '보유 기간별 펀딩비', tAvgp: '매수 금액 vs 평가 금액', tEtf: '같은 기간 수익률 비교',
+      bGross: '수수료 전 손익', bFees: '총 수수료', bNet: '순손익', bCost: '총 매수 금액', bValue: '평가 금액', bIndex: '지수', bNaive: '지수 × 배수', bEtf: '레버리지 ETF',
+      d1: '1일', d7: '1주', d30: '30일',
+      feeEat: '가격은 맞췄는데 수수료 때문에 손실이에요. 레버리지를 낮추거나 지정가(메이커) 주문으로 수수료를 줄여 보세요.',
+      feeBe: '수수료 본전까지 가격이 {m}% 움직여야 해요. 이번 거래 수수료는 증거금의 {r}%예요.',
+      liqHigh: '고배율이라 작은 흔들림에도 청산될 수 있어요. 손절가를 반드시 청산가보다 안쪽에 두세요.',
+      liqInfo: '{l}배는 가격이 {m}% 반대로 가면 청산돼요. 손절은 그 안쪽에 두세요.',
+      fundPay: '지금 방향이면 펀딩비를 내는 쪽이에요. 오래 들고 갈수록 비용이 쌓여요.',
+      fundGet: '지금 방향이면 펀딩비를 받는 쪽이에요. 비율 부호가 바뀌면 반대가 돼요.',
+      fundZero: '펀딩비율이 0이면 주고받는 금액이 없어요.',
+      dcaOne: '아직 한 번만 진입한 상태예요. 2차 가격과 수량을 넣어 보세요.',
+      dcaBetter: '평균 진입가가 1차보다 {p}% 유리해졌어요. 대신 포지션이 커진 만큼 손절 시 손실도 커져요.',
+      dcaWorse: '평균 진입가가 1차보다 {p}% 불리해졌어요 (불타기).',
+      rrGood: '승률 {w}%만 넘으면 수수료 전 기준으로 수익이에요.',
+      rrMid: '본전 승률이 {w}%예요. 손익비를 1:2 이상으로 잡으면 훨씬 여유가 생겨요.',
+      rrBad: '손절폭이 목표폭보다 커요. 승률이 {w}%를 넘어야 본전이라 꽤 빡빡해요.',
+      adBig: '목표 평단까지 기존 투자금의 {x}배가 더 필요해요. 한 종목 비중이 너무 커지지 않는지 확인하세요.',
+      adInfo: '기존 투자금의 약 {x}%만큼 더 사면 목표 평단이 돼요.',
+      apUp: '현재가가 평단보다 {p}% 위에 있어요.',
+      apDown: '본전까지 현재가에서 {p}% 올라야 해요.',
+      etfDecay: '같은 기간 "지수 × 배수"보다 {p}%p 덜 벌었어요. 횡보장에서 오래 들고 있을수록 손실이 커져요.',
+      etfInfo: '이 조건에서는 음의 복리 영향이 크지 않아요.'
+    };
+  }
+
+  calcText(lang) {
+    var en = lang === 'en';
+    var rows = function (pre, pl, ql) {
+      var o = {};
+      for (var i = 1; i <= 4; i++) { o['p' + i] = pre(i) + pl; o['q' + i] = pre(i) + ql; }
+      return o;
+    };
+    var dcaF = en ? rows(function (i) { return 'Entry ' + i + ' '; }, 'price', 'size') : rows(function (i) { return i + '차 '; }, '가격', '수량');
+    dcaF.lev = en ? 'Leverage' : '레버리지';
+    var avgF = en ? rows(function (i) { return 'Buy ' + i + ' '; }, 'price', 'shares') : rows(function (i) { return i + '차 '; }, '매수가', '수량');
+    avgF.cp = en ? 'Current price' : '현재가';
+    var liqF = en ? { entry: 'Entry price', lev: 'Leverage', mmr: 'Maintenance margin' } : { entry: '진입가', lev: '레버리지', mmr: '유지증거금률' };
+    var liqR = en ? { p: 'Est. liquidation price', s: 'Move to liquidation' } : { p: '예상 청산가', s: '청산까지 가격 변동' };
+    var liqFormula = en ? ['Long ≈ entry × (1 − 1/leverage + MMR)', 'Short ≈ entry × (1 + 1/leverage − MMR)'] : ['롱 ≈ 진입가 × (1 − 1/레버리지 + 유지증거금률)', '숏 ≈ 진입가 × (1 + 1/레버리지 − 유지증거금률)'];
+    if (en) return {
+      pos: { code: 'POSITION SIZER', title: 'Position size calculator', card: 'Size and leverage from your stop-loss',
+        desc: 'Works backwards from the amount you are willing to lose, so a stop-out costs exactly that, fees included.',
+        f: { seed: 'Account size', risk: 'Risk per trade', entry: 'Entry price', stop: 'Stop-loss', margin: 'Margin to use', fee: 'Fee rate (taker, one way)' },
+        r: { p: 'Position size (units)', s: 'Required leverage', loss: 'Loss at stop', target: 'Target (1:2)', liq: 'Est. liquidation' },
+        formula: ['Risk = account × risk %', 'Position = risk ÷ (stop distance + 2 × fee)', 'Units = position ÷ entry', 'Leverage = position ÷ margin (rounded up)'],
+        note: 'Liquidation is an estimate assuming 0.5% maintenance margin; it varies by exchange and tier.' },
+      fee: { code: 'FEE IMPACT', title: 'Leverage fee calculator', card: 'How much fees eat your margin as leverage grows',
+        desc: 'Fees are charged on the full leveraged position, not your margin. See what is left after opening and closing fees.',
+        f: { margin: 'Margin', lev: 'Leverage', entry: 'Entry price', exit: 'Exit price', fo: 'Opening fee', fc: 'Closing fee' },
+        r: { p: 'Net P&L after fees', s: 'Total fees', notional: 'Position size', open: 'Opening fee', close: 'Closing fee', gross: 'P&L before fees', be: 'Break-even price' },
+        formula: ['Position = margin × leverage', 'Fee = position × fee rate (open and close)', 'Net = price P&L − total fees'], note: 'Funding fees are not included.' },
+      liq: { code: 'LIQUIDATION · ISOLATED', title: 'Liquidation price calculator', card: 'Isolated-margin liquidation for longs and shorts',
+        desc: 'Enter entry and leverage to see the isolated-margin liquidation price and how far price can move before it hits.',
+        f: liqF, r: liqR, formula: liqFormula, note: 'Excludes fees and funding. Maintenance margin varies by exchange and tier.' },
+      fund: { code: 'FUNDING FEE', title: 'Funding fee calculator', card: 'What you pay or receive for holding a position',
+        desc: 'With a positive rate longs pay shorts; with a negative rate shorts pay longs. Counts the settlements over your holding time.',
+        f: { notional: 'Position size', rate: 'Funding rate (per settlement)', interval: 'Settlement interval', hold: 'Holding time' },
+        r: { p: 'Est. funding', s: 'Settlements', per: 'Per settlement', apr: 'Annualized rate' },
+        formula: ['Settlements = holding time ÷ interval (rounded down)', 'Funding = position × rate × settlements'], note: 'Assumes the current rate stays the same; real rates change every settlement.' },
+      dca: { code: 'DCA · AVERAGE ENTRY', title: 'DCA average entry calculator', card: 'Average entry and new liquidation after scaling in',
+        desc: 'Average entry price after scaling in, and the new liquidation price at the same leverage. Empty rows are skipped.',
+        f: dcaF, r: { p: 'Average entry', s: 'New est. liquidation', qty: 'Total size', notional: 'Position value', margin: 'Required margin' },
+        formula: ['Average = Σ(price × size) ÷ Σ size', 'Liquidation is recalculated from the average entry'], note: 'Liquidation assumes 0.5% maintenance margin.' },
+      rr: { code: 'RISK : REWARD', title: 'Risk/reward calculator', card: 'Risk/reward ratio and break-even win rate',
+        desc: 'Compares the distance to your stop with the distance to your target. The higher the ratio, the lower the win rate you need.',
+        f: { entry: 'Entry price', stop: 'Stop-loss', target: 'Target' }, r: { p: 'Risk : reward', s: 'Break-even win rate', risk: 'Stop distance', reward: 'Target distance' },
+        formula: ['R = target distance ÷ stop distance', 'Break-even win rate = 1 ÷ (1 + R)'], note: 'Fees and slippage are not included.' },
+      avgdown: { code: 'AVERAGING DOWN', title: 'Averaging-down calculator', card: 'Shares and cash needed to reach a target average',
+        desc: 'How many more shares to buy at today’s price to bring your average cost down to the level you want.',
+        f: { shares: 'Shares held', avg: 'Current average cost', price: 'Current price', target: 'Target average' },
+        r: { p: 'Shares to buy', s: 'Extra cash needed', newAvg: 'New average cost', total: 'Total shares after', invested: 'Total invested' },
+        formula: ['Shares = held × (avg − target) ÷ (target − price)', 'Rounded up to whole shares'], note: 'Only works when current price < target average < current average.' },
+      avgp: { code: 'AVERAGE PRICE', title: 'Average cost calculator', card: 'Average cost and return across several buys',
+        desc: 'Enter each buy price and share count to see your average cost and return at the current price.',
+        f: avgF, r: { p: 'Average cost', s: 'Return', qty: 'Total shares', cost: 'Total cost', value: 'Market value', pl: 'Unrealized P&L' },
+        formula: ['Average = Σ(price × shares) ÷ Σ shares', 'Return = (price − average) ÷ average'], note: 'Taxes and commissions are not included.' },
+      etf: { code: 'LEVERAGED ETF DECAY', title: 'Leveraged ETF decay calculator', card: 'How much 2x and 3x ETFs lose in a choppy market',
+        desc: 'Simulates an index that moves up and down by the same amount each day, and shows how much a leveraged ETF shrinks.',
+        f: { lev: 'ETF leverage', vol: 'Daily move', days: 'Period' }, r: { p: 'ETF return', s: 'Index return', naive: 'Index × leverage', decay: 'Volatility decay' },
+        formula: ['Alternates +move and −move each day', 'ETF = Π(1 + leverage × daily return)'], note: 'Simple model: ignores fees and tracking error.' },
+      sliq: { code: 'STOCK PERP · LIQUIDATION', title: 'Stock perpetual liquidation', card: 'Liquidation for stock-based perpetual futures',
+        desc: 'Stock-based perpetuals on crypto exchanges liquidate the same way as coin futures, but often with higher maintenance margin, so the default is 1%.',
+        f: liqF, r: liqR, formula: liqFormula, note: 'Always check your exchange’s maintenance margin for the stock.' }
+    };
+    return {
+      pos: { code: 'POSITION SIZER', title: '포지션 사이즈 계산기', card: '손절가 기준으로 진입 수량과 레버리지 계산',
+        desc: '감수할 손실 금액에서 거꾸로 계산해요. 손절가에 닿으면 수수료까지 포함해 딱 정한 만큼만 잃도록 수량을 맞춰요.',
+        f: { seed: '총 시드', risk: '감수할 손실', entry: '진입가', stop: '손절가', margin: '투입 증거금', fee: '수수료율 (편도·테이커)' },
+        r: { p: '진입 수량', s: '필요 레버리지', loss: '손절 시 손실', target: '목표가 (1:2)', liq: '예상 청산가' },
+        formula: ['손실액 = 시드 × 리스크%', '포지션 = 손실액 ÷ (손절폭 + 수수료 × 2)', '수량 = 포지션 ÷ 진입가', '레버리지 = 포지션 ÷ 증거금 (올림)'],
+        note: '청산가는 유지증거금률 0.5% 가정 근사치예요. 거래소·구간마다 달라요.' },
+      fee: { code: 'FEE IMPACT', title: '레버리지 수수료 계산기', card: '레버리지가 커질수록 수수료가 증거금을 얼마나 갉아먹는지',
+        desc: '수수료는 증거금이 아니라 레버리지를 곱한 포지션 전체에 붙어요. 진입·청산 수수료를 빼고 실제로 남는 손익을 보여 드려요.',
+        f: { margin: '증거금', lev: '레버리지', entry: '진입가', exit: '청산(익절)가', fo: '진입 수수료', fc: '청산 수수료' },
+        r: { p: '수수료 뺀 순손익', s: '총 수수료', notional: '포지션 크기', open: '진입 수수료', close: '청산 수수료', gross: '수수료 전 손익', be: '본전 가격' },
+        formula: ['포지션 = 증거금 × 레버리지', '수수료 = 포지션 × 수수료율 (진입·청산 각각)', '순손익 = 가격 손익 − 총 수수료'], note: '펀딩비는 포함되지 않아요.' },
+      liq: { code: 'LIQUIDATION · ISOLATED', title: '청산가 계산기', card: '격리 마진 롱·숏 청산가와 남은 거리',
+        desc: '진입가와 레버리지만 넣으면 격리 마진 기준 청산가와, 가격이 몇 % 움직이면 청산되는지 바로 보여 드려요.',
+        f: liqF, r: liqR, formula: liqFormula, note: '수수료·펀딩비를 뺀 근사치예요. 유지증거금률은 거래소·구간마다 달라요.' },
+      fund: { code: 'FUNDING FEE', title: '펀딩비 계산기', card: '들고 있는 시간만큼 내거나 받는 펀딩비',
+        desc: '펀딩비율이 양수면 롱이 숏에게, 음수면 숏이 롱에게 내요. 보유 시간 동안 몇 번 정산되는지 세어서 총액을 계산해요.',
+        f: { notional: '포지션 크기', rate: '펀딩비율 (1회)', interval: '정산 주기', hold: '보유 시간' },
+        r: { p: '예상 펀딩비', s: '정산 횟수', per: '1회 금액', apr: '연환산 비율' },
+        formula: ['정산 횟수 = 보유 시간 ÷ 정산 주기 (내림)', '펀딩비 = 포지션 × 펀딩비율 × 정산 횟수'], note: '지금 비율이 유지된다는 가정이에요. 실제 비율은 정산 때마다 바뀌어요.' },
+      dca: { code: 'DCA · AVERAGE ENTRY', title: '분할 진입 평단 계산기', card: '나눠 들어갔을 때 평균가와 새 청산가',
+        desc: '여러 번 나눠 진입했을 때의 평균 진입가와, 같은 레버리지에서 바뀐 청산가를 계산해요. 빈 줄은 계산에서 빠져요.',
+        f: dcaF, r: { p: '평균 진입가', s: '새 예상 청산가', qty: '총 수량', notional: '포지션 크기', margin: '필요 증거금' },
+        formula: ['평균가 = Σ(가격 × 수량) ÷ Σ수량', '청산가는 평균가 기준으로 다시 계산'], note: '청산가는 유지증거금률 0.5% 가정이에요.' },
+      rr: { code: 'RISK : REWARD', title: '손익비 계산기', card: '목표가·손절가로 손익비와 본전 승률',
+        desc: '손절까지의 거리와 목표까지의 거리를 비교해요. 손익비가 높을수록 승률이 낮아도 본전이에요.',
+        f: { entry: '진입가', stop: '손절가', target: '목표가' }, r: { p: '손익비', s: '본전 승률', risk: '손절폭', reward: '목표폭' },
+        formula: ['손익비 = 목표폭 ÷ 손절폭', '본전 승률 = 1 ÷ (1 + 손익비)'], note: '수수료와 슬리피지는 빠져 있어요.' },
+      avgdown: { code: 'AVERAGING DOWN', title: '주식 물타기 계산기', card: '목표 평단까지 필요한 추가 매수 수량·금액',
+        desc: '지금 가격에 몇 주를 더 사야 원하는 평단가가 되는지 계산해요.',
+        f: { shares: '보유 수량', avg: '현재 평단가', price: '현재가', target: '목표 평단가' },
+        r: { p: '추가 매수 수량', s: '추가 매수 금액', newAvg: '매수 후 평단가', total: '매수 후 보유 수량', invested: '총 투자금' },
+        formula: ['필요 수량 = 보유 × (평단 − 목표) ÷ (목표 − 현재가)', '1주 단위로 올림'], note: '현재가 < 목표 평단 < 현재 평단일 때만 계산돼요.' },
+      avgp: { code: 'AVERAGE PRICE', title: '평단가 계산기', card: '여러 번 산 주식의 평균 단가와 수익률',
+        desc: '나눠서 산 가격과 수량을 넣으면 평균 매수 단가와 현재가 기준 수익률을 보여 드려요.',
+        f: avgF, r: { p: '평균 단가', s: '수익률', qty: '총 수량', cost: '총 매수 금액', value: '평가 금액', pl: '평가 손익' },
+        formula: ['평단가 = Σ(가격 × 수량) ÷ Σ수량', '수익률 = (현재가 − 평단가) ÷ 평단가'], note: '세금과 거래 수수료는 빠져 있어요.' },
+      etf: { code: 'LEVERAGED ETF DECAY', title: '레버리지 ETF 음의 복리', card: '횡보장에서 2배·3배 ETF가 잃는 정도',
+        desc: '지수가 매일 같은 폭으로 오르내리며 제자리일 때, 레버리지 ETF가 얼마나 줄어드는지 시뮬레이션해요.',
+        f: { lev: 'ETF 배수', vol: '일간 변동폭', days: '기간' }, r: { p: 'ETF 수익률', s: '지수 수익률', naive: '지수 × 배수', decay: '음의 복리 손실' },
+        formula: ['하루씩 +변동폭, −변동폭을 번갈아 적용', 'ETF = Π(1 + 배수 × 일간 수익률)'], note: '운용 보수·괴리율은 빠진 단순 모델이에요.' },
+      sliq: { code: 'STOCK PERP · LIQUIDATION', title: '주식 무기한선물 청산가', card: '삼성전자·SK하이닉스 등 주식 기반 무기한선물',
+        desc: '해외 거래소의 주식 기반 무기한선물도 청산 원리는 코인과 같아요. 다만 유지증거금률이 더 높은 경우가 많아 기본값을 1%로 뒀어요.',
+        f: liqF, r: liqR, formula: liqFormula, note: '종목별 유지증거금률은 거래소에서 꼭 확인하세요.' }
+    };
+  }
+
+  compute(id, v, isLong, L, r, fmt) {
+    var N = function (x) { if (x === '' || x == null) return NaN; return parseFloat(String(x).replace(/,/g, '')); };
+    var sg = function (x, d) { return (x > 0 ? '+' : x < 0 ? '−' : '') + fmt(Math.abs(x), d); };
+    var fin = function (a) { for (var i = 0; i < a.length; i++) { if (!isFinite(a[i])) return false; } return true; };
+    var err = function (m) { return { ok: false, error: m }; };
+    var liqOf = function (e, lev, mmr, long) { return Math.max(0, long ? e * (1 - 1 / lev + mmr) : e * (1 + 1 / lev - mmr)); };
+    var rowsOf = function () {
+      var out = [];
+      for (var i = 1; i <= 4; i++) {
+        var p = N(v['p' + i]), q = N(v['q' + i]);
+        var pe = v['p' + i] === '' || v['p' + i] == null, qe = v['q' + i] === '' || v['q' + i] == null;
+        if (pe && qe) continue;
+        if (!isFinite(p) || !isFinite(q) || p <= 0 || q <= 0) return null;
+        out.push([p, q]);
+      }
+      return out;
+    };
+    if (id === 'pos') {
+      var seed = N(v.seed), risk = N(v.risk), entry = N(v.entry), stop = N(v.stop), margin = N(v.margin), fee = N(v.fee);
+      if (!fin([seed, risk, entry, stop, margin, fee])) return err(L.errNum);
+      if (seed <= 0 || risk <= 0 || entry <= 0 || stop <= 0 || margin <= 0 || fee < 0) return err(L.errPos);
+      if (isLong && stop >= entry) return err(L.errLongStop);
+      if (!isLong && stop <= entry) return err(L.errShortStop);
+      var dist = Math.abs(entry - stop) / entry, riskAmt = seed * risk / 100;
+      var notional = riskAmt / (dist + 2 * fee / 100), qty = notional / entry;
+      var lev = Math.max(1, Math.ceil(notional / margin));
+      var liq = liqOf(entry, lev, 0.005, isLong);
+      var target = isLong ? entry + 2 * (entry - stop) : entry - 2 * (stop - entry);
+      var lo = Math.min(liq, stop, entry, target), hi = Math.max(liq, stop, entry, target);
+      var pad = (hi - lo) * 0.06 || entry * 0.01; lo -= pad; hi += pad;
+      var span = hi - lo;
+      var pc = function (x) { return Math.max(0, Math.min(100, x)).toFixed(2) + '%'; };
+      var at = function (x) { return pc((x - lo) / span * 100); };
+      return {
+        ok: true,
+        p: { label: r.p, value: fmt(qty, 6), sub: L.pos + ' ' + fmt(notional) + ' USDT' },
+        s: { label: r.s, value: lev + 'x', sub: L.stopDist + ' ' + fmt(dist * 100) + '%' },
+        list: [{ label: r.loss, value: '−' + fmt(riskAmt) + ' USDT' }, { label: r.target, value: fmt(target) }, { label: r.liq, value: fmt(liq) }],
+        safe: isLong ? liq < stop : liq > stop,
+        lad: { lossL: at(Math.min(entry, stop)), lossW: pc(Math.abs(entry - stop) / span * 100), gainL: at(Math.min(entry, target)), gainW: pc(Math.abs(target - entry) / span * 100),
+          liqP: at(liq), stopP: at(stop), entryP: at(entry), targetP: at(target), liq: fmt(liq), stop: fmt(stop), entry: fmt(entry), target: fmt(target) }
+      };
+    }
+    if (id === 'fee') {
+      var m = N(v.margin), lv = N(v.lev), en = N(v.entry), ex = N(v.exit), fo = N(v.fo), fc = N(v.fc);
+      if (!fin([m, lv, en, ex, fo, fc])) return err(L.errNum);
+      if (m <= 0 || en <= 0 || ex <= 0 || fo < 0 || fc < 0) return err(L.errPos);
+      if (lv < 1 || lv > 125) return err(L.errLev);
+      var nt = m * lv, q2 = nt / en, of = nt * fo / 100, cf = q2 * ex * fc / 100;
+      var gross = isLong ? q2 * (ex - en) : q2 * (en - ex), tot = of + cf, net = gross - tot;
+      var be = isLong ? en * (1 + fo / 100) / (1 - fc / 100) : en * (1 - fo / 100) / (1 + fc / 100);
+      return { ok: true,
+        p: { label: r.p, value: sg(net) + ' USDT', sub: L.roe + ' ' + sg(net / m * 100) + '%' },
+        s: { label: r.s, value: fmt(tot), sub: L.ofMargin + ' ' + fmt(tot / m * 100) + '%' },
+        list: [{ label: r.notional, value: fmt(nt) + ' USDT' }, { label: r.open, value: fmt(of, 4) + ' USDT' }, { label: r.close, value: fmt(cf, 4) + ' USDT' }, { label: r.gross, value: sg(gross) + ' USDT' }, { label: r.be, value: fmt(be) }] };
+    }
+    if (id === 'liq' || id === 'sliq') {
+      var e2 = N(v.entry), l2 = N(v.lev), mm = N(v.mmr) / 100;
+      if (!fin([e2, l2, mm])) return err(L.errNum);
+      if (e2 <= 0) return err(L.errPos);
+      if (l2 < 1 || l2 > 125) return err(L.errLev);
+      if (mm < 0 || mm >= 1 / l2) return err(L.errMmr);
+      return { ok: true, p: { label: r.p, value: fmt(liqOf(e2, l2, mm, isLong)), sub: '' }, s: { label: r.s, value: (isLong ? '−' : '+') + fmt((1 / l2 - mm) * 100) + '%', sub: '' }, list: [] };
+    }
+    if (id === 'fund') {
+      var n3 = N(v.notional), rt = N(v.rate), iv = N(v.interval), hd = N(v.hold);
+      if (!fin([n3, rt, iv, hd])) return err(L.errNum);
+      if (n3 <= 0 || iv <= 0 || hd < 0) return err(L.errPos);
+      var cnt = Math.floor(hd / iv), per = n3 * rt / 100, amt = (isLong ? -1 : 1) * per * cnt;
+      return { ok: true,
+        p: { label: r.p, value: sg(amt) + ' USDT', sub: amt < 0 ? L.pay : amt > 0 ? L.receive : '' },
+        s: { label: r.s, value: cnt + L.times, sub: '' },
+        list: [{ label: r.per, value: fmt(Math.abs(per), 4) + ' USDT' }, { label: r.apr, value: sg(rt * (24 / iv) * 365) + '%' }] };
+    }
+    if (id === 'dca') {
+      var rs = rowsOf(), l4 = N(v.lev);
+      if (rs === null) return err(L.errRows);
+      if (!rs.length || !isFinite(l4)) return err(L.errNum);
+      if (l4 < 1 || l4 > 125) return err(L.errLev);
+      var sq = 0, spq = 0;
+      for (var i = 0; i < rs.length; i++) { sq += rs[i][1]; spq += rs[i][0] * rs[i][1]; }
+      var avg = spq / sq;
+      return { ok: true, p: { label: r.p, value: fmt(avg), sub: '' }, s: { label: r.s, value: fmt(liqOf(avg, l4, 0.005, isLong)), sub: '' },
+        list: [{ label: r.qty, value: fmt(sq, 6) }, { label: r.notional, value: fmt(spq) + ' USDT' }, { label: r.margin, value: fmt(spq / l4) + ' USDT' }] };
+    }
+    if (id === 'rr') {
+      var e5 = N(v.entry), s5 = N(v.stop), t5 = N(v.target);
+      if (!fin([e5, s5, t5])) return err(L.errNum);
+      if (e5 <= 0 || s5 <= 0 || t5 <= 0) return err(L.errPos);
+      if (isLong && !(s5 < e5 && e5 < t5)) return err(L.errRRLong);
+      if (!isLong && !(t5 < e5 && e5 < s5)) return err(L.errRRShort);
+      var rk = Math.abs(e5 - s5) / e5, rw = Math.abs(t5 - e5) / e5, R = rw / rk;
+      return { ok: true, p: { label: r.p, value: '1 : ' + fmt(R, 2), sub: '' }, s: { label: r.s, value: fmt(100 / (1 + R), 1) + '%', sub: '' },
+        list: [{ label: r.risk, value: '−' + fmt(rk * 100) + '%' }, { label: r.reward, value: '+' + fmt(rw * 100) + '%' }] };
+    }
+    if (id === 'avgdown') {
+      var sh = N(v.shares), av = N(v.avg), px = N(v.price), tg = N(v.target);
+      if (!fin([sh, av, px, tg])) return err(L.errNum);
+      if (sh <= 0 || av <= 0 || px <= 0 || tg <= 0) return err(L.errPos);
+      if (!(px < tg && tg < av)) return err(L.errAvgDown);
+      var need = Math.ceil(sh * (av - tg) / (tg - px)), cost = need * px;
+      return { ok: true, p: { label: r.p, value: fmt(need, 0) + L.sh, sub: '' }, s: { label: r.s, value: fmt(cost, 0), sub: '' },
+        list: [{ label: r.newAvg, value: fmt((sh * av + cost) / (sh + need)) }, { label: r.total, value: fmt(sh + need, 0) + L.sh }, { label: r.invested, value: fmt(sh * av + cost, 0) }] };
+    }
+    if (id === 'avgp') {
+      var rs2 = rowsOf(), cp = N(v.cp);
+      if (rs2 === null) return err(L.errRows);
+      if (!rs2.length || !isFinite(cp)) return err(L.errNum);
+      if (cp <= 0) return err(L.errPos);
+      var q7 = 0, c7 = 0;
+      for (var j = 0; j < rs2.length; j++) { q7 += rs2[j][1]; c7 += rs2[j][0] * rs2[j][1]; }
+      var a7 = c7 / q7, val = q7 * cp;
+      return { ok: true, p: { label: r.p, value: fmt(a7), sub: '' }, s: { label: r.s, value: sg((cp - a7) / a7 * 100) + '%', sub: '' },
+        list: [{ label: r.qty, value: fmt(q7, 4) }, { label: r.cost, value: fmt(c7, 0) }, { label: r.value, value: fmt(val, 0) }, { label: r.pl, value: sg(val - c7, 0) }] };
+    }
+    if (id === 'etf') {
+      var L8 = N(v.lev), vo = N(v.vol) / 100, dy = N(v.days);
+      if (!fin([L8, vo, dy])) return err(L.errNum);
+      if (L8 < 1 || vo <= 0 || dy < 1) return err(L.errPos);
+      if (L8 * vo >= 1) return err(L.errEtf);
+      var ix = 1, et = 1, nd = Math.min(Math.floor(dy), 5000);
+      for (var k = 0; k < nd; k++) { var d = k % 2 === 0 ? vo : -vo; ix *= 1 + d; et *= 1 + L8 * d; }
+      var ir = (ix - 1) * 100, er = (et - 1) * 100;
+      return { ok: true, p: { label: r.p, value: sg(er) + '%', sub: '' }, s: { label: r.s, value: sg(ir) + '%', sub: '' },
+        list: [{ label: r.naive, value: sg(ir * L8) + '%' }, { label: r.decay, value: sg(er - ir * L8) + '%p' }] };
+    }
+    return err(L.errNum);
+  }
+
+  extras(id, v, isLong, L, fmt) {
+    var N = function (x) { if (x === '' || x == null) return NaN; return parseFloat(String(x).replace(/,/g, '')); };
+    var sg = function (x, d) { return (x > 0 ? '+' : x < 0 ? '−' : '') + fmt(Math.abs(x), d); };
+    var fill = function (tpl, o) { return tpl.replace(/\{(\w)\}/g, function (m, k) { return o[k] == null ? m : o[k]; }); };
+    var liqOf = function (e, lev, mmr, long) { return Math.max(0, long ? e * (1 - 1 / lev + mmr) : e * (1 + 1 / lev - mmr)); };
+    var LIME = '#C6F432', ORANGE = '#FF8A4C', WHITE = '#EEF1F4', GRAY = '#8E99A8';
+    var pc = function (x) { return Math.max(0, Math.min(100, x)).toFixed(2) + '%'; };
+    var ladder = function (pts, zones) {
+      var lo = Infinity, hi = -Infinity;
+      pts.forEach(function (p) { lo = Math.min(lo, p.v); hi = Math.max(hi, p.v); });
+      var pad = (hi - lo) * 0.06 || Math.abs(hi) * 0.01 || 1; lo -= pad; hi += pad;
+      var span = hi - lo;
+      var at = function (x) { return pc((x - lo) / span * 100); };
+      return {
+        zones: (zones || []).map(function (z) { return { l: at(Math.min(z.a, z.b)), w: pc(Math.abs(z.b - z.a) / span * 100), color: z.color }; }),
+        markers: pts.map(function (p) {
+          var big = p.kind === 'big', dash = p.kind === 'dash';
+          return { l: at(p.v), top: big || dash ? '4px' : p.kind === 'small' ? '12px' : '8px', h: big || dash ? '36px' : p.kind === 'small' ? '20px' : '28px',
+            wd: dash ? '2px' : p.kind === 'small' ? '3px' : '4px', ml: dash ? '-1px' : p.kind === 'small' ? '-1.5px' : '-2px',
+            bg: dash ? 'repeating-linear-gradient(180deg, #EEF1F4 0 4px, transparent 4px 7px)' : p.color };
+        }),
+        legend: pts.filter(function (p) { return p.label; }).map(function (p) { return { label: p.label, value: fmt(p.v), color: p.kind === 'dash' ? WHITE : p.color, dash: p.kind === 'dash', solid: p.kind !== 'dash' }; })
+      };
+    };
+    var bars = function (items) {
+      var mx = 0; items.forEach(function (i) { mx = Math.max(mx, Math.abs(i.v)); });
+      return items.map(function (i) { return { label: i.label, value: i.text, color: i.color, w: pc(mx ? Math.max(2, Math.abs(i.v) / mx * 100) : 2) }; });
+    };
+    var rowsOf = function () {
+      var out = [];
+      for (var i = 1; i <= 4; i++) { var p = N(v['p' + i]), q = N(v['q' + i]); if (isFinite(p) && isFinite(q) && p > 0 && q > 0) out.push({ p: p, q: q, n: i }); }
+      return out;
+    };
+    var nth = function (n) { return L.nthPre + n + L.nthPost; };
+    var out = {};
+    if (id === 'pos') {
+      var entry = N(v.entry), stop = N(v.stop), seed = N(v.seed), risk = N(v.risk), margin = N(v.margin), fee = N(v.fee);
+      var dist = Math.abs(entry - stop) / entry, notional = seed * risk / 100 / (dist + 2 * fee / 100);
+      var lev = Math.max(1, Math.ceil(notional / margin)), liq = liqOf(entry, lev, 0.005, isLong);
+      var target = isLong ? entry + 2 * (entry - stop) : entry - 2 * (stop - entry);
+      out.ladder = ladder([{ v: liq, kind: 'dash', label: L.lLiq }, { v: stop, color: ORANGE, label: L.lStop }, { v: entry, kind: 'big', color: WHITE, label: L.lEntry }, { v: target, color: LIME, label: L.lTarget }],
+        [{ a: entry, b: stop, color: 'rgba(255,138,76,0.35)' }, { a: entry, b: target, color: 'rgba(198,244,50,0.35)' }]);
+      var safe = isLong ? liq < stop : liq > stop;
+      out.insight = safe ? { tone: 'good', text: L.safe } : { tone: 'warn', text: L.danger };
+    } else if (id === 'fee') {
+      var m = N(v.margin), lv = N(v.lev), en = N(v.entry), ex = N(v.exit), fo = N(v.fo), fc = N(v.fc);
+      var nt = m * lv, q2 = nt / en, tot = nt * fo / 100 + q2 * ex * fc / 100;
+      var gross = isLong ? q2 * (ex - en) : q2 * (en - ex), net = gross - tot;
+      var be = isLong ? en * (1 + fo / 100) / (1 - fc / 100) : en * (1 - fo / 100) / (1 + fc / 100);
+      out.barsTitle = L.tFee;
+      out.bars = bars([{ label: L.bGross, v: gross, text: sg(gross) + ' USDT', color: gross >= 0 ? LIME : ORANGE }, { label: L.bFees, v: tot, text: '−' + fmt(tot) + ' USDT', color: ORANGE }, { label: L.bNet, v: net, text: sg(net) + ' USDT', color: net >= 0 ? LIME : ORANGE }]);
+      out.insight = gross > 0 && net < 0 ? { tone: 'warn', text: L.feeEat } : { tone: 'info', text: fill(L.feeBe, { m: fmt(Math.abs(be - en) / en * 100, 3), r: fmt(tot / m * 100) }) };
+    } else if (id === 'liq' || id === 'sliq') {
+      var e2 = N(v.entry), l2 = N(v.lev), mm = N(v.mmr) / 100, lq = liqOf(e2, l2, mm, isLong);
+      out.ladder = ladder([{ v: lq, kind: 'dash', label: L.lLiq }, { v: e2, kind: 'big', color: WHITE, label: L.lEntry }], [{ a: e2, b: lq, color: 'rgba(255,138,76,0.3)' }]);
+      var levels = [2, 5, 10, 20, 50, 100].filter(function (x) { return 1 / x - mm > 0; });
+      out.barsTitle = L.tLiq;
+      out.bars = bars(levels.map(function (x) { var d = (1 / x - mm) * 100; return { label: x + 'x', v: d, text: (isLong ? '−' : '+') + fmt(d) + '%', color: Math.round(l2) === x ? LIME : GRAY }; }));
+      out.insight = l2 >= 50 ? { tone: 'warn', text: L.liqHigh } : { tone: 'info', text: fill(L.liqInfo, { l: fmt(l2, 1), m: fmt((1 / l2 - mm) * 100) }) };
+    } else if (id === 'fund') {
+      var n3 = N(v.notional), rt = N(v.rate), iv = N(v.interval), per = n3 * rt / 100, sgn = isLong ? -1 : 1;
+      out.barsTitle = L.tFund;
+      out.bars = bars([[1, L.d1], [7, L.d7], [30, L.d30]].map(function (d) { var a = sgn * per * Math.floor(24 * d[0] / iv); return { label: d[1], v: a, text: sg(a) + ' USDT', color: a < 0 ? ORANGE : LIME }; }));
+      var paying = (isLong && rt > 0) || (!isLong && rt < 0);
+      out.insight = rt === 0 ? { tone: 'info', text: L.fundZero } : paying ? { tone: 'warn', text: L.fundPay } : { tone: 'good', text: L.fundGet };
+    } else if (id === 'dca') {
+      var rs = rowsOf(), l4 = N(v.lev), sq = 0, spq = 0;
+      rs.forEach(function (r) { sq += r.q; spq += r.p * r.q; });
+      var avg = spq / sq, lq4 = liqOf(avg, l4, 0.005, isLong);
+      var pts = rs.map(function (r) { return { v: r.p, kind: 'small', color: GRAY, label: nth(r.n) }; });
+      pts.push({ v: avg, kind: 'big', color: LIME, label: L.lAvg });
+      pts.push({ v: lq4, kind: 'dash', label: L.lLiq });
+      out.ladder = ladder(pts, [{ a: avg, b: lq4, color: 'rgba(255,138,76,0.25)' }]);
+      if (rs.length < 2) out.insight = { tone: 'info', text: L.dcaOne };
+      else { var imp = isLong ? (rs[0].p - avg) / rs[0].p : (avg - rs[0].p) / rs[0].p; out.insight = imp >= 0 ? { tone: 'good', text: fill(L.dcaBetter, { p: fmt(imp * 100) }) } : { tone: 'warn', text: fill(L.dcaWorse, { p: fmt(-imp * 100) }) }; }
+    } else if (id === 'rr') {
+      var e5 = N(v.entry), s5 = N(v.stop), t5 = N(v.target), R = Math.abs(t5 - e5) / Math.abs(e5 - s5), w = fmt(100 / (1 + R), 1);
+      out.ladder = ladder([{ v: s5, color: ORANGE, label: L.lStop }, { v: e5, kind: 'big', color: WHITE, label: L.lEntry }, { v: t5, color: LIME, label: L.lTarget.split(' ')[0] }],
+        [{ a: e5, b: s5, color: 'rgba(255,138,76,0.35)' }, { a: e5, b: t5, color: 'rgba(198,244,50,0.35)' }]);
+      out.insight = R >= 2 ? { tone: 'good', text: fill(L.rrGood, { w: w }) } : R < 1 ? { tone: 'warn', text: fill(L.rrBad, { w: w }) } : { tone: 'info', text: fill(L.rrMid, { w: w }) };
+    } else if (id === 'avgdown') {
+      var sh = N(v.shares), av = N(v.avg), px = N(v.price), tg = N(v.target);
+      var need = Math.ceil(sh * (av - tg) / (tg - px)), cost = need * px, na = (sh * av + cost) / (sh + need), ratio = cost / (sh * av);
+      out.ladder = ladder([{ v: px, color: ORANGE, label: L.lCur }, { v: na, kind: 'big', color: LIME, label: L.lNewAvg }, { v: av, color: WHITE, label: L.lCurAvg }], [{ a: na, b: av, color: 'rgba(198,244,50,0.25)' }]);
+      out.insight = ratio > 1 ? { tone: 'warn', text: fill(L.adBig, { x: fmt(ratio, 1) }) } : { tone: 'info', text: fill(L.adInfo, { x: fmt(ratio * 100, 0) }) };
+    } else if (id === 'avgp') {
+      var rs2 = rowsOf(), cp = N(v.cp), q7 = 0, c7 = 0;
+      rs2.forEach(function (r) { q7 += r.q; c7 += r.p * r.q; });
+      var a7 = c7 / q7, val = q7 * cp;
+      var pts2 = rs2.map(function (r) { return { v: r.p, kind: 'small', color: GRAY, label: nth(r.n) }; });
+      pts2.push({ v: a7, kind: 'big', color: LIME, label: L.lAvg });
+      pts2.push({ v: cp, color: val >= c7 ? WHITE : ORANGE, label: L.lCur });
+      out.ladder = ladder(pts2, [{ a: a7, b: cp, color: val >= c7 ? 'rgba(198,244,50,0.3)' : 'rgba(255,138,76,0.3)' }]);
+      out.barsTitle = L.tAvgp;
+      out.bars = bars([{ label: L.bCost, v: c7, text: fmt(c7, 0), color: WHITE }, { label: L.bValue, v: val, text: fmt(val, 0), color: val >= c7 ? LIME : ORANGE }]);
+      out.insight = val >= c7 ? { tone: 'good', text: fill(L.apUp, { p: fmt((cp - a7) / a7 * 100) }) } : { tone: 'warn', text: fill(L.apDown, { p: fmt((a7 - cp) / cp * 100) }) };
+    } else if (id === 'etf') {
+      var L8 = N(v.lev), vo = N(v.vol) / 100, nd = Math.min(Math.floor(N(v.days)), 5000), ix = 1, et = 1;
+      for (var k = 0; k < nd; k++) { var dd = k % 2 === 0 ? vo : -vo; ix *= 1 + dd; et *= 1 + L8 * dd; }
+      var ir = (ix - 1) * 100, er = (et - 1) * 100, nv = ir * L8;
+      out.barsTitle = L.tEtf;
+      out.bars = bars([{ label: L.bIndex, v: ir, text: sg(ir) + '%', color: ir >= 0 ? LIME : ORANGE }, { label: L.bNaive, v: nv, text: sg(nv) + '%', color: nv >= 0 ? LIME : ORANGE }, { label: L.bEtf, v: er, text: sg(er) + '%', color: er >= 0 ? LIME : ORANGE }]);
+      out.insight = er < nv - 0.5 ? { tone: 'warn', text: fill(L.etfDecay, { p: fmt(nv - er) }) } : { tone: 'info', text: L.etfInfo };
+    }
+    return out;
+  }
+
+  marketSnapshot() {
+    return {
+      at: '2026-11-09 23:06 KST', next: '11/10 01:00 KST', n: 76, pos: 56, neg: 8, avg: 0.000111,
+      majors: [['BTC', 74560.00, -1.764, 0.0001], ['ETH', 2119.01, -5.257, -0.00000779], ['BNB', 684.79, -1.733, 0], ['SOL', 86.64, -2.913, 0.00002441],
+        ['XRP', 1.0926, -5.591, 0.00008561], ['DOGE', 0.06958, -2.152, 0.00008618], ['ADA', 0.1791, -0.223, 0.0000696], ['TRX', 0.31788, -0.799, -0.00010748],
+        ['AVAX', 8.821, 8.167, 0.00009079], ['LINK', 10.62, -0.914, 0.00008962], ['SUI', 0.8489, 0.13, 0.00008279]],
+      top: [['NATGAS', 0.005, 77], ['JCT', 0.00131728, 1755], ['ON', 0.00088178, 246], ['SAMSUNG', 0.00060297, 141], ['SKHYNIX', 0.00057965, 1321], ['NVDA', 0.00055171, 804]],
+      bottom: [['RSR', -0.0023078, 62], ['HOT', -0.00155765, 143], ['BZ', -0.00094982, 639], ['CL', -0.00054521, 1030], ['AIN', -0.00040781, 101], ['WLD', -0.00012009, 142]]
+    };
+  }
+
+  coinIcon(sym) {
+    var known = ['BTC', 'ETH', 'BNB', 'SOL', 'XRP', 'DOGE', 'ADA', 'TRX', 'AVAX', 'LINK', 'DOT', 'LTC', 'BCH', 'ETC', 'XLM', 'ATOM', 'UNI', 'FIL', 'NEAR', 'AAVE'];
+    return this.iconBase && known.indexOf(sym) >= 0 ? this.iconBase + sym.toLowerCase() + '.svg' : '';
+  }
+
+  market(lang, fmt) {
+    var self = this, en = lang === 'en';
+    var S = this.marketSnapshot();
+    var LIME = '#C6F432', ORANGE = '#FF8A4C', GRAY = '#A9B3BF';
+    var sg = function (x, d) { return (x > 0 ? '+' : x < 0 ? '−' : '') + fmt(Math.abs(x), d); };
+    var fr = function (x) { return (x > 0 ? '+' : x < 0 ? '−' : '') + Math.abs(x * 100).toFixed(4) + '%'; };
+    var col = function (x) { return x > 0 ? LIME : x < 0 ? ORANGE : GRAY; };
+    var px = function (x) { return x.toLocaleString(en ? 'en-US' : 'ko-KR', { minimumFractionDigits: x >= 100 ? 2 : 0, maximumFractionDigits: x >= 100 ? 2 : x >= 1 ? 4 : 5 }); };
+    var names = en ? { NATGAS: 'Natural gas', SAMSUNG: 'Samsung Electronics', SKHYNIX: 'SK hynix', NVDA: 'NVIDIA', TSLA: 'Tesla', AAPL: 'Apple', XAU: 'Gold', XAG: 'Silver' }
+      : { NATGAS: '천연가스', SAMSUNG: '삼성전자', SKHYNIX: 'SK하이닉스', NVDA: '엔비디아', TSLA: '테슬라', AAPL: '애플', XAU: '금', XAG: '은' };
+    var nm = function (sym) { return names[sym] || sym; };
+    var PAL = ['#7FD1FF', '#FFC48A', '#C9A7FF', '#8EE6C4', '#FF9EB1', '#F2E27A', '#9DB4FF', '#FFD9B8', '#A6EFE3', '#E3BBFF', '#C3D0E2', '#B9E3FF'];
+    var badge = function (sym) {
+      var h = 0; for (var i = 0; i < sym.length; i++) h = (h * 31 + sym.charCodeAt(i)) % 997;
+      var ic = self.coinIcon(sym);
+      return { ini: sym.length <= 3 ? sym : sym.slice(0, 2), bg: PAL[h % PAL.length], icon: ic, hasIcon: !!ic };
+    };
+    var maj = {}; S.majors.forEach(function (m) { maj[m[0]] = m; });
+    var rows = function (list) {
+      return list.map(function (r) { var b = badge(r[0]); return { ini: b.ini, bg: b.bg, icon: b.icon, hasIcon: b.hasIcon, sym: r[0], name: names[r[0]] || (en ? 'USDT perp' : 'USDT 무기한'), rate: fr(r[1]), color: col(r[1]), vol: (en ? '$' + fmt(r[2], 0) + 'M vol' : '거래대금 $' + fmt(r[2], 0) + 'M') }; });
+    };
+    var t = S.top, btc = maj.BTC ? maj.BTC[3] : 0, eth = maj.ETH ? maj.ETH[3] : 0;
+    var movers = S.majors.slice().sort(function (a, b) { return b[2] - a[2]; });
+    var hiM = movers[0], loM = movers[movers.length - 1];
+    var t1 = en ? (Math.abs(btc - 0.0001) <= 0.00003 ? 'BTC funding at baseline' : btc > 0.0001 ? 'BTC longs getting crowded' : 'BTC funding below baseline')
+      : (Math.abs(btc - 0.0001) <= 0.00003 ? 'BTC는 기본 수준' : btc > 0.0001 ? 'BTC 롱 쏠림 커져' : 'BTC 펀딩비 기본 이하');
+    var t2 = t.length ? (en ? '; ' + nm(t[0][0]) + ' tops the table at ' + fr(t[0][1]) : ', 펀딩비 1위는 ' + nm(t[0][0]) + ' ' + fr(t[0][1])) : '';
+    var topList = t.slice(0, 4).map(function (r) { return nm(r[0]) + ' ' + fr(r[1]); }).join(', ');
+    var tk = {
+      aria: en ? 'Major coin prices' : '주요 코인 시세',
+      label: S.live ? (en ? 'BINANCE PERP · LIVE' : '바이낸스 선물 · 실시간') : (en ? 'BINANCE PERP · ' + S.at : '바이낸스 선물 · ' + S.at + ' 기준'),
+      items: S.majors.map(function (m) { var b = badge(m[0]); return { ini: b.ini, bg: b.bg, icon: b.icon, hasIcon: b.hasIcon, sym: m[0], price: px(m[1]), chg: sg(m[2]) + '%', color: col(m[2]) }; })
+    };
+    var rep = {
+      stamp: en ? 'Binance USDT perpetuals · as of ' + S.at : '바이낸스 USDT 무기한 · ' + S.at + ' 기준',
+      kicker: (S.live ? 'LIVE · ' : 'TODAY · ') + S.at,
+      title: t1 + t2,
+      stats: [
+        { label: en ? 'Contracts scanned' : '분석 종목', value: String(S.n), color: '#EEF1F4' },
+        { label: en ? 'Positive (longs pay)' : '양수 (롱 지불)', value: String(S.pos), color: LIME },
+        { label: en ? 'Negative (shorts pay)' : '음수 (숏 지불)', value: String(S.neg), color: ORANGE },
+        { label: en ? 'Average rate' : '평균 펀딩비', value: fr(S.avg), color: '#EEF1F4' }
+      ],
+      points: en ? [
+        'Of ' + S.n + ' USDT perpetuals with over $50M in 24h volume, ' + S.pos + ' have a positive rate and ' + S.neg + ' a negative one. The average is ' + fr(S.avg) + (S.avg > 0 ? ', so overall longs are paying shorts.' : ', so overall shorts are paying longs.'),
+        'BTC ' + fr(btc) + ', ETH ' + fr(eth) + '. Over 24h the biggest gainer among majors is ' + hiM[0] + ' (' + sg(hiM[2]) + '%) and the biggest loser is ' + loM[0] + ' (' + sg(loM[2]) + '%).',
+        'Highest funding right now: ' + topList + '. Longs are crowded there, so holding a long costs money every settlement.'
+      ] : [
+        '거래대금 5천만 달러 이상 USDT 무기한 ' + S.n + '개 중 ' + S.pos + '개가 양수, ' + S.neg + '개가 음수예요. 평균 펀딩비는 ' + fr(S.avg) + (S.avg > 0 ? '로, 전체적으로 롱이 숏에게 내는 흐름이에요.' : '로, 전체적으로 숏이 롱에게 내는 흐름이에요.'),
+        'BTC ' + fr(btc) + ', ETH ' + fr(eth) + '예요. 24시간 동안 주요 코인 중 가장 많이 오른 건 ' + hiM[0] + '(' + sg(hiM[2]) + '%), 가장 많이 내린 건 ' + loM[0] + '(' + sg(loM[2]) + '%)이에요.',
+        '지금 펀딩비 상위권은 ' + topList + '예요. 롱이 몰려 있다는 뜻이라, 롱을 들고 있으면 정산마다 비용이 나가요.'
+      ],
+      topTitle: en ? 'HIGHEST · LONGS PAY SHORTS' : '펀딩비 상위 · 롱이 숏에게 지불',
+      botTitle: en ? 'LOWEST · SHORTS PAY LONGS' : '펀딩비 하위 · 숏이 롱에게 지불',
+      top: rows(S.top), bottom: rows(S.bottom),
+      note: en ? 'A summary of Binance public data for reference only, not investment advice. Rates are per settlement; settlement intervals can differ by contract.' : '바이낸스 공개 데이터를 정리한 참고 자료이며 투자 권유가 아니에요. 펀딩비는 1회 정산 기준이고, 정산 주기는 종목마다 다를 수 있어요.',
+      majTitle: en ? 'MAJORS · 24H · FUNDING' : '주요 코인 · 24시간 · 펀딩비',
+      majors: S.majors.slice(0, 6).map(function (m) { var b = badge(m[0]); return { ini: b.ini, bg: b.bg, icon: b.icon, hasIcon: b.hasIcon, sym: m[0], chg: sg(m[2]) + '%', chgColor: col(m[2]), rate: fr(m[3]), color: col(m[3]) }; }),
+      majNote: en ? 'Around +0.0100% is the usual baseline on Binance.' : '바이낸스에서 +0.0100% 근처면 평소 수준이에요.',
+      nextLabel: en ? 'NEXT BTC FUNDING' : '다음 BTC 펀딩 정산',
+      next: S.next,
+      archive: en ? 'Once daily auto-publishing starts, past reports will stack up here.' : '매일 자동 발행이 시작되면 지난 리포트가 여기에 쌓여요.'
+    };
+    return { tk: tk, rep: rep };
+  }
+
+  planner(lang, fmt, L) {
+    var self = this, en = lang === 'en';
+    var st = this.state || {};
+    var N = function (x) { if (x === '' || x == null) return NaN; return parseFloat(String(x).replace(/,/g, '')); };
+    var ad = (st.vals || {}).avgdown || {}, pv = (st.vals || {}).plan || {};
+    var mode = st.planMode === 'pyramid' ? 'pyramid' : 'equal';
+    var LIME = '#C6F432', ORANGE = '#FF8A4C';
+    var fields = [['budget', en ? 'Extra budget' : '추가 투입 예산', ''], ['n', en ? 'Number of buys' : '분할 횟수', en ? 'buys' : '회'], ['gap', en ? 'Drop between buys' : '회차 간 하락 간격', '%']].map(function (f) {
+      return { key: f[0], label: f[1], unit: f[2], value: pv[f[0]] == null ? '' : pv[f[0]],
+        onChange: function (e) { self.setVal('plan', f[0], e.target.value); },
+        onKeyDown: function (e) { if (e.key !== 'ArrowUp' && e.key !== 'ArrowDown') return; e.preventDefault(); self.nudge(f[0], e.key === 'ArrowUp' ? 1 : -1, e.shiftKey ? 10 : e.altKey ? 0.1 : 1, 'plan'); } };
+    });
+    var on = function (m) { return mode === m; };
+    var base = {
+      title: en ? 'Averaging-down strategy planner' : '물타기 전략 플래너',
+      desc: en ? 'Instead of buying everything at once, plan your buys across price levels. It uses the holdings, average and price you entered above and shows how your average falls with each buy.'
+        : '한 번에 다 사지 말고 가격대를 나눠 미리 계획해 두세요. 위에 넣은 보유 수량·평단·현재가를 그대로 써서, 회차마다 평단이 어떻게 내려가는지 보여 드려요.',
+      modeLabel: en ? 'Split method' : '분할 방식',
+      eqLabel: en ? 'Equal split' : '균등 분할', pyLabel: en ? 'Pyramid (1:2:3…)' : '피라미드 (1:2:3…)',
+      eqPressed: on('equal') ? 'true' : 'false', pyPressed: on('pyramid') ? 'true' : 'false',
+      eqBg: on('equal') ? LIME : 'transparent', eqFg: on('equal') ? '#0A0D04' : '#A9B3BF',
+      pyBg: on('pyramid') ? LIME : 'transparent', pyFg: on('pyramid') ? '#0A0D04' : '#A9B3BF',
+      pickEqual: function () { self.setState({ planMode: 'equal' }); }, pickPyr: function () { self.setState({ planMode: 'pyramid' }); },
+      fields: fields,
+      head: en ? ['Buy', 'Price', 'Shares', 'Cost', 'Running avg'] : ['회차', '매수가', '수량', '금액', '누적 평단'],
+      methodsTitle: en ? 'THREE COMMON WAYS TO SPLIT' : '대표적인 분할 방법 3가지',
+      methods: (en ? [
+        ['Equal split', 'SIMPLE', 'Buy the same amount at each preset price level.', 'Simple, and keeps emotion out of it', 'The deeper it falls, the slower your average comes down'],
+        ['Pyramid', '1 : 2 : 3', 'Buy more the further it falls, e.g. 1x, 2x, 3x.', 'Pulls your average down fastest', 'Most of the budget sits low; if it bounces early you end up with little'],
+        ['Time split', 'DCA', 'Split by date instead of price, e.g. the same amount every week.', 'No need to guess the bottom', 'Keeps buying even while the reason for the fall is unresolved']
+      ] : [
+        ['균등 분할', '단순', '정해 둔 가격마다 같은 금액씩 사요.', '단순하고 감정이 덜 개입돼요', '많이 떨어질수록 평단이 천천히 내려가요'],
+        ['피라미드', '1 : 2 : 3', '떨어질수록 더 많이 사요. 예를 들어 1배, 2배, 3배씩이요.', '평단이 가장 빨리 내려가요', '예산이 아래쪽에 몰려서, 일찍 반등하면 조금만 산 채로 끝나요'],
+        ['시간 분할', '적립식', '가격 대신 날짜로 나눠 사요. 예를 들어 매주 같은 금액이요.', '바닥을 맞히려고 애쓸 필요가 없어요', '하락 이유가 해결되지 않아도 계속 사게 돼요']
+      ]).map(function (m, i) { return { title: m[0], tag: m[1], body: m[2], pro: m[3], con: m[4], border: (i === 0 && mode === 'equal') || (i === 1 && mode === 'pyramid') ? LIME : '#252D39' }; }),
+      checkTitle: en ? 'Before you average down' : '물타기 전에 체크',
+      checks: en ? ['Do you know why it fell: the company itself, or the whole market?', 'Have you set a cap on how much of your assets one stock can take?', 'Have you decided what to do if it falls below your last buy: cut or hold?', 'Is the extra money something you will not need soon?']
+        : ['떨어진 이유가 회사 문제인지, 시장 전체 문제인지 알고 있나요?', '한 종목이 전체 자산에서 차지할 최대 비중을 정했나요?', '마지막 회차 아래로 더 떨어지면 손절할지 버틸지 정했나요?', '추가로 넣는 돈이 곧 써야 할 돈은 아닌가요?'],
+      disclaimer: en ? 'General methods for reference only, not a recommendation to buy any stock.' : '일반적인 방법을 소개한 참고 자료이며, 특정 종목의 매수를 권유하지 않아요.'
+    };
+    var sh = N(ad.shares), av = N(ad.avg), px = N(ad.price), tg = N(ad.target), bud = N(pv.budget), n = Math.round(N(pv.n)), gap = N(pv.gap);
+    var fail = function (m) { base.ok = false; base.hasError = true; base.error = m; base.rows = []; base.stats = []; base.good = false; base.warn = false; base.msg = ''; return base; };
+    if (![sh, av, px, bud, n, gap].every(isFinite)) return fail(L.errNum);
+    if (sh <= 0 || av <= 0 || px <= 0 || bud <= 0 || n < 1 || gap < 0) return fail(L.errPos);
+    if (n > 10) return fail(en ? 'Use 10 buys or fewer.' : '분할 횟수는 10회 이하로 넣어 주세요.');
+    if (gap * (n - 1) >= 100) return fail(en ? 'The last buy price would fall below zero. Reduce the drop or the number of buys.' : '마지막 회차 가격이 0 아래로 내려가요. 간격이나 횟수를 줄여 주세요.');
+    var W = 0, i; for (i = 0; i < n; i++) W += mode === 'pyramid' ? i + 1 : 1;
+    var cq = 0, cc = 0, rows = [], reachAt = -1, tValid = isFinite(tg) && tg > 0 && tg < av;
+    for (i = 0; i < n; i++) {
+      var p = px * (1 - gap / 100 * i), w = mode === 'pyramid' ? i + 1 : 1;
+      var q = Math.floor(bud * w / W / p), c = q * p;
+      cq += q; cc += c;
+      var a = (sh * av + cc) / (sh + cq);
+      var hit = tValid && a <= tg;
+      if (hit && reachAt < 0) reachAt = i;
+      rows.push({ n: en ? 'Buy ' + (i + 1) : (i + 1) + '회차', drop: i === 0 ? (en ? 'price now' : '현재가') : '−' + fmt(gap * i, 1) + '%', price: fmt(p), qty: fmt(q, 0), cost: fmt(c, 0), avg: fmt(a),
+        avgColor: hit ? LIME : '#EEF1F4', bg: reachAt === i ? 'rgba(198,244,50,0.10)' : 'transparent' });
+    }
+    var fa = (sh * av + cc) / (sh + cq);
+    base.ok = true; base.hasError = false; base.error = ''; base.rows = rows;
+    base.stats = [
+      { label: en ? 'Average if all fill' : '모두 체결 시 평단', value: fmt(fa), color: LIME },
+      { label: en ? 'Average change' : '평단 변화', value: '−' + fmt((av - fa) / av * 100) + '%', color: '#EEF1F4' },
+      { label: en ? 'Extra invested' : '추가 투자금', value: fmt(cc, 0), color: '#EEF1F4' },
+      { label: en ? 'Budget left over' : '남는 예산', value: fmt(bud - cc, 0), color: '#A9B3BF' }
+    ];
+    if (tValid && reachAt >= 0) {
+      base.good = true; base.warn = false;
+      base.msg = en ? 'You reach your target average of ' + fmt(tg) + ' once buy ' + (reachAt + 1) + ' fills (' + (reachAt === 0 ? 'at today’s price' : fmt(gap * reachAt, 1) + '% below today') + '). Buys after that are optional.'
+        : (reachAt + 1) + '회차(' + (reachAt === 0 ? '현재가' : '현재가 대비 −' + fmt(gap * reachAt, 1) + '%') + ')까지 체결되면 목표 평단 ' + fmt(tg) + '에 도달해요. 그 뒤 회차는 선택이에요.';
+    } else if (tValid) {
+      base.good = false; base.warn = true;
+      base.msg = en ? 'Even if every buy fills, your average only reaches ' + fmt(fa) + ', short of your ' + fmt(tg) + ' target. Raise the budget, the drop between buys, or the target.'
+        : '계획을 다 체결해도 평단은 ' + fmt(fa) + '까지예요. 목표 ' + fmt(tg) + '에는 못 미쳐요. 예산이나 간격을 늘리거나 목표를 조정해 보세요.';
+    } else {
+      base.good = false; base.warn = false; base.msg = '';
+    }
+    return base;
+  }
+
+  liqData() {
+    return {
+      at: '11/09 23:51',
+      BTC: { P: 74937.97, chg: -1.429, acct: 0.7409, oiUsd: 7292, dec: 1,
+        up: [76624.07, 76905.09, 76764.58, 2.44], dn: [72970.85, 73251.86, 73111.36, -2.44],
+        closes: [75728, 75712.2, 75809.4, 75765.3, 75772.5, 75657.7, 75715.8, 75749.1, 75836, 75775.1, 75713.3, 75758, 75887.8, 75830.2, 75800, 75801.8, 75939, 75900.4, 75899.5, 75861.4, 75944.3, 75944.9, 75895.9, 76007, 76038.9, 75745.4, 75716, 75913.6, 75894.7, 75715.9, 74097.4, 74438.9, 74823.5, 75213.3, 75138.4, 75248.7, 74825.1, 74800, 74440.3, 74271.1, 73844.1, 74524.7, 74254.1, 74125.5, 74345.1, 74895.8, 74694.3, 74930.5] },
+      ETH: { P: 2133.73, chg: -4.789, acct: 0.7978, oiUsd: 4860, dec: 2,
+        up: [2301.761, 2309.763, 2305.762, 8.06], dn: [2037.712, 2045.714, 2041.713, -4.31],
+        closes: [2236.19, 2232.65, 2235, 2236.11, 2234.43, 2227.99, 2231.59, 2233.95, 2239.01, 2235.9, 2233.29, 2235.61, 2237.41, 2234.75, 2234.43, 2233.07, 2240.24, 2238.25, 2236.22, 2235.3, 2239.5, 2238.45, 2235.37, 2239.76, 2241.11, 2229.59, 2229.87, 2235.41, 2231.36, 2225.78, 2126, 2127.4, 2126.27, 2143.28, 2141.16, 2145.38, 2139.48, 2137.94, 2127.81, 2112.19, 2092.95, 2122.21, 2107.81, 2106.84, 2112.37, 2121.49, 2124.35, 2133.42] },
+      SOL: { P: 87.5209, chg: -2.3, acct: 0.7713, oiUsd: 827, dec: 3,
+        up: [92.1157, 92.44391, 92.2798, 5.44], dn: [84.23883, 84.56703, 84.40293, -3.56],
+        closes: [89.51, 89.47, 89.7, 89.75, 89.59, 89, 89.2, 89.23, 89.77, 89.41, 89.05, 89.05, 89.28, 89.06, 89.17, 89.02, 89.31, 89.25, 89.25, 89.17, 89.66, 89.51, 89.19, 89.53, 89.69, 89, 89.11, 89.52, 89.54, 89.07, 85.91, 86.27, 86.5, 87.52, 87.75, 88, 87.44, 87.36, 86.57, 86.03, 85.53, 86.93, 86.41, 85.92, 86.07, 86.58, 86.73, 87.51] }
+    };
+  }
+
+  liqMap(lang, fmt) {
+    var self = this, en = lang === 'en';
+    var D = this.liqData();
+    var coin = ['BTC', 'ETH', 'SOL'].indexOf((this.state || {}).lmCoin) >= 0 ? this.state.lmCoin : 'BTC';
+    var d = D[coin];
+    var PAL = { BTC: '#FFC48A', ETH: '#C9A7FF', SOL: '#8EE6C4' };
+    var fp = function (x) { return fmt(x, d.dec); };
+    var fa = function (x) { return fmt(x, Math.max(0, d.dec - 1)); };
+    var pc = function (x, k) { return (x > 0 ? '+' : x < 0 ? '−' : '') + Math.abs(x).toFixed(k == null ? 1 : k) + '%'; };
+    var up = d.up, dn = d.dn;
+    var pos = Math.max(0.06, Math.min(0.94, (up[2] - d.P) / (up[2] - dn[2])));
+    var W = 336, H = 96, lo = Math.min.apply(null, d.closes.concat([dn[0], d.P])), hi = Math.max.apply(null, d.closes.concat([up[1], d.P]));
+    var pad = (hi - lo) * 0.06; lo -= pad; hi += pad;
+    var Y = function (p) { return H - (p - lo) / (hi - lo) * H; };
+    var pts = d.closes.slice(0, -1).concat([d.P]);
+    var spark = pts.map(function (p, i) { return (i ? 'L' : 'M') + (i / (pts.length - 1) * W).toFixed(1) + ',' + Y(p).toFixed(1); }).join(' ');
+    return {
+      titleA: en ? 'Where liquidations' : '롱·숏 청산은', titleB: en ? 'are stacked' : '어디에 몰려 있나',
+      stamp: en ? 'Binance futures · estimate as of ' + D.at + ' KST' : '바이낸스 선물 · ' + D.at + ' 기준 추정',
+      coinLabel: en ? 'Coin' : '코인',
+      coins: ['BTC', 'ETH', 'SOL'].map(function (c) { var on = c === coin; var ic = self.coinIcon(c); return { sym: c, icon: ic, hasIcon: !!ic, badge: PAL[c], pressed: on ? 'true' : 'false', bg: on ? '#EEF1F4' : 'transparent', fg: on ? '#07090D' : '#A9B3BF', pick: function () { self.setState({ lmCoin: c }); } }; }),
+      sym: coin, badge: PAL[coin], icon: self.coinIcon(coin), hasIcon: !!self.coinIcon(coin), price: fp(d.P),
+      chg: pc(d.chg, 2) + ' (24h)', chgColor: d.chg >= 0 ? '#C6F432' : '#FF8A4C',
+      upLabel: en ? '▲ SHORT LIQUIDATION MAGNET ABOVE' : '▲ 위쪽 숏 청산 자석', dnLabel: en ? '▼ LONG LIQUIDATION MAGNET BELOW' : '▼ 아래쪽 롱 청산 자석',
+      upD: pc(up[3]), dnD: pc(dn[3]), upRange: fa(up[0]) + ' – ' + fa(up[1]), dnRange: fa(dn[0]) + ' – ' + fa(dn[1]),
+      upMid: fa(up[2]), dnMid: fa(dn[2]),
+      upShort: en ? 'Short cluster' : '숏 청산 밀집', dnShort: en ? 'Long cluster' : '롱 청산 밀집',
+      nowLabel: en ? 'PRICE NOW' : '지금 가격',
+      closer: Math.abs(up[3]) === Math.abs(dn[3]) ? (en ? 'Equally close on both sides' : '위·아래 거리가 같아요')
+        : Math.abs(up[3]) < Math.abs(dn[3]) ? (en ? 'The short cluster above is closer' : '위쪽 숏 청산 구간이 더 가까워요') : (en ? 'The long cluster below is closer' : '아래쪽 롱 청산 구간이 더 가까워요'),
+      ballTop: (pos * 100).toFixed(1) + '%',
+      spark: spark, lastY: Y(d.P).toFixed(1),
+      upY: Y(up[1]).toFixed(1), upH: Math.max(3, Y(up[0]) - Y(up[1])).toFixed(1), dnY: Y(dn[1]).toFixed(1), dnH: Math.max(3, Y(dn[0]) - Y(dn[1])).toFixed(1),
+      sparkAria: en ? 'Price over the last 48 hours with liquidation clusters' : '최근 48시간 가격 흐름과 청산 밀집 구간',
+      ratioLabel: en ? 'Accounts long/short' : '계정 롱/숏', oi: '$' + fmt(d.oiUsd, 0) + 'M',
+      longW: (d.acct * 100).toFixed(1) + '%', longTxt: (en ? 'Long ' : '롱 ') + (d.acct * 100).toFixed(1) + '%', shortTxt: (en ? 'Short ' : '숏 ') + ((1 - d.acct) * 100).toFixed(1) + '%',
+      at: D.at,
+      method: en ? 'Clusters are estimates from the last 7 days of 1-hour volume with a 10x/25x/50x/100x leverage mix, ignoring levels price has already passed. The long/short ratio and open interest are Binance’s published figures. Not investment advice.'
+        : '청산 밀집 구간은 최근 7일 1시간봉 거래대금과 10·25·50·100배 레버리지 비중을 가정해 계산한 추정치예요. 이미 가격이 지나간 지점은 뺐어요. 롱·숏 비율과 미결제약정은 바이낸스 공개 값이에요. 투자 권유가 아니에요.'
+    };
+  }
+
+  faqText(lang) {
+    if (lang === 'en') return {
+      pos: [['How much of my account should I risk per trade?', 'There is no single answer, but many traders risk around 0.5–2% of their account per trade, small enough to survive a losing streak.'],
+        ['Why are fees counted twice?', 'You pay once when you enter and again when your stop closes the trade. Leaving that out makes the real loss bigger than you planned.'],
+        ['Should I just use more leverage?', 'Size is set by your stop, so more leverage does not change the loss. It only lowers the margin and pulls liquidation closer, so keep liquidation outside your stop.']],
+      fee: [['Are fees charged on margin or on the position?', 'On the full leveraged position. With 100 margin at 20x, fees are charged on 2,000.'],
+        ['What is the difference between maker and taker?', 'Limit orders that rest on the book are maker; orders that fill immediately are taker. Maker is usually cheaper, so limit orders alone can cut costs.'],
+        ['What does the break-even price mean?', 'It is the price at which your P&L is zero after paying both opening and closing fees. You only keep money beyond it.']],
+      liq: [['How much closer does liquidation get with more leverage?', 'Roughly 1/leverage. At 10x a ~10% move against you liquidates; at 20x, ~5%.'],
+        ['Is it different on cross margin?', 'Yes. Cross margin uses your whole wallet balance, so liquidation is further away. This calculator uses isolated margin.'],
+        ['Why does my exchange show a slightly different price?', 'Exchanges use tiered maintenance margin by position size and also account for fees and funding.']],
+      fund: [['Who pays whom?', 'Longs and shorts pay each other, not the exchange. With a positive rate longs pay shorts; with a negative rate shorts pay longs.'],
+        ['Do I pay if I am not holding at settlement?', 'Usually funding is exchanged only if you hold a position at the settlement time. Closing just before means you skip that round.'],
+        ['What does a high funding rate mean?', 'Positions are crowded on one side. The higher the rate, the faster holding costs add up.']],
+      dca: [['Does scaling in change my liquidation price?', 'Yes. Your average entry changes, so liquidation is recalculated and moves along with it at the same leverage.'],
+        ['What unit should I use for size?', 'The number of coins, for example 0.01 BTC. Any coin works as long as price and size match.'],
+        ['Is scaling in always better?', 'Your average improves, but the position gets bigger and so does the loss at your stop. Recheck it with the position size calculator.']],
+      rr: [['What ratio is good?', 'Many traders aim for 1:2 or better. At 1:2 you break even (before fees) by winning about 34% of trades.'],
+        ['How is break-even win rate calculated?', '1 ÷ (1 + R). At 1:3 it is 25%; at 1:1 it is 50%.'],
+        ['Should I just push my target further?', 'A further target improves the ratio but lowers the chance of reaching it. Use targets backed by your chart.']],
+      avgdown: [['When does it fail to calculate?', 'A target average below the current price or above your current average is mathematically unreachable. It works only when price < target < average.'],
+        ['What if my target is close to the current price?', 'The shares needed grow very fast and approach infinity near the current price. Pick a realistic target.'],
+        ['What should I check before averaging down?', 'How much of your total assets the extra money represents. A lower average does not help if one stock takes over your portfolio.']],
+      avgp: [['Are fees and taxes included?', 'No. It uses only prices and share counts, so it may differ slightly from your broker app.'],
+        ['What if I sold some shares?', 'Selling usually does not change the average cost of the remaining shares. Enter only the shares you still hold.'],
+        ['How much does it need to rise to break even?', 'Average ÷ price − 1. The bigger the loss, the larger the rise needed.']],
+      etf: [['What is volatility decay?', 'Even if the index ends flat after swinging up and down, a leveraged ETF loses value, because it resets to leverage × the daily return every day.'],
+        ['Do I lose in an uptrend too?', 'In a steady trend it can even beat leverage × index. Losses grow in choppy, directionless markets.'],
+        ['What daily move should I enter?', 'Indexes often move around 1–2% a day and more in volatile periods. Try several values and compare.']],
+      sliq: [['What is a stock perpetual?', 'A futures contract with no expiry that tracks a stock price. Some crypto exchanges list them on stocks such as Samsung Electronics and SK hynix.'],
+        ['Why is the default maintenance margin 1%?', 'Stock-based contracts often carry higher maintenance margin than coins, so the default is conservative. Replace it with your exchange’s value.'],
+        ['Can I be liquidated outside stock market hours?', 'Trading hours depend on the exchange. Where the contract keeps trading while the home market is closed, its price can move and liquidate you.']]
+    };
+    return {
+      pos: [['리스크는 시드의 몇 %가 적당한가요?', '정답은 없지만 많은 트레이더가 한 번의 거래에 시드의 0.5~2% 정도만 걸어요. 연속으로 손절해도 계좌가 버틸 수 있는 수준으로 정하세요.'],
+        ['왜 수수료를 두 번 빼나요?', '진입할 때 한 번, 손절로 나갈 때 한 번 수수료가 붙어서예요. 이걸 빼먹으면 실제 손실이 정한 금액보다 커져요.'],
+        ['레버리지를 더 높이면 안 되나요?', '수량은 손절가로 정해지기 때문에 레버리지를 높여도 손실 금액은 같아요. 증거금만 줄고 청산가가 가까워질 뿐이니, 청산가가 손절가 바깥에 있는 선에서 정하세요.']],
+      fee: [['수수료는 증거금에 붙나요, 포지션에 붙나요?', '레버리지를 곱한 포지션 전체에 붙어요. 증거금 100에 20배면 2,000 기준으로 수수료가 계산돼요.'],
+        ['메이커와 테이커 수수료는 뭐가 다른가요?', '지정가로 호가에 걸어두면 메이커, 시장가로 바로 체결하면 테이커예요. 보통 메이커가 더 싸서 지정가 주문만으로도 수수료를 줄일 수 있어요.'],
+        ['본전 가격은 무슨 뜻인가요?', '진입·청산 수수료를 모두 낸 뒤 손익이 0이 되는 가격이에요. 이 가격을 넘어야 실제로 돈이 남아요.']],
+      liq: [['레버리지를 올리면 청산가가 얼마나 가까워지나요?', '대략 1/레버리지만큼이에요. 10배면 약 10%, 20배면 약 5% 반대로 움직일 때 청산돼요.'],
+        ['교차 마진이면 청산가가 다른가요?', '네. 교차 마진은 지갑 잔고 전체가 증거금으로 쓰여서 청산가가 더 멀어져요. 이 계산기는 격리 마진 기준이에요.'],
+        ['거래소 화면의 청산가와 왜 조금 다른가요?', '거래소는 포지션 크기 구간별로 유지증거금률을 다르게 적용하고, 수수료와 펀딩비도 반영하기 때문이에요.']],
+      fund: [['펀딩비는 누가 누구에게 내나요?', '거래소가 아니라 롱과 숏이 서로 주고받아요. 비율이 양수면 롱이 숏에게, 음수면 숏이 롱에게 내요.'],
+        ['정산 시각에 포지션이 없으면 안 내나요?', '보통 정산 시각에 포지션을 들고 있을 때만 주고받아요. 정산 직전에 닫으면 그 회차는 건너뛰어요.'],
+        ['펀딩비율이 높다는 건 무슨 뜻인가요?', '한쪽 방향으로 포지션이 몰려 있다는 신호예요. 비율이 높을수록 오래 들고 갈 때 비용이 빠르게 쌓여요.']],
+      dca: [['분할 진입하면 청산가도 바뀌나요?', '네. 평균 진입가가 바뀌면 같은 레버리지에서 청산가도 평균가를 따라 다시 계산돼요.'],
+        ['수량에는 뭘 넣나요?', '코인 개수를 넣으면 돼요. 예를 들어 BTC 0.01개요. 가격과 수량만 맞으면 어떤 코인이든 계산돼요.'],
+        ['분할 진입이 항상 유리한가요?', '평균가는 좋아지지만 포지션이 커져서 손절 시 손실도 늘어요. 진입 후 포지션 사이즈 계산기로 손실 금액을 다시 확인하세요.']],
+      rr: [['손익비는 얼마 이상이 좋나요?', '많은 트레이더가 1:2 이상을 기준으로 삼아요. 1:2면 승률 약 34%만 넘어도 수수료 전 기준으로 본전이에요.'],
+        ['본전 승률은 어떻게 계산하나요?', '1 ÷ (1 + 손익비)예요. 1:3이면 25%, 1:1이면 50%예요.'],
+        ['목표가만 멀리 잡으면 되나요?', '목표를 멀리 잡을수록 손익비는 좋아지지만 도달할 확률은 낮아져요. 차트에 근거가 있는 목표가를 쓰는 게 중요해요.']],
+      avgdown: [['언제 계산이 안 되나요?', '목표 평단이 현재가보다 낮거나 현재 평단보다 높으면 수학적으로 도달할 수 없어요. 현재가 < 목표 평단 < 현재 평단일 때만 계산돼요.'],
+        ['목표 평단을 현재가에 가깝게 잡으면요?', '필요한 수량이 급격히 늘어나요. 현재가에 가까워질수록 무한대에 가까워지니 현실적인 목표를 잡으세요.'],
+        ['물타기 전에 꼭 확인할 것은?', '추가로 넣는 돈이 전체 자산에서 차지하는 비중이에요. 평단이 낮아져도 한 종목에 돈이 쏠리면 위험도 같이 커져요.']],
+      avgp: [['수수료와 세금도 포함되나요?', '아니요. 매수 가격과 수량만으로 계산해서 증권사 앱의 평단과 조금 다를 수 있어요.'],
+        ['일부를 팔았으면 어떻게 하나요?', '일반적으로 팔아도 남은 주식의 평단은 그대로예요. 지금 남아 있는 수량만 넣어서 계산하세요.'],
+        ['본전까지 얼마나 올라야 하나요?', '평단 ÷ 현재가 − 1 만큼이에요. 손실이 클수록 본전까지 필요한 상승률은 더 커져요.']],
+      etf: [['음의 복리가 뭔가요?', '지수가 오르내리다 제자리로 와도 레버리지 ETF는 손실이 나는 현상이에요. 매일 그날 수익률에 배수를 곱해 다시 시작하기 때문이에요.'],
+        ['상승장에서도 손해인가요?', '한 방향으로 꾸준히 오르면 오히려 "지수 × 배수"보다 더 벌 수도 있어요. 손해가 커지는 건 방향 없이 출렁이는 횡보장이에요.'],
+        ['일간 변동폭은 얼마로 넣어야 하나요?', '지수는 평소 하루 1~2% 안팎, 변동이 클 때는 그 이상 움직이기도 해요. 여러 값으로 바꿔 보면서 비교해 보세요.']],
+      sliq: [['주식 무기한선물이 뭔가요?', '만기 없이 주가를 따라가는 선물이에요. 일부 해외 가상자산 거래소에서 삼성전자, SK하이닉스 같은 종목 기반 상품을 거래해요.'],
+        ['왜 유지증거금률 기본값이 1%인가요?', '주식 기반 상품은 코인보다 유지증거금률이 높게 잡히는 경우가 많아서 보수적으로 잡았어요. 거래소의 실제 값으로 바꿔 넣으세요.'],
+        ['국내 장이 닫혀 있어도 청산되나요?', '거래 시간은 거래소마다 달라요. 국내 장이 닫힌 시간에도 거래되는 상품이라면 가격이 움직여 청산될 수 있어요.']]
+    };
+  }
+
+  renderVals() {
+    var s = this.state || {};
+    var self = this;
+    var lang = s.lang === 'en' ? 'en' : 'ko';
+    var L = this.ui(lang);
+    var CT = this.calcText(lang);
+    var locale = lang === 'en' ? 'en-US' : 'ko-KR';
+    var fmt = function (x, d) { return isFinite(x) ? x.toLocaleString(locale, { maximumFractionDigits: d == null ? 2 : d }) : '-'; };
+    var presets = this.fontPresets();
+    var fontId = s.font || this.props.fontSet || 'B';
+    if (!presets[fontId]) fontId = '0';
+    var fp = presets[fontId];
+
+    var scrollTo = function (id) {
+      setTimeout(function () {
+        try {
+          var el = id ? document.getElementById(id) : null;
+          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          else window.scrollTo({ top: 0, behavior: 'smooth' });
+        } catch (e) {}
+      }, 30);
+    };
+    var go = function (view, anchor) { return function () { self.setState({ view: view }); scrollTo(anchor); }; };
+
+    var order = ['avgdown', 'avgp', 'etf', 'sliq', 'pos', 'fee', 'liq', 'fund', 'dca', 'rr'];
+    var units = {
+      pos: { seed: 'USDT', risk: '%', margin: 'USDT', fee: '%' }, fee: { margin: 'USDT', lev: 'x', fo: '%', fc: '%' },
+      liq: { lev: 'x', mmr: '%' }, sliq: { lev: 'x', mmr: '%' }, fund: { notional: 'USDT', rate: '%', interval: 'h', hold: 'h' },
+      dca: { lev: 'x' }, etf: { lev: 'x', vol: '%', days: L.days }
+    };
+    var keys = {
+      pos: ['seed', 'risk', 'entry', 'stop', 'margin', 'fee'], fee: ['margin', 'lev', 'entry', 'exit', 'fo', 'fc'],
+      liq: ['entry', 'lev', 'mmr'], sliq: ['entry', 'lev', 'mmr'], fund: ['notional', 'rate', 'interval', 'hold'],
+      dca: ['p1', 'q1', 'p2', 'q2', 'p3', 'q3', 'p4', 'q4', 'lev'], rr: ['entry', 'stop', 'target'],
+      avgdown: ['shares', 'avg', 'price', 'target'], avgp: ['p1', 'q1', 'p2', 'q2', 'p3', 'q3', 'p4', 'q4', 'cp'], etf: ['lev', 'vol', 'days']
+    };
+    var hasSide = { pos: true, fee: true, liq: true, fund: true, dca: true, rr: true, sliq: true };
+
+    var view = order.indexOf(s.view) >= 0 ? s.view : 'home';
+    var cid = view === 'home' ? 'avgdown' : view;
+    var ct = CT[cid];
+    var vals = (s.vals || {})[cid] || {};
+    var side = ((s.sides || {})[cid]) === 'short' ? 'short' : 'long';
+    var isLong = side === 'long';
+
+    this._cid = cid;
+    var fields = keys[cid].map(function (k) {
+      return {
+        key: k, label: ct.f[k], unit: (units[cid] || {})[k] || '', value: vals[k] == null ? '' : vals[k],
+        onChange: function (e) { self.setVal(cid, k, e.target.value); },
+        onKeyDown: function (e) {
+          if (e.key !== 'ArrowUp' && e.key !== 'ArrowDown') return;
+          e.preventDefault();
+          self.nudge(k, e.key === 'ArrowUp' ? 1 : -1, e.shiftKey ? 10 : e.altKey ? 0.1 : 1);
+        }
+      };
+    });
+    var setSide = function (sd) { return function () { var ss = Object.assign({}, self.state.sides); ss[cid] = sd; self.setState({ sides: ss }); }; };
+
+    var r = this.compute(cid, vals, isLong, L, ct.r, fmt);
+    var x = r.ok ? this.extras(cid, vals, isLong, L, fmt) : {};
+    var blankRes = { label: '', value: '-', sub: '' };
+    var res = { ok: !!r.ok, hasError: !r.ok, error: r.error || '', p: r.p || blankRes, s: r.s || blankRes, list: r.list || [] };
+    var ins = x.insight || null;
+    var lad = x.ladder || null;
+    var viz = {
+      hasLadder: !!lad, zones: lad ? lad.zones : [], markers: lad ? lad.markers : [], legend: lad ? lad.legend : [],
+      hasBars: !!(x.bars && x.bars.length), barsTitle: x.barsTitle || '', bars: x.bars || [],
+      insGood: !!ins && ins.tone === 'good', insWarn: !!ins && ins.tone === 'warn', insInfo: !!ins && ins.tone === 'info', insText: ins ? ins.text : ''
+    };
+    var mk = this.market(lang, fmt);
+    var faq = (this.faqText(lang)[cid] || []).map(function (qa) { return { q: qa[0], a: qa[1] }; });
+
+    var tool = function (id) {
+      var t = CT[id]; var active = view === id; var i = order.indexOf(id);
+      return {
+        id: id, num: (i < 9 ? '0' : '') + (i + 1), code: t.code, title: t.title, card: t.card,
+        go: go(id, 'top'), flex: id === 'avgdown' ? '2 1 520px' : '1 1 260px',
+        border: active ? '#C6F432' : '#252D39', bg: active ? '#11161E' : (id === 'avgdown' ? '#0E1218' : '#0B0E13')
+      };
+    };
+    var tools = order.map(tool);
+    var relMap = { pos: ['liq', 'fee', 'rr'], fee: ['pos', 'fund', 'liq'], liq: ['pos', 'dca', 'sliq'], fund: ['fee', 'liq', 'pos'], dca: ['liq', 'pos', 'avgp'],
+      rr: ['pos', 'liq', 'fee'], avgdown: ['avgp', 'etf', 'sliq'], avgp: ['avgdown', 'dca', 'etf'], etf: ['avgp', 'avgdown', 'sliq'], sliq: ['liq', 'pos', 'avgdown'] };
+    var related = (relMap[cid] || []).map(tool);
+
+    var fontLabels = lang === 'en'
+      ? { '0': '0 Current', 'A': 'A Editorial', 'B': 'B Crypto wide', 'C': 'C Grotesk', 'D': 'D Ticker board' }
+      : { '0': '0 현재', 'A': 'A 에디토리얼', 'B': 'B 크립토 와이드', 'C': 'C 그로테스크', 'D': 'D 티커보드' };
+    var fonts = ['0', 'A', 'B', 'C', 'D'].map(function (id) {
+      var on = id === fontId;
+      return { label: fontLabels[id], pressed: on ? 'true' : 'false', bg: on ? '#0A0D04' : 'transparent', fg: on ? '#C6F432' : '#0A0D04', pick: function () { self.setState({ font: id }); } };
+    });
+
+    return {
+      fh: fp.fh, fb: fp.fb, fn: fp.fn, hw: fp.hw,
+      t: L, fonts: fonts, tools: tools, coinTools: tools.slice(4), stockTools: tools.slice(0, 4),
+      isHome: view === 'home', isDetail: view !== 'home', faq: faq, related: related,
+      calc: { num: (order.indexOf(cid) < 9 ? '0' : '') + (order.indexOf(cid) + 1), code: ct.code, title: ct.title, desc: ct.desc, formula: ct.formula, note: ct.note, hasSide: !!hasSide[cid], fields: fields },
+      res: res, viz: viz, tk: mk.tk, rep: mk.rep,
+      isAvgDown: cid === 'avgdown', pl: this.planner(lang, fmt, L),
+      lm: this.liqMap(lang, fmt),
+      pickLong: setSide('long'), pickShort: setSide('short'),
+      longPressed: isLong ? 'true' : 'false', shortPressed: isLong ? 'false' : 'true',
+      longBg: isLong ? '#C6F432' : 'transparent', longFg: isLong ? '#0A0D04' : '#A9B3BF',
+      shortBg: isLong ? 'transparent' : '#FF8A4C', shortFg: isLong ? '#A9B3BF' : '#1A0B03',
+      setKo: function () { self.setState({ lang: 'ko' }); }, setEn: function () { self.setState({ lang: 'en' }); },
+      koPressed: lang === 'ko' ? 'true' : 'false', enPressed: lang === 'en' ? 'true' : 'false',
+      koBg: lang === 'ko' ? '#EEF1F4' : 'transparent', koFg: lang === 'ko' ? '#07090D' : '#A9B3BF',
+      enBg: lang === 'en' ? '#EEF1F4' : 'transparent', enFg: lang === 'en' ? '#07090D' : '#A9B3BF',
+      goHome: go('home', 'top'), goTools: go(view, 'tools'), goReport: go('home', 'report'), goInd: go('home', 'indicator'), goLiq: go('home', 'liqmap')
+    };
+  }
+}
+
+/* ---------- live data from Binance USDⓈ-M futures public API ---------- */
+var API = 'https://fapi.binance.com';
+var MAJ = ['BTC', 'ETH', 'BNB', 'SOL', 'XRP', 'DOGE', 'ADA', 'TRX', 'AVAX', 'LINK', 'SUI'];
+var LIVE = { market: null, px: {}, liq: {}, liqAt: null, fund: {} };
+function getJ(u) { return fetch(API + u).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }); }
+function kst(ms, withDate) {
+  var d = new Date(ms + 9 * 3600e3), p = function (n) { return (n < 10 ? '0' : '') + n; };
+  var md = p(d.getUTCMonth() + 1) + '/' + p(d.getUTCDate()), hm = p(d.getUTCHours()) + ':' + p(d.getUTCMinutes());
+  return withDate === 'full' ? d.getUTCFullYear() + '-' + p(d.getUTCMonth() + 1) + '-' + p(d.getUTCDate()) + ' ' + hm + ' KST' : md + ' ' + hm + (withDate ? ' KST' : '');
+}
+
+Component.prototype.iconBase = 'https://cdn.jsdelivr.net/npm/cryptocurrency-icons@0.18.1/svg/color/';
+var _snap = Component.prototype.marketSnapshot;
+Component.prototype.marketSnapshot = function () {
+  if (!LIVE.market) return _snap.call(this);
+  var m = LIVE.market;
+  m.majors = MAJ.filter(function (s) { return LIVE.px[s] || LIVE.fund[s]; }).map(function (s) {
+    var p = LIVE.px[s] || {}, f = LIVE.fund[s] || {};
+    return [s, p.c != null ? p.c : f.c, p.P != null ? p.P : f.P, f.fr || 0];
+  });
+  return m;
+};
+var _liq = Component.prototype.liqData;
+Component.prototype.liqData = function () {
+  var base = _liq.call(this);
+  if (!LIVE.liqAt) return base;
+  var out = { at: LIVE.liqAt };
+  ['BTC', 'ETH', 'SOL'].forEach(function (c) {
+    var L = LIVE.liq[c];
+    if (!L) { out[c] = base[c]; return; }
+    var P = LIVE.px[c] && LIVE.px[c].c ? LIVE.px[c].c : L.P;
+    var re = function (z) { return [z[0], z[1], z[2], (z[2] - P) / P * 100]; };
+    out[c] = { P: P, chg: LIVE.px[c] && LIVE.px[c].P != null ? LIVE.px[c].P : L.chg, acct: L.acct, oiUsd: Math.round(L.oi * P / 1e6), dec: L.dec, up: re(L.up), dn: re(L.dn), closes: L.closes };
+  });
+  return out;
+};
+
+function loadMarket() {
+  return Promise.all([getJ('/fapi/v1/premiumIndex'), getJ('/fapi/v1/ticker/24hr')]).then(function (r) {
+    var pi = r[0], tk = r[1], tmap = {};
+    tk.forEach(function (t) { tmap[t.symbol] = t; });
+    MAJ.forEach(function (s) {
+      var sym = s + 'USDT', p = pi.find(function (x) { return x.symbol === sym; }), t = tmap[sym];
+      if (t) LIVE.fund[s] = { fr: p ? +p.lastFundingRate : 0, c: +t.lastPrice, P: +t.priceChangePercent };
+    });
+    var liquid = pi.filter(function (p) { return /USDT$/.test(p.symbol) && tmap[p.symbol] && +tmap[p.symbol].quoteVolume > 50e6; })
+      .map(function (p) { return [p.symbol.replace(/USDT$/, ''), +p.lastFundingRate, Math.round(+tmap[p.symbol].quoteVolume / 1e6)]; });
+    liquid.sort(function (a, b) { return b[1] - a[1]; });
+    var btc = pi.find(function (x) { return x.symbol === 'BTCUSDT'; });
+    LIVE.market = {
+      live: true, at: kst(Date.now(), 'full'), next: btc ? kst(+btc.nextFundingTime, true) : '-',
+      n: liquid.length, pos: liquid.filter(function (x) { return x[1] > 0; }).length, neg: liquid.filter(function (x) { return x[1] < 0; }).length,
+      avg: liquid.reduce(function (a, b) { return a + b[1]; }, 0) / (liquid.length || 1),
+      top: liquid.slice(0, 6), bottom: liquid.slice(-6).reverse(), majors: []
+    };
+    App.schedule();
+  }).catch(function (e) { console.warn('market', e); });
+}
+
+function liqModel(kl, P) {
+  var TIERS = [[100, 0.15], [50, 0.2], [25, 0.3], [10, 0.35]], MMR = 0.005, R = 0.12, NB = 64;
+  var n = kl.length, lo = P * (1 - R), hi = P * (1 + R), bw = (hi - lo) / NB, L = new Array(NB).fill(0), S = new Array(NB).fill(0);
+  for (var i = 0; i < n; i++) {
+    var e = (kl[i].h + kl[i].l + kl[i].c) / 3;
+    for (var ti = 0; ti < TIERS.length; ti++) {
+      var lev = TIERS[ti][0], w = kl[i].qv * TIERS[ti][1], lp = e * (1 - 1 / lev + MMR), sp = e * (1 + 1 / lev - MMR), lh = -1, sh = -1;
+      for (var t = i + 1; t < n; t++) { if (lh < 0 && kl[t].l <= lp) lh = t; if (sh < 0 && kl[t].h >= sp) sh = t; if (lh >= 0 && sh >= 0) break; }
+      if (lh < 0 && P > lp && lp >= lo && lp < hi) L[Math.floor((lp - lo) / bw)] += w;
+      if (sh < 0 && P < sp && sp >= lo && sp < hi) S[Math.floor((sp - lo) / bw)] += w;
+    }
+  }
+  var mx = Math.max.apply(null, L.concat(S)), thr = mx * 0.5, half = NB / 2;
+  var near = function (a, f, to, st) { for (var q = f; q !== to; q += st) if (a[q] >= thr) return q; return -1; };
+  var am = function (a, f, to) { var m = 0, mi = -1; for (var q = f; q < to; q++) if (a[q] > m) { m = a[q]; mi = q; } return mi; };
+  var su = near(S, half, NB, 1); if (su < 0) su = am(S, half, NB);
+  var ld = near(L, half - 1, -1, -1); if (ld < 0) ld = am(L, 0, half);
+  var z = function (b) { if (b < 0) return [P, P, P, 0]; var a = lo + b * bw; return [a, a + bw, a + bw / 2, ((a + bw / 2) - P) / P * 100]; };
+  return { up: z(su), dn: z(ld) };
+}
+function loadLiq() {
+  var DEC = { BTC: 1, ETH: 2, SOL: 3 };
+  return Promise.all(['BTC', 'ETH', 'SOL'].map(function (c) {
+    var sym = c + 'USDT';
+    return Promise.all([
+      getJ('/fapi/v1/klines?symbol=' + sym + '&interval=1h&limit=168'), getJ('/fapi/v1/premiumIndex?symbol=' + sym),
+      getJ('/futures/data/globalLongShortAccountRatio?symbol=' + sym + '&period=1h&limit=1'), getJ('/fapi/v1/openInterest?symbol=' + sym), getJ('/fapi/v1/ticker/24hr?symbol=' + sym)
+    ]).then(function (r) {
+      var kl = r[0].map(function (k) { return { h: +k[2], l: +k[3], c: +k[4], qv: +k[7] }; }), P = +r[1].markPrice, m = liqModel(kl, P);
+      LIVE.liq[c] = { P: P, chg: +r[4].priceChangePercent, acct: r[2][0] ? +r[2][0].longAccount : 0.5, oi: +r[3].openInterest, dec: DEC[c], up: m.up, dn: m.dn, closes: kl.slice(-48).map(function (k) { return k.c; }) };
+    });
+  })).then(function () { LIVE.liqAt = kst(Date.now()); App.schedule(); }).catch(function (e) { console.warn('liq', e); });
+}
+function connectTicker() {
+  var streams = MAJ.map(function (s) { return s.toLowerCase() + 'usdt@ticker'; }).join('/'), ws;
+  try { ws = new WebSocket('wss://fstream.binance.com/stream?streams=' + streams); } catch (e) { return; }
+  ws.onmessage = function (ev) {
+    var d = JSON.parse(ev.data).data; if (!d || !d.s) return;
+    LIVE.px[d.s.replace(/USDT$/, '')] = { c: +d.c, P: +d.P };
+    App.dirty = true;
+  };
+  ws.onclose = function () { setTimeout(connectTicker, 3000); };
+}
+
+/* ---------- boot ---------- */
+(function boot() {
+  var root = document.getElementById('app'), tpl = document.getElementById('tpl');
+  var comp = new Component();
+  var m = location.hash.match(/^#\/(\w+)/);
+  comp.state.lang = /^ko/i.test(navigator.language || '') ? 'ko' : 'en';
+  if (m) comp.state.view = m[1];
+  function renderNow() {
+    App.raf = false; App.dirty = false;
+    var vals = comp.renderVals(), kids = [], sc = { vars: vals, parent: null };
+    for (var i = 0; i < tpl.content.childNodes.length; i++) renderNode(tpl.content.childNodes[i], sc, kids);
+    patchChildren(root, kids);
+    var st = comp.state, lang = st.lang === 'en' ? 'en' : 'ko', v = st.view || 'home';
+    document.documentElement.lang = lang;
+    var ct = comp.calcText(lang)[v];
+    document.title = v === 'home' || !ct ? (lang === 'en' ? 'Averaging Down Calculator & Crypto Liquidation Map | TradeMath' : '주식 물타기 계산기 · 코인 청산 맵 | TradeMath') : ct.title + ' | TradeMath';
+    var h = v === 'home' ? '' : '#/' + v;
+    if (v !== 'home' && location.hash !== h) history.replaceState(null, '', h);
+    if (v === 'home' && /^#\//.test(location.hash)) history.replaceState(null, '', location.pathname + location.search);
+  }
+  App.schedule = function () { if (App.raf) return; App.raf = true; requestAnimationFrame(renderNow); };
+  ['click', 'input', 'keydown'].forEach(function (type) {
+    root.addEventListener(type, function (e) {
+      var n = e.target;
+      while (n && n !== root) { if (n.__ev && n.__ev[type]) { n.__ev[type](e); break; } n = n.parentNode; }
     });
   });
+  window.addEventListener('hashchange', function () { var mm = location.hash.match(/^#\/(\w+)/); if (mm && mm[1] !== comp.state.view) comp.setState({ view: mm[1] }); });
+  renderNow();
+  if (comp.componentDidMount) comp.componentDidMount();
+  setInterval(function () { if (App.dirty) App.schedule(); }, 1000);
+  loadMarket(); loadLiq(); connectTicker();
+  setInterval(loadMarket, 60000); setInterval(loadLiq, 60000);
+})();
+
 </script>
 </body>
 </html>
